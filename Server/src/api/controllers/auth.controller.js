@@ -6,32 +6,53 @@ const Languages = require('../utils/languages')
 const bcrypt = require('bcrypt')
 const getNextSequenceValue = require('../utils/icrement.db')
 require('dotenv').config()
+const path = require('path')
+const fs = require('fs')
 
 let refreshTokens = []
 const schemaLoginUser = Joi.object({
   email: Joi.string().required().email(),
   password: Joi.string().required()
 })
+function unlinkFile (file) {
+  fs.unlink(file, function (err) {
+    if (err) {
+      console.log('Error deleting file:', err)
+    } else {
+      console.log(`File deleted successfully.${file}`)
+    }
+  })
+}
 
 exports.registerUser = async (req, res) => {
+  const directoryFile = path.join(__dirname, '../../../upload/user/')
+  const listFile = req.listFile
   try {
-    const { username, email, password, department, role, lastName, firstName } = req.body
+    const { email, password, department, role, lastName, firstName } = req.body
     const result = validate(req.body)
     if (result.error) {
+      if (listFile.length !== 0) {
+        listFile.forEach(element => {
+          unlinkFile(directoryFile + element)
+        })
+      }
       return apiResponse.response_status(res, result.error.message, 400)
     }
     const user = await User.findOne({ email })
-    const usernameAcc = await User.findOne({ username })
     if (user) {
+      if (listFile.length !== 0) {
+        listFile.forEach(element => {
+          unlinkFile(directoryFile + element)
+        })
+      }
       return apiResponse.response_status(res, Languages.EMAIL_EXSITS, 400)
-    } else if (usernameAcc) {
-      return apiResponse.response_status(res, Languages.USERNAME_EXSITS, 400)
-    } else {
+    }
+    {
       const salt = await bcrypt.genSalt(10)
       const hashPassword = await bcrypt.hash(password, salt)
       const userId = await getNextSequenceValue('userId')
       const user = new User({
-        username,
+        avatar: listFile.length > 0 ? listFile[0] : 'default-avatar.png',
         email,
         password: hashPassword,
         department,
@@ -45,6 +66,11 @@ exports.registerUser = async (req, res) => {
       return apiResponse.response_data(res, Languages.REGISTER_SUCCESS, 200, user)
     }
   } catch (error) {
+    if (listFile.length !== 0) {
+      listFile.forEach(element => {
+        unlinkFile(directoryFile + element)
+      })
+    }
     return apiResponse.response_error_500(res, error.message)
   }
 }

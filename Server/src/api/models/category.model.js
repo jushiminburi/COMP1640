@@ -3,20 +3,14 @@ const Joi = require('joi')
 
 const Category = mongoose.model('Category', new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
-  name: { type: String, required: true, maxlength: 30 },
-  startDate: { type: String, required: true },
-  endDate: { type: String, required: true }
+  name: { type: String, required: true, maxlength: 30 }
 }, {
-  timestamps: {
-    currentTime: () => Date.now() + 7 * 60 * 60 * 1000
-  }
+  timestamps: true
 }))
 
 function validateCategory (category) {
   const schema = Joi.object({
-    name: Joi.string().max(100),
-    startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/),
-    endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)
+    name: Joi.string().max(30).required()
   })
   return schema.validate(category)
 }

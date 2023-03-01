@@ -3,6 +3,7 @@ const { User } = require('../models/user.model')
 const Languages = require('../utils/languages')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
+const { BASEURL_AVATAR } = require('../utils/global')
 require('dotenv').config()
 
 function validateUser (user) {
@@ -79,7 +80,13 @@ module.exports = {
       const limit = parseInt(req.query.limit) || 5
       // const keyword = req.query.keyword
       const skip = (limit * page) - limit
-      const listUser = await User.find({}, { _id: 0, password: 0, __v: 0 }).skip(skip).limit(limit)
+      const list = await User.find({}, { _id: 0, password: 0, __v: 0 }).skip(skip).limit(limit)
+      const listUser = list.map(user => {
+        return {
+          ...user._doc,
+          avatar: `${BASEURL_AVATAR}${user.avatar}`
+        }
+      })
       const totalUser = await User.find().countDocuments()
       const response = apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
         listUser,

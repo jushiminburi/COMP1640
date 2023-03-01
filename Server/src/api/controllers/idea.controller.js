@@ -20,10 +20,10 @@ function unlinkFile (file) {
 
 module.exports = {
   async createIdea (req, res) {
-    const directoryFile = path.join(__dirname, '../../../upload/')
+    const directoryFile = path.join(__dirname, '../../../upload/idea/')
     const listFile = req.listFile
     try {
-      const { title, content, anonymous, categoryId } = req.body
+      const { title, content, anonymous, categoryId, eventId } = req.body
       const userId = req.userId
       const resultValidate = validate(req.body)
       if (resultValidate.error) {
@@ -52,8 +52,8 @@ module.exports = {
       if (listFile.length > 0) {
         const fileId = await getNextSequenceValue('fileId')
         await Files.create({ id: fileId, ideaId: id, file: listFile })
-        await new Ideas({ id, userId, title, content, anonymous, categoryId, file: fileId }).save()
-      } else { await new Ideas({ id, userId, title, content, anonymous, categoryId }).save() }
+        await new Ideas({ id, userId, title, content, anonymous, categoryId, file: fileId, eventId }).save()
+      } else { await new Ideas({ id, userId, title, content, anonymous, categoryId, eventId }).save() }
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
       if (listFile.length !== 0) {
@@ -69,7 +69,6 @@ module.exports = {
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
-
       const ideas = await Ideas.aggregate([
         {
           $lookup: {
