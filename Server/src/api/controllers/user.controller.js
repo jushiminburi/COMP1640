@@ -9,9 +9,8 @@ require('dotenv').config()
 function validateUser (user) {
   const schema = Joi.object({
     email: Joi.string().min(6).max(255).email(),
-    firstName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]$/),
-    lastName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]$/),
-    fullName: Joi.string().min(1).max(100).pattern(/^[a-zA-Z]$/),
+    firstName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}$/),
+    lastName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}$/),
     department: Joi.string().min(1).max(30),
     role: Joi.number().max(5).min(1)
   })

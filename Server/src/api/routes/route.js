@@ -10,5 +10,6 @@ router.use('/user', userRouter)
 router.use('/event', eventRouter)
 router.use('/idea', ideaRouter)
 router.use('/category', categoryRoute)
+router.use('/comment', categoryRoute)
 
 module.exports = router
