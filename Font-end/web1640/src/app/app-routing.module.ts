@@ -11,6 +11,7 @@ import { TopicmanagerComponent } from './qam/topicmanager/topicmanager.component
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StaffComponent } from './staff/staff.component';
 import { TesttemComponent } from './testtem/testtem.component';
+import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -29,7 +30,10 @@ const routes: Routes = [
       { path: 'topiclist', component: TopicListComponent}
     ],
  },
-  { path: 'staff', component: StaffComponent },
+  { path: 'staff', component: StaffComponent ,
+children:[
+  {path:'createidea' , component: CreateIdeaComponent}
+]},
 
 ]
 
