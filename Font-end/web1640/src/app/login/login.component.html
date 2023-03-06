@@ -80,6 +80,7 @@
                                             </div>
                                         </div>
                                         <div class="btn-group mt-3 w-100">
+                                            <!--(click)="showSuccess()"-->
                                             <button class="btn btn-primary btn-block" type="submit" [disabled]="!loginForm.valid">Log In</button>
                                             <button type="button" class="btn btn-primary" type="submit" [disabled]="!loginForm.valid"><i
                                                     class="lni lni-arrow-right"></i>
@@ -104,6 +105,8 @@
         </div>
     </div>
     <!-- end wrapper -->
+
+    <lib-ng-toast></lib-ng-toast>
 </body>
 
 </html>

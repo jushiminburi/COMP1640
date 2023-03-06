@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { NgToastService } from 'ng-angular-popup';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../api.service';
 interface LoginDetails {
   email: string | null,
@@ -20,8 +22,18 @@ export class LoginComponent {
   constructor(
     private http: HttpClient,
     private api: ApiService,
-    private router: Router) { } //dependency injection
+    private router: Router, private toastr: ToastrService, private toast: NgToastService) { } //dependency injection
   ngOnInit(): void { }
+
+  // showSuccess() { // in ra thàh công
+  //   this.toastr.success('Thành công', 'Thông báo', {
+  //     timeOut: 2000,
+  //     progressBar: true,
+  //     progressAnimation: 'increasing',
+  //     closeButton: true,
+  //     positionClass: 'toast-top-right'
+  //   });
+  // }
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.minLength(9), Validators.email]),
@@ -42,10 +54,13 @@ export class LoginComponent {
       localStorage.setItem('refreshToken', res.refreshToken);
       console.log(res.message);
       if (res.status != 200) {
-        alert("Email or password is incorrect! Please try again!")
+        // alert("Email or password is incorrect! Please try again!")
+        this.toast.error({detail: "Email or password is incorrect! Please try again!", position: "top-right", duration:5000})
+        this.loginForm.reset();
         this.router.navigate(['/login']);
       } else if (res.status == 200){
         // alert("Login Successful!");
+        this.toast.success({detail: "Login Successful!", position: "top-right", duration:5000})
         const helper = new JwtHelperService();
         const user = helper.decodeToken(res.accessToken);
 
@@ -54,7 +69,7 @@ export class LoginComponent {
         if (user.role == 1) {
           this.router.navigateByUrl('/admin').then(() => {
             // Reload the current page
-            window.location.reload();
+            // window.location.reload();
           });
           // this.router.navigate(['/admin'])
         } else if (user.role == 3) {
@@ -75,7 +90,9 @@ export class LoginComponent {
     },
 
       error => {
-        alert("Email or password is incorrect! Please try again")
+        
+        this.toast.error({detail: "Email or password is incorrect! Please try again!", position: "top-right", duration:5000})
+        // alert("Email or password is incorrect! Please try again")
         
         this.router.navigate(['/login']);
       }

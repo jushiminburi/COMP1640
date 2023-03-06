@@ -16,7 +16,7 @@ import { SuccessDialogComponentComponent } from './success-dialog-component/succ
 })
 export class CreateAccountComponent implements OnInit {
 
- 
+  currentFile!: File;
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
   ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
   public aElement?: boolean = true;
@@ -28,34 +28,69 @@ export class CreateAccountComponent implements OnInit {
    
   }
 
+ 
+
   
 
   constructor(
     private http: HttpClient,
     private api: ApiService,
     private router: Router,
-    // private fb: FormBuilder,
+    private fb: FormBuilder,
     private dialog: MatDialog) {
 
   } //dependency injection
 
-  createAccountForm = new FormGroup({
-    image: new FormControl('', [Validators.required]),
-    firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    username: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    role: new FormControl('', [Validators.required]),
-    department: new FormControl('', [Validators.required])})
+  createAccountForm   !: FormGroup;
+
+  // createAccountForm = new FormGroup({
+   
+  //   firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+  //   lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    
+  //   email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
+  //   password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  //   role: new FormControl('', [Validators.required]),
+  //   department: new FormControl('', [Validators.required]),
+  //   avatar: new FormControl(File)
+  //  })
+
+  
 
   ngOnInit(): void {
     // this.newAccount();
 
+    this.createAccountForm = this.fb.group({
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null,
+      role: null,
+      department: null,
+      avatar: null
+    })
+
+      
     
       
       
     
+  }
+
+
+  selectFile(event: any, fieldName: string): void {
+
+    this.currentFile = event.target.files[0];
+   
+    
+    
+    
+        
+    this.createAccountForm.get('avatar')?.setValue(this.currentFile);
+    
+    // console.log(this.createAccountForm);
+
+   
   }
 
   
@@ -74,15 +109,23 @@ export class CreateAccountComponent implements OnInit {
 
   CreateNewAccount(data: any) {
     //get password from localstorage
-    var formData: any = new FormData();
     
-    formData.append('firstName', this.createAccountForm.get('firstName')!.value?.toString());
-    formData.append('lastName', this.createAccountForm.get('lastName')!.value);
-    formData.append('username', this.createAccountForm.get('username')!.value);
-    formData.append('email', this.createAccountForm.get('email')!.value);
-    formData.append('role', this.createAccountForm.get('role')!.value);
-    formData.append('password', this.createAccountForm.get('password')!.value);
-    formData.append('department', this.createAccountForm.get('department')!.value);
+    var formData: any = new FormData();
+
+    for(let key in this.createAccountForm.value){
+      console.log(key);
+      formData.append(key, this.createAccountForm.get(key)!.value);
+    }
+
+    
+    
+    // formData.append('firstName', this.createAccountForm.get('firstName')!.value?.toString());
+    // formData.append('lastName', this.createAccountForm.get('lastName')!.value);
+    // formData.append('username', this.createAccountForm.get('username')!.value);
+    // formData.append('email', this.createAccountForm.get('email')!.value);
+    // formData.append('role', this.createAccountForm.get('role')!.value);
+    // formData.append('password', this.createAccountForm.get('password')!.value);
+    // formData.append('department', this.createAccountForm.get('department')!.value);
 
 
     
@@ -143,7 +186,7 @@ export class CreateAccountComponent implements OnInit {
     // formData.append('password', this.myForm?.get('password')?.value);
     // formData.append('department', this.myForm?.get('Department')?.value);
 
-    
+    console.log(formData);
     
     this.api.createNewAccount( formData
     ).subscribe(res => {

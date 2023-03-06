@@ -27,6 +27,10 @@ import { SwitcherWrapperComponent } from './switcher-wrapper/switcher-wrapper.co
 import { TopicAndDeadLineComponent } from './admin/topic-and-dead-line/topic-and-dead-line.component';
 import { TopicListComponent } from './admin/topic-list/topic-list.component';
 import { ModalModule } from 'ngx-bootstrap/modal'; 
+import { ToastrModule } from 'ngx-toastr';
+import { NgToastModule } from 'ng-angular-popup';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -50,7 +54,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
-    AppRoutingModule, ReactiveFormsModule, MatDialogModule
+    AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }), NgToastModule, MatPaginatorModule, NgxPaginationModule
   ],
   providers: [
     ApiService
