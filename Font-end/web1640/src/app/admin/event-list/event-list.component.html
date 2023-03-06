@@ -1,0 +1,230 @@
+<div class="page-content">
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-md-flex align-items-center mb-3">
+        <div class="breadcrumb-title pr-3">Event List</div>
+        <div class="pl-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="javascript:;"><i class='bx bx-home-alt'></i></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Event</li>
+
+
+                    <li class="breadcrumb-item active" aria-current="page">Event List</li>
+                </ol>
+            </nav>
+        </div>
+
+
+    </div>
+    <!--end breadcrumb-->
+
+    <div class="col-md-12  card radius-15 align-content-center ">
+        <div class="card-header border-bottom-0 d-flex flex-row-reverse">
+            
+            <div class="  align-items-center col-md-3">
+
+                <button class="btn btn-info" type="submit" data-toggle="modal" data-target="#createNewEventModal"><i class="fadeIn animated bx bx-calendar-star"></i> Create new Event 
+                     </button>
+            </div>
+        </div>
+        
+
+        <!-- Modal -->
+        <div class="modal fade bd-example-modal-md" id="createNewEventModal" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+
+
+                    <div class="card-body">
+                        <app-create-new-event></app-create-new-event>
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            
+
+        </div>
+
+
+    </div>
+    <br>
+
+    <div class="col-md-12  card radius-15 align-content-center ">
+        <br>
+
+        <div class="card-body p-0">
+            <h4 class="text-center text-info">Event List</h4>
+            <hr />
+
+            <div class="row">
+
+                <div class="col-12 col-lg-4">
+                    <div class="card radius-15 d-flex">
+                        <div class="card-body m-auto text-center">
+                            <div class="row">
+                                <h6 class="text-center">Event Name</h6>
+                            </div>
+                            <div class="row ">
+                                <div class="row">
+                                    <div class="col-lg-6">Deadline Event </div>
+                                    <div class="col-lg-6">Deadline Comment</div>
+                                </div>
+                                <div class="row text-danger">
+                                    <div class="col-lg-6">12/02/2023</div>
+                                    <div class="col-lg-6">24/02/2023</div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6">Idea</div>
+                                    <div class="col-lg-6 text-info">23</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Like</div>
+                                    <div class="col-lg-6 text-info">345</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Dislike</div>
+                                    <div class="col-lg-6 text-info">24</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Comment</div>
+                                    <div class="col-lg-6 text-info">143</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <button type="button" class="btn btn-info radius-15 me-1 " data-toggle="modal" data-target="#createNewEventModal">Edit</button>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <button type="button" class="btn btn-danger radius-15">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <div class="card radius-15 d-flex">
+                        <div class="card-body m-auto text-center">
+                            <div class="row">
+                                <h6 class="text-center">Event Name</h6>
+                            </div>
+                            <div class="row ">
+                                <div class="row">
+                                    <div class="col-lg-6">Deadline Event </div>
+                                    <div class="col-lg-6">Deadline Comment</div>
+                                </div>
+                                <div class="row text-danger">
+                                    <div class="col-lg-6">12/02/2023</div>
+                                    <div class="col-lg-6">24/02/2023</div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6">Idea</div>
+                                    <div class="col-lg-6 text-info">23</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Like</div>
+                                    <div class="col-lg-6 text-info">345</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Dislike</div>
+                                    <div class="col-lg-6 text-info">24</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Comment</div>
+                                    <div class="col-lg-6 text-info">143</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <button type="button" class="btn btn-info radius-15 me-1 " data-toggle="modal" data-target="#createNewEventModal">Edit</button>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <button type="button" class="btn btn-danger radius-15">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <div class="card radius-15 d-flex">
+                        <div class="card-body m-auto text-center">
+                            <div class="row">
+                                <h6 class="text-center">Event Name</h6>
+                            </div>
+                            <div class="row ">
+                                <div class="row">
+                                    <div class="col-lg-6">Deadline Event </div>
+                                    <div class="col-lg-6">Deadline Comment</div>
+                                </div>
+                                <div class="row text-danger">
+                                    <div class="col-lg-6">12/02/2023</div>
+                                    <div class="col-lg-6">24/02/2023</div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6">Idea</div>
+                                    <div class="col-lg-6 text-info">23</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Like</div>
+                                    <div class="col-lg-6 text-info">345</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Dislike</div>
+                                    <div class="col-lg-6 text-info">24</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">Comment</div>
+                                    <div class="col-lg-6 text-info">143</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <button type="button" class="btn btn-info radius-15 me-1 " data-toggle="modal" data-target="#createNewEventModal">Edit</button>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <button type="button" class="btn btn-danger radius-15">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+            
+        </div>
+
+
+    </div>

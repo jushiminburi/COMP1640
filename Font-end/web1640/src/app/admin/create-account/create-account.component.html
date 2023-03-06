@@ -70,23 +70,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Username</label>
-                                                <input type="email" placeholder="anne"
-                                                    formControlName="username" class="form-control" required>
-                                                    <div class="text-danger text-center invalid-feedback d-block"
-                                                        *ngIf="!createAccountForm.controls.username?.valid && (createAccountForm.controls.username?.dirty || createAccountForm.controls.username?.touched)">
-
-                                                        <span
-                                                            [hidden]="!createAccountForm.controls.username.errors?.['required']">
-                                                            Username is required!
-                                                        </span>
-                                                        <span
-                                                            [hidden]="!createAccountForm.controls.username.errors?.['minlength']">
-                                                            Username must be at least 5 characters long!
-                                                        </span>
-                                                    </div>
-                                            </div>
+                                           
                                             <div class="form-group">
                                                 <label>Email</label>
                                                 <input type="email" placeholder="svetlana1997@example.com"

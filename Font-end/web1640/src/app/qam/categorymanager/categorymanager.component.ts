@@ -8,22 +8,23 @@ interface LoginDetails {
 
 }
 @Component({
-  selector: 'app-topicmanager',
-  templateUrl: './topicmanager.component.html',
-  styleUrls: ['./topicmanager.component.css']
+  
+  templateUrl: './categorymanager.component.html',
+  styleUrls: ['./categorymanager.component.css']
 })
 
 
-export class TopicmanagerComponent implements OnInit {
+export class CategorymanagerComponent implements OnInit {
   status: any;
-  addTopicForm! : FormGroup;
+  addCategoryForm! : FormGroup;
   constructor(
     private http: HttpClient,
     private api: ApiService,
     private router: Router) { }
 
   isShowForm = false;
-  addNewTopic() {
+  addNewCategory() {
+    
     this.isShowForm = false;
   }
 

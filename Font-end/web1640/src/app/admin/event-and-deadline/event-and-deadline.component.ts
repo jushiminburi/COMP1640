@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 interface NewDeadline {
 
@@ -11,17 +10,16 @@ interface NewDeadline {
   DLTopic: string | null,
   DLComment: string | null,
   Description: string | null,
-
 }
-@Component({
 
-  templateUrl: './topic-and-dead-line.component.html',
-  styleUrls: ['./topic-and-dead-line.component.css']
+@Component({
+  selector: 'app-event-and-deadline',
+  templateUrl: './event-and-deadline.component.html',
+  styleUrls: ['./event-and-deadline.component.css']
 })
 
-
-export class TopicAndDeadLineComponent {
-  ngOptionTopic = ["", "Topic 1", "Topic 2", "Topic 3", "Topic 4",]
+export class EventAndDeadLineComponent {
+  ngOptionEvent = ["", "Meeting", "TeamBuilding", "Time Work ", "OT",]
 
   newDeadline: NewDeadline = {
     Topic: null,
@@ -124,11 +122,3 @@ export class TopicAndDeadLineComponent {
 
 
 }
-
-
-
-
-
-
-
-
