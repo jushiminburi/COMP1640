@@ -86,38 +86,7 @@
                                     Add new Topic</button>
                                     <br>
 
-                                    <div *ngIf="isShowForm">
-                                        <div class="row me-2">
-                                            <form [formGroup]="categoryForm" (ngSubmit)="addCategory(categoryForm.value)" novalidate>
 
-                                                <div class="form-group">
-                                                    <h4>Name Topic </h4>
-
-                                                    <input type="text" formControlName="name" class="form-control" placeholder="Enter your new topic" formControlName="Newtopic" />
-                                                    <!--<div class="text-danger text-center invalid-feedback d-block" *ngIf="!addTopicForm.controls.Newtopic?.valid && (addTopicForm.controls.Newtopic?.dirty || addTopicForm.controls.Newtopic?.touched)">
-
-                                                    <span [hidden]="!addTopicForm.controls.Newtopic.errors?.['required']">
-                                                        Password is required!
-                                                    </span>
-                                                    <span [hidden]="!addTopicForm.controls.Newtopic.errors?.['minlength']">
-                                                        Password must be at least 3 characters long!
-                                                    </span>
-                                                </div>-->
-                                                    <br>
-                                                    <button class="btn btn-success" type="submit"> <i
-                                                        class="fadeIn animated bx bx-trash-alt"></i>
-                                                    Add new Topic</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <hr>
-                                        <button (click)="isShowForm = true" *ngIf="!isShowForm" class="btn btn-success"> <i
-                                            class="fadeIn animated bx bx-trash-alt"></i>
-                                        Add new Category</button>
-                                        <br>
-
-
-                                    </div>
 
 
 
@@ -127,7 +96,7 @@
 
                                 <div *ngIf="isShowForm">
                                     <div class="row me-2">
-                                        <form (ngSubmit)="onSubmit(addCategoryForm.value)" novalidate>
+                                        <form (ngSubmit)="addCategory(categoryForm.value)" novalidate>
 
                                             <div class="form-group">
                                                 <h4>Name Category </h4>
@@ -143,7 +112,7 @@
                                             </span>
                                         </div>-->
                                                 <br>
-                                                <button (click)="addNewCategory();" class="btn btn-success" type="submit" [disabled]="!addCategoryForm.valid"> <i
+                                                <button class="btn btn-success" type="submit" [disabled]="!categoryForm.valid"> <i
                                                     class="fadeIn animated bx bx-trash-alt"></i>
                                                 Add new Category</button>
                                             </div>
