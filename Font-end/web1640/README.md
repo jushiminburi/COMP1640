@@ -42,6 +42,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Chạy trong terminal của project: 
         npm update 
         npm install ngx-bootstrap --save
+        npm install --force
 
 - start server bằng câu lệnh: 
       vào Font-end -> web1640 -> src -> app -> mở terminal của app -> chạy câu lệnh: ng serve -o

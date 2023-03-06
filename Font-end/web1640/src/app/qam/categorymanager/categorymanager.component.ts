@@ -1,115 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
-
-interface NewDeadline {
-
-  Topic: string | null,
-  DLTopic: Date | null,
-  DLComment: Date | null,
-  Description: string | null,
+interface LoginDetails {
+  Newtopic: string | null,
 
 }
 @Component({
-
-  templateUrl: './topic-and-dead-line.component.html',
-  styleUrls: ['./topic-and-dead-line.component.css']
+  
+  templateUrl: './categorymanager.component.html',
+  styleUrls: ['./categorymanager.component.css']
 })
 
 
-export class TopicAndDeadLineComponent {
-  ngOptionTopic = ["", "Topic 1", "Topic 2", "Topic 3", "Topic 4",]
-
-  newDeadline: NewDeadline = {
-    Topic: null,
-    DLTopic: null,
-    DLComment: null,
-    Description: null,
-
-
-
-  };
-
-  deadlineForm = new FormGroup({
-    Topic: new FormControl('', [Validators.required]),
-    DLTopic: new FormControl('', [Validators.required]),
-    DLComment: new FormControl('', [Validators.required]),
-    Description: new FormControl('', [Validators.required]),
-  })
-
-  
-  
-  DeadlineForm = new FormGroup({
-    Topic: new FormControl(''),
-    DLTopic: new FormControl(''),
-    DLComment: new FormControl(''),
-    Description: new FormControl(''),
-
-  })
-
-  createDeadline = new FormGroup({
-    Topic: new FormControl(''),
-    DLTopic: new FormControl(''),
-    DLComment: new FormControl(''),
-    Description: new FormControl(''),
-    
-  }
-  )
-  CreateDeadline(data: any) {
-    //get password from localstorage
-    var deadline: any = localStorage.getItem('deadline');
-    var topic = JSON.parse(deadline).Topic;;
-    // console.log("dsadsds" + phone);
-
-    this.deadline = {
-      Topic: data.Topic,
-      DLTopic: data.DLTopic,
-      DLComment: data.DLComment,
-      Description: data.Description,
-    }
-
-    console.log("hii");
-    // this.api.CreateDeadline(this.deadline
-    // ).subscribe(res => {
-
-    //   var d = JSON.parse(res); //doi tu json sang object
-    //   const helper = new JwtHelperService();
-    //   console.log("okeee", d.deadline)
-    //   const decoedToken = helper.decodeToken(d.deadline);
-    //   console.log("okeee", d.deadline)
-    //   console.log("d", decoedToken);
-
-    //   alert("Tạo tài khoản thành công!");
-
-    //   // this.router.navigateByUrl('/students/profilestudent');
-    //   this.router.navigateByUrl('/admin');
-    // },
-
-    //   error => {
-    //     console.log("Error", error);
-    //     alert("Error");
-    //     this.router.navigateByUrl('/admin/TopicandDeadline');
-    //   }
-
-    // );
-
-
-  }
-  deadline: NewDeadline = {
-  
-    Topic: null,
-    DLTopic: null,
-    DLComment: null,
-    Description: null,
-
-
-  };
-
+export class CategorymanagerComponent implements OnInit {
   status: any;
   categoryForm!: FormGroup;
 
@@ -184,82 +90,6 @@ export class TopicAndDeadLineComponent {
 
   }
 
-  eventForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    deadlineIdea: new FormControl('', Validators.required),
-    deadlineComment: new FormControl('', Validators.required),
-  });
-
-  addEvent() {
-    const deadlineIdea = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-    const deadlineComment = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-    const data = {
-      name: this.eventForm.value.name,
-     
-      deadlineIdea: deadlineIdea,
-      deadlineComment: deadlineComment
-
-    };
-    this.api.addEvent(data).subscribe((response) => {
-
-      const data = JSON.parse(response);
-      if (data.status == 200) {
-        alert("Add event successfully!");
-        location.reload();
-      } else {
-        alert("Add event failed!");
-      }
-
-    },
-      (err: any) => {
-        alert("Add event failed!");
-      })
-  }
-
-  events: any[] = [];
-
-
-  getAnEvent() {
-    
-    
-    this.api.getEvents().subscribe((response) => {
-      const data = JSON.parse(response);
-      if(data.status == 200){
-        
-        this.events = data.data;
-       
-      } else {
-        alert("Get events failed!");
-      }
-      
-      
-      
-      
-    }, (err: any) => {
-      alert("Get events failed!");
-    })
-  }
-
-
-  // editEvent() {
-  //   const deadlineIdea = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-  //   const deadlineComment = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-  //   const formData = {
-  //     name: this.eventForm.value.name,
-     
-  //     deadlineIdea: deadlineIdea,
-  //     deadlineComment: deadlineComment
-
-  //   };
-  //   this.api.submitRegistrationForm(formData).subscribe((response) => {
-  //     console.log(response);
-  //   });
-  // }
-
-
-
-  
-
 
 
 
@@ -271,7 +101,7 @@ export class TopicAndDeadLineComponent {
     private api: ApiService,
     private router: Router,
     private fb: FormBuilder,
-    private dialog: MatDialog, private datePipe: DatePipe) {
+    private dialog: MatDialog) {
 
       this.categoryForm = this.fb.group({
         id: new FormControl(null),
@@ -300,7 +130,7 @@ export class TopicAndDeadLineComponent {
 
   ngOnInit(): void {
     // this.newAccount();
-    this.getAnEvent();
+    this.getlistCategory();
 
   }
 
@@ -443,15 +273,9 @@ export class TopicAndDeadLineComponent {
   // }
 
 
-  
-
+  reloadParent() {
+    this.ngOnInit();
+  }
 
 }
-
-
-
-
-
-
-
 

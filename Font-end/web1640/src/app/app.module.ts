@@ -22,10 +22,16 @@ import { CreateAccountComponent } from './admin/create-account/create-account.co
 import { MatDialogModule } from '@angular/material/dialog';
 import { SuccessDialogComponentComponent } from './admin/create-account/success-dialog-component/success-dialog-component.component';
 import { QamComponent } from './qam/qam.component';
-import { TopicmanagerComponent } from './qam/topicmanager/topicmanager.component';
+import { CategorymanagerComponent } from './qam/categorymanager/categorymanager.component';
 import { SwitcherWrapperComponent } from './switcher-wrapper/switcher-wrapper.component';
-import { TopicAndDeadLineComponent } from './admin/topic-and-dead-line/topic-and-dead-line.component';
-import { TopicListComponent } from './admin/topic-list/topic-list.component';
+
+
+import { EventListComponent } from './admin/event-list/event-list.component';
+import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
+import { CreateNewEventComponent } from './admin/event-and-deadline/create-new-event/create-new-event.component';
+import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
+import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-idea.component';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { NgToastModule } from 'ng-angular-popup';
@@ -51,7 +57,14 @@ import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
     ResetPasswordComponent,
     AccountManagerComponent,
     QamComponent,
-    TopicmanagerComponent,
+    CategorymanagerComponent,
+    SwitcherWrapperComponent,
+    EventListComponent,
+    EventAndDeadLineComponent,
+    CreateNewEventComponent,
+    DashboardsAdminComponent,
+    MostPopularIdeaComponent,
+    
     SwitcherWrapperComponent,
     ProfileStaffComponent,
     CreateIdeaComponent
