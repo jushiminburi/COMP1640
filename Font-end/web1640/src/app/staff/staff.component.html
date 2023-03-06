@@ -45,11 +45,10 @@
               Most Comments
             </a>
           </li><li>
-            <a [routerLink]="['/staff/createidea']" href="#">
-              <div
-                class="arent-icon icon-color-1">
-                <i class="bx bx-comment-detail"></i>
-              </div>Create New Idea
+            <a [routerLink]="['/staff/create-idea']" >
+
+               Create New Idea
+
             </a>
           </li>
         </ul>
@@ -207,65 +206,7 @@
   <div class="page-wrapper">
     <!--page-content-wrapper-->
     <div class="page-content-wrapper">
-        <div class="col py-2">
-          <div class="card radius-15">
-            <div class="card-body">
-              <div class="float-right text-muted">
-                Wed, Jan 11th 2019 8:30 AM
-								<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">	<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<div class="dropdown-menu">	<a class="dropdown-item" href="#">Change Privacy</a>
-									<a class="dropdown-item" href="#">Detele</a>
-</div>
-              </div>
-              <h4 class="card-title">Idea</h4>
-              <p>
-                Ideas worth spreading
-              </p>
-              <a class="interact-idea"><button type="button" class="btn btn-outline-secondary m-1"><i class='bx bx-comment-detail'></i> </button>
-							<button type="button" class="btn btn-outline-dark m-1"><i class='bx bx-like'></i>
-							</button><button type="button" class="btn btn-outline-dark m-1"><i class='bx bx-dislike'></i> </button>
-        </a>
-        </div></div></div><div class="col py-2">
-          <div class="card radius-15">
-            <div class="card-body">
-              <div class="float-right text-muted">
-                Wed, Jan 11th 2019 8:30 AM
-								<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">	<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<div class="dropdown-menu">	<a class="dropdown-item" href="#">Change Privacy</a>
-									<a class="dropdown-item" href="#">Detele</a>
-</div>
-              </div>
-              <h4 class="card-title">Idea</h4>
-              <p>
-                Ideas worth spreading
-              </p>
-              <a class="interact-idea"><button type="button" class="btn btn-outline-secondary m-1"><i class='bx bx-comment-detail'></i> </button>
-							<button type="button" class="btn btn-outline-dark m-1"><i class='bx bx-like'></i>
-							</button><button type="button" class="btn btn-outline-dark m-1"><i class='bx bx-dislike'></i> </button>
-        </a>
-        </div></div></div>
-         <div class="col py-2">
-          <div class="card radius-15">
-            <div class="card-body">
-              <div class="float-right text-muted">
-                Wed, Jan 11th 2019 8:30 AM
-								<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">	<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<div class="dropdown-menu">	<a class="dropdown-item" href="#">Change Privacy</a>
-									<a class="dropdown-item" href="#">Detele</a>
-</div>
-              </div>
-              <h4 class="card-title">Idea</h4>
-              <p>
-                Ideas worth spreading
-              </p>
-              <a class="interact-idea"><button type="button" class="btn btn-outline-secondary m-1"><i class='bx bx-comment-detail'></i> </button>
-							<button type="button" class="btn btn-outline-dark m-1"><i class='bx bx-like'></i>
-							</button><button type="button" class="btn btn-outline-dark m-1"><i class='bx bx-dislike'></i> </button>
-        </a>
-        </div></div></div></div></div>
+       <router-outlet></router-outlet><</div> /div>
   <!--end page-wrapper-->
   <!--start overlay-->
   <div class="overlay toggle-btn-mobile"></div>
