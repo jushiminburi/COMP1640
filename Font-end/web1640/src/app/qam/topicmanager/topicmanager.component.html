@@ -27,30 +27,19 @@
                         <div class="card-body text-center">
                             <h4 class="mb-0 text-center">Topic List</h4>
                             <hr />
-                            <ul>
+                            <ul *ngFor="let category of categories">
                                 <div class="row me-2">
 
                                     <li class=" col-md-10 list-group-item">
-                                        <p class="mb-0"><i class='bx bx-globe'></i> Topic 2
+                                        <p class="mb-0"><i class='bx bx-globe'></i> {{category.name}}
                                         </p>
                                     </li>
                                     <button class="col-md-2 btn btn-danger"><i
-                                            class="fadeIn animated bx bx-trash-alt"></i></button>
+                                            class="fadeIn animated bx bx-trash-alt" (click) = "deleteCategory(category.id)"></i></button>
                                 </div>
 
                             </ul>
-                            <ul>
-                                <div class="row me-2">
 
-                                    <li class=" col-md-10 list-group-item">
-                                        <p class="mb-0"><i class='bx bx-globe'></i> Topic 2
-                                        </p>
-                                    </li>
-                                    <button class="col-md-2 btn btn-danger"><i
-                                            class="fadeIn animated bx bx-trash-alt"></i></button>
-                                </div>
-
-                            </ul>
 
                         </div>
 
@@ -86,12 +75,12 @@
 
                                 <div *ngIf="isShowForm">
                                     <div class="row me-2">
-                                        <form (ngSubmit)="onSubmit(addTopicForm.value)" novalidate>
+                                        <form [formGroup]="categoryForm" (ngSubmit)="addCategory(categoryForm.value)" novalidate>
 
                                             <div class="form-group">
                                                 <h4>Name Topic </h4>
 
-                                                <input type="text" class="form-control" placeholder="Enter your new topic" formControlName="Newtopic" />
+                                                <input type="text" formControlName="name" class="form-control" placeholder="Enter your new topic" formControlName="Newtopic" />
                                                 <!--<div class="text-danger text-center invalid-feedback d-block" *ngIf="!addTopicForm.controls.Newtopic?.valid && (addTopicForm.controls.Newtopic?.dirty || addTopicForm.controls.Newtopic?.touched)">
 
                                                     <span [hidden]="!addTopicForm.controls.Newtopic.errors?.['required']">
@@ -102,7 +91,7 @@
                                                     </span>
                                                 </div>-->
                                                 <br>
-                                                <button (click)="addNewTopic();" class="btn btn-success" type="submit" [disabled]="!addTopicForm.valid"> <i
+                                                <button class="btn btn-success" type="submit"> <i
                                                         class="fadeIn animated bx bx-trash-alt"></i>
                                                     Add new Topic</button>
                                             </div>
@@ -122,16 +111,18 @@
                                     <table class="table mb-0">
                                         <thead>
                                             <tr>
-                                                <th>Name staff</th>
-                                                <th>Description</th>
+                                                <th>ID</th>
+                                                <th>Name</th>
                                                 <th>Created Date</th>
+                                                <th>Updated Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Staff 1</td>
-                                                <td>afnkvsdkvksdnv...</td>
-                                                <td>22/02/2023</td>
+                                            <tr *ngFor="let category of categories">
+                                                <td>{{category.id}}</td>
+                                                <td>{{category.name}}</td>
+                                                <td>{{category.createdAt}}</td>
+                                                <td>{{category.updatedAt}}</td>
                                             </tr>
                                         </tbody>
 

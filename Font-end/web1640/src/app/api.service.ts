@@ -29,6 +29,145 @@ export class ApiService {
   //   )
   // }
 
+  deleteCategory(id: number){
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+      return this.http.get(api + `category/delete/${id}}`
+      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+
+  }
+
+  getCategory() {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+      return this.http.get(api + 'category/list'
+      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+
+  }
+
+  addCategory(name: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+    const category = {name: name}
+    
+    return this.http.post(api + 'category/add', category, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+  deleteEvent(id: number){
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+      return this.http.get(api + `event/delete/${id}}`
+      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+
+  }
+
+  getEvents() {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+      return this.http.get(api + 'event/list'
+      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+
+  }
+
+  addEvent(data: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+    
+    
+    return this.http.post(api + 'category/add', data, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+
+  deleteIdea(id: number){
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+      return this.http.get(api + `idea/delete/${id}}`
+      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+
+  }
+
+  getIdeas() {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+      return this.http.get(api + 'idea/list'
+      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+
+  }
+
+  addIdea(formData: FormData) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+    
+    return this.http.post(api + 'idea/add', formData, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+  }
 
   
 
