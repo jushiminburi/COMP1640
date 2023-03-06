@@ -1,28 +1,53 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ApiService } from 'src/app/api.service';
 import { SuccessDialogComponentComponent } from '../create-account/success-dialog-component/success-dialog-component.component';
 
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+
+interface User{
+  avatar: string;
+  department: string;
+  email: string;
+  firstName: string;
+  userId: number;
+  lastName: string;
+  password: string;
+  role: string;
+  username: string;
+
+}
 @Component({
 
   templateUrl: './account-manager.component.html',
   styleUrls: ['./account-manager.component.css']
 })
 
+
 export class AccountManagerComponent implements OnInit {
 
+  users: User[] = []; // List of users
+  currentPage: number = 1;
+  totalPages: number = 0;
+  limit: number = 5;
+
+
+  pagedStudents: User[] = []; // List of users for current page
+  totalItems?: number; // Total number of users
 
   page?: number;
-  limit?: number;
+  
   accounts?: any[];
+
+  createAccountForm!: FormGroup;
 
   constructor(private api: ApiService, private router: Router, 
     private route: ActivatedRoute, private http: HttpClient,
-    private dialog: MatDialog){}
+    private dialog: MatDialog, private fb: FormBuilder){}
     
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
   ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
@@ -34,56 +59,193 @@ export class AccountManagerComponent implements OnInit {
     
    
   }
-  
-  ngOnInit() {
+  currentFile?: File;
 
-      this.route.queryParams.subscribe(params => {
-        this.page = +params['page'] || 1;
-        this.limit = +params['limit'] || 5;
-        //Lấy danh sách tài khoản từ API
-        this.api.getUsers(this.page.toString(), this.limit.toString()).subscribe((data: any) => {
-          console.log(data)
-          var d = JSON.parse(data);
-          this.accounts = d.data.listUser;
+  selectFile(event: any, fieldName: string): void {
 
-          console.log()
-        },
-        error => {
-          console.log(error);
+    this.currentFile = event.target.files[0]; 
+    this.createAccountForm.get('avatar')?.setValue(this.currentFile);
+    
+   
+
+   
+  }
+
+  user: User = {
+    avatar: '',
+    department: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    userId: 0,
+    role: '',
+    username: '',
+  }
+
+  getAnUser(id: number) {
+    console.log(id);
+    this.api.getUsers().subscribe((d: any) => {
+      var data = JSON.parse(d);
+      console.log(data);
+      if(data.status == 200) {
+        //filter user by id
+        
+        let user = data.data.listUser.filter((user: any) => user.userId == id)[0];
+        console.log(user);
+        //set value for formcontrol
+        console.log(this.editAccountForm.value);
+        for(let key in this.editAccountForm.value){
+          if(key == "avatar") continue;
+          this.editAccountForm.get(key)?.setValue(user[key]);
         }
         
-        );
+        console.log(this.editAccountForm.value);
+       
+      } else {
+        alert("Get user failed!");
+        console.log(data.message);
+        return
+      }
+
+    }, error => {
+      alert("Get user error!");
+      console.log(error);
+      return
+    }
+    )
+
+  }
+
+
+  editUser(id: any) {
+
+
+    console.log(this.editAccountForm.get('userId')?.value);
+
+    var formData: any = new FormData();
+    for(let key in this.editAccountForm.value){
+      console.log(key);
+      formData.append(key, this.editAccountForm.get(key)!.value);
+    }
+    console.log(formData);
+    this.api.editUser( id, formData
+      ).subscribe((res:any) => {
+        var data = JSON.parse(res);
+
+        if (data.status == 200) {
+          
+          location.reload();
+          alert("Edit Account Success!")
+        
+          // this.router.navigate(['/admin'])
+        } else if (data.status == 400) {
+          alert("Edit Account Failed!")
+
+        } 
+
+  },
+  
+      error => {
+        alert("Edit Account Error!")
+        console.log(error)
+        
       });
+}
+
+loadStudents(): void {
+  this.api.getUsers(this.currentPage, this.limit).subscribe(
+    res => {
+      console.log(res);
+      var users = JSON.parse(res);
+      console.log(users);
+      this.users = users.data.listUser;
+      this.totalPages = Math.ceil(users.data.totalUser/this.limit);
+    },
+    error => {
+      console.log(error);
+    }
+  );
+}
+
+nextPage() {
+  this.currentPage++;
+  this.loadStudents();
+}
+
+previousPage() {
+  this.currentPage--;
+  this.loadStudents();
+}
+
+  
+  
+  ngOnInit() {
+    this.createAccountForm = this.fb.group({
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null,
+      role: null,
+      department: null,
+      avatar: null
+    })
+
+    this.loadStudents();
+
+      // this.route.queryParams.subscribe(params => {
+      //   this.page = +params['page'] || 1;
+      //   this.limit = +params['limit'] || 5;
+      //   //Lấy danh sách tài khoản từ API
+      //   this.api.getUsers(this.page, this.limit).subscribe((data: any) => {
+      //     console.log(data)
+      //     var d = JSON.parse(data);
+      //     this.accounts = d.data.listUser;
+
+      //     console.log()
+      //   },
+      //   error => {
+      //     console.log(error);
+      //   }
+        
+      //   );
+      // });
 
   }
 
   
   editAccountForm = new FormGroup({
-    image: new FormControl('', [Validators.required]),
+    userId: new FormControl(0),
+    avatar: new FormControl(null),
     firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    username: new FormControl('', [Validators.required, Validators.minLength(5)]),
+   
     email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  
     role: new FormControl('', [Validators.required]),
     department: new FormControl('', [Validators.required])})
   
-  delete(id: string) {
-    confirm("Are you sure you want to delete this account?")
-    this.api.deleteUser(id).subscribe((data: any) => {
-      window.location.reload();
+  delete(id: number) {
+    if(confirm("Are you sure you want to delete this account?")) {
+      this.api.deleteUser(id).subscribe((data: any) => {
+        console.log(data)
+        window.location.reload();
+        
+        alert("Delete Successful!")
+  
+        
+        
+      },
+      error => {
+        alert("Delete Failed!")
+      }
       
-      alert("Delete Successful!")
+      );
+      }
 
-      
-      
-    },
-    error => {
-      alert("Delete Failed!")
     }
     
-    );
-    }
+    
 
 
     EditAccountForm(data: any) {

@@ -14,6 +14,7 @@ import { TesttemComponent } from './testtem/testtem.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
+import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -37,7 +38,10 @@ const routes: Routes = [
       
     ],
  },
-  { path: 'staff', component: StaffComponent },
+  { path: 'staff', component: StaffComponent ,
+children:[
+  {path:'createidea' , component: CreateIdeaComponent}
+]},
 
 ]
 
