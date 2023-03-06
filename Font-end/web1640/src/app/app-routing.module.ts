@@ -30,10 +30,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardsAdminComponent},
       { path: 'createaccount', component: CreateAccountComponent },
       { path: 'accountmanager', component: AccountManagerComponent},
-      {path: 'eventlist', component: EventListComponent,
-      
-    },
-
+      {path: 'eventlist', component: EventListComponent},
       {path: 'eventanddeadline', component: EventAndDeadLineComponent},
       
     ],

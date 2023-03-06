@@ -46,7 +46,8 @@
                             <td class="align-middle text-center ">{{account.role}}</td>
                             <td class="align-middle text-center ">{{account.department}}</td>
                             <td class="align-middle text-center ">
-                                <button type="button " class="btn btn-info radius-15 me-3 " data-toggle="modal " data-target="#exampleModalCenter " (click)="getAnUser(account.userId) ">Edit</button>
+                                <!-- <button type="button " class="btn btn-info radius-15 me-3 " data-bs-toggle="modal " data-bs-target="#exampleModal " >Edit</button> -->
+                                <button type="button" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getAnUser(account.userId)"> Edit</button>
 
                                 <button type="button " (click)="delete(account.userId) " class="btn btn-danger radius-15 ">Delete</button>
                             </td>
@@ -57,16 +58,16 @@
                     </tbody>
                 </table>
 
-                <!-- Modal -->
-                <div class="modal fade " id="exampleModalCenter " tabindex="-1 " role="dialog " aria-labelledby="exampleModalCenterTitle " aria-hidden="true ">
 
-                    <div class="modal-dialog modal-dialog-centered " role="document ">
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                    <div class="modal-dialog " >
                         <div class="modal-content ">
                             <div class="modal-header ">
-                                <h5 class="modal-title " id="exampleModalLongTitle ">Edit Account</h5>
-                                <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-                                    <span aria-hidden="true ">&times;</span>
-                                </button>
+                                
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Account</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
 
@@ -74,7 +75,7 @@
 
                                 <div class="tab-content mt-3 ">
 
-                                    <div class="card shadow-none border mb-0 radius-15 ">
+                                    <div class="shadow-none border mb-0 radius-15 ">
                                         <div class="card-body ">
 
                                             <div class="row ">
@@ -188,19 +189,19 @@
 
                                                         <div class=" col-sm-12 form-group text-center align-content-center ">
                                                             <label>Image</label>
-                                                            <input type="file " class="form-control " formControlName="avatar ">
+                                                            <input type="file" class="form-control " formControlName="avatar ">
 
 
                                                         </div>
 
                                                         <div class="checkbox ">
                                                             <label>
-                                                                <input type="checkbox " required> Agree the terms and
+                                                                <input type="checkbox" required> Agree the terms and
                                                                 policy
                                                             </label>
                                                         </div>
                                                         <div class="modal-footer ">
-                                                            <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                             <button type="submit " (click)="editUser(this.editAccountForm.get( 'userId')?.value) " class="btn btn-primary ">Save changes</button>
                                                         </div>
 
