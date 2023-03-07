@@ -39,6 +39,7 @@ import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { IdeaComponent } from './idea/idea.component';
+import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
 
 
 
@@ -68,7 +69,8 @@ import { IdeaComponent } from './idea/idea.component';
     SwitcherWrapperComponent,
     ProfileStaffComponent,
     CreateIdeaComponent,
-    IdeaComponent
+    IdeaComponent,
+    ListIdeaComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
