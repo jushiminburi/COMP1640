@@ -13,7 +13,7 @@ interface NewDeadline {
 }
 
 @Component({
-  selector: 'app-event-and-deadline',
+  
   templateUrl: './event-and-deadline.component.html',
   styleUrls: ['./event-and-deadline.component.css']
 })
