@@ -11,10 +11,12 @@ import { CategorymanagerComponent } from './qam/categorymanager/categorymanager.
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StaffComponent } from './staff/staff.component';
 import { TesttemComponent } from './testtem/testtem.component';
-import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
-import { EventListComponent } from './admin/event-list/event-list.component';
+
 import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
 import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
+import { EventListComponent } from './admin/event-list/event-list.component';
+import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -28,10 +30,11 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent,
     children: [
       {path: 'dashboard', component: DashboardsAdminComponent},
-      { path: 'createaccount', component: CreateAccountComponent },
-      { path: 'accountmanager', component: AccountManagerComponent},
-      {path: 'eventlist', component: EventListComponent},
-      {path: 'eventanddeadline', component: EventAndDeadLineComponent},
+      {path: 'createaccount', component: CreateAccountComponent },
+      {path: 'accountmanager', component: AccountManagerComponent},
+      {path: 'eventlist', component: EventListComponent },
+      {path: 'eventanddeadline', component: EventAndDeadLineComponent}
+   
       
     ],
  },

@@ -25,9 +25,6 @@ import { QamComponent } from './qam/qam.component';
 import { CategorymanagerComponent } from './qam/categorymanager/categorymanager.component';
 import { SwitcherWrapperComponent } from './switcher-wrapper/switcher-wrapper.component';
 
-
-import { EventListComponent } from './admin/event-list/event-list.component';
-import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
 import { CreateNewEventComponent } from './admin/event-and-deadline/create-new-event/create-new-event.component';
 import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
 import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-idea.component';
@@ -39,6 +36,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfileStaffComponent } from './staff/profile-staff/profile-staff.component';
 import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
+import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
+import { EventListComponent } from './admin/event-list/event-list.component';
 
 
 
@@ -59,8 +58,8 @@ import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
     QamComponent,
     CategorymanagerComponent,
     SwitcherWrapperComponent,
-    EventListComponent,
     EventAndDeadLineComponent,
+    EventListComponent,
     CreateNewEventComponent,
     DashboardsAdminComponent,
     MostPopularIdeaComponent,
