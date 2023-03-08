@@ -43,8 +43,10 @@ const routes: Routes = [
   { path: 'staff', component: StaffComponent ,
 children:[
   {path:'create-idea' , component: CreateIdeaComponent},
-{path: 'profile-staff', component: ProfileStaffComponent}
-]},
+{path: 'profile-staff', component: ProfileStaffComponent},
+
+],},
+
 {path: 'idea' , component: IdeaComponent ,
 children:[
   {path: 'list-idea' , component: ListIdeaComponent}

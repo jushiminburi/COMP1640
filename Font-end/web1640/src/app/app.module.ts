@@ -65,13 +65,12 @@ import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
     CreateNewEventComponent,
     DashboardsAdminComponent,
     MostPopularIdeaComponent,
-    
+
     SwitcherWrapperComponent,
     ProfileStaffComponent,
     CreateIdeaComponent,
     IdeaComponent,
-    ListIdeaComponent
-  ],
+    ListIdeaComponent  ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
