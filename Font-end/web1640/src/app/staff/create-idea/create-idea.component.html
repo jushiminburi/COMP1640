@@ -20,8 +20,7 @@
           <div class="parent-icon icon-color-2">
             <i class="bx bx-home-alt"></i>
           </div>
-          <div class="menu-title">Feeds</div>
-        </a>
+<div class="menu-title"><a [routerLink]="['/staff']" href="#">Home Page</a></div>        </a>
       </li>
       <li>
         <a href="javascript:;" class="has-arrow">
@@ -30,31 +29,15 @@
           </div>
           <div class="menu-title">Ideas</div>
         </a>
-        <ul>
+       </li> <ul>
           <li>
-            <a [routerLink]="['/staff/ideaview']" href="#"
-              ><i class="bx bx-menu"></i>Most Views</a
-            >
-          </li>
-          <li>
-            <a [routerLink]="['/staff/ideacomment']" href="#">
-              <div
-                class="arent-icon icon-color-1">
+            <a [routerLink]="['/staff/create-idea']" href="#">
+              <div class="arent-icon icon-color-1">Create New Idea
                 <i class="bx bx-comment-detail"></i>
               </div>
-              Most Comments
-            </a>
-          </li><li>
-            <a [routerLink]="['/staff/createidea']" href="#">
-              <div
-                class="arent-icon icon-color-1">
-                <i class="bx bx-comment-detail"></i>
-              </div>Create New Idea
             </a>
           </li>
         </ul>
-      </li>
-
       <li>
         <a href="javascript:;" class="has-arrow">
           <div class="parent-icon icon-color-1">
@@ -62,39 +45,15 @@
           </div>
           <div class="menu-title">Account Manager</div>
         </a>
-        <ul>
-          <li>
-            <a [routerLink]="['/staff/manageaccount']" href="#"
-              ><i class="bx bx-comment-edit"></i>See Your Profile</a
-            >
-          </li>
 
-          <li>
-            <a [routerLink]="['/resetpassword']" href="#"
-              ><i class="bx bx-wallet"></i>Change Password</a
-            >
-          </li>
-        </ul>
-      </li>
       <li>
         <a href="javascript:;" class="has-arrow">
           <div class="parent-icon icon-color-1"><i class="bx bx-lock"></i></div>
           <div class="menu-title">Setting & Privacy</div>
         </a>
-        <ul>
-          <li>
-            <a [routerLink]="['/']" href="#"
-              ><i class="bx bx-wallet"></i>Setting</a
-            >
-          </li>
-          <li>
-            <a [routerLink]="['/']" href="#"
-              ><i class="bx bx-wallet"></i>Privacy</a
-            >
+
           </li>
         </ul>
-      </li>
-    </ul>
     <!--end navigation-->
   </div>
 
@@ -185,11 +144,11 @@
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="javascript:;"
+              <a class="dropdown-item" href="javascript:;" [routerLink]="['/staff/profile-staff']" href="#"
                 ><i class="bx bx-user"></i><span>Profile</span></a
               >
               <a class="dropdown-item" href="javascript:;"
-                ><i class="bx bx-cog"></i><span>Settings</span></a
+                ><i class="bx bx-cog"></i><span>Change The Password</span></a
               >
 
               <div class="dropdown-divider mb-0"></div>
@@ -204,10 +163,10 @@
   </header>
 <div class="page-wrapper">
 			<!--page-content-wrapper-->
-			<div class="page-content-wrapper">
-				<div class="page-content">
+			<div class="page-content-wrapper" style="margin:auto;">
+				<div class="page-content" style="margin:auto;">
 					<!--breadcrumb-->
-					<div class="page-breadcrumb d-none d-md-flex align-items-center mb-3">
+					<div class="page-breadcrumb d-none d-md-flex align-items-center mb-3" style="margin:auto;">
 						<div class="breadcrumb-title pr-3">Ideas</div>
 						<div class="pl-3">
 							<nav aria-label="breadcrumb">
@@ -233,23 +192,15 @@
 									</div>
 									<hr/>
 									<div class="form-body" >
-										<div class="form-row">
-											<div class="form-group col-md-6">
+
+											<div class="form-group">
 												<label>Title:</label>
 												<input type="text" class="form-control " />
-											</div>
-											<div class="form-group col-md-6">
-												<label>Contents:</label>
-												<input type="text" class="form-control" />
-											</div>
+						
+
 										</div>
 
-										<div class="form-group">
-											<select class="custom-select" id="chooseIdea" required>
-											<option selected disabled value="">Choose Event</option>
-											<option>Event 1</option>
-										</select>
-										</div><div class="form-group">
+								<div class="form-group">
 											<select class="custom-select" id="validationCustom04" required>
 											<option selected disabled value="">Choose Category</option>
 											<option></option>
@@ -257,11 +208,7 @@
 
 										</div>
 
-										<div class="form-group">
-											<label>Date: </label>
 
-								<input type="text" class="form-control timepicker" />
-							</div>
 
 										</div>
 										<div class="form-group">

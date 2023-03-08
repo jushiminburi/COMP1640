@@ -13,147 +13,143 @@ import { ApiService } from 'src/app/api.service';
 })
 export class CreateIdeaComponent {
 
-  ngOptionTopic = ["", "Topic 1", "Topic 2", "Topic 3", "Topic 4",]
+  // ngOptionTopic = ["", "Topic 1", "Topic 2", "Topic 3", "Topic 4",]
 
-  status: any;
-  ideaForm!: FormGroup;
+  // status: any;
+  // ideaForm!: FormGroup;
 
-  categories: any[] = [];
-  
-  getlistIdea() {
-    this.api.getCategory().subscribe((res: any) => {
-      const data = JSON.parse(res);
-      this.categories = data.data;
-      
-      
-    })
+  // categories: any[] = [];
+
+  // getlistIdea() {
+  //   this.api.getCategory().subscribe((res: any) => {
+  //     const data = JSON.parse(res);
+  //     this.categories = data.data;
 
 
-  }
-
-  deleteIdea(id: number) {
-    if(confirm("Are you sure to delete this category?")){ 
-      this.api.deleteIdea(id).subscribe(async (res: any) => {
-       
-        if (res.status == 200) {
-          // await this.getlistCategory();
-          await location.reload();
-          alert("Delete idea successfully!");
-          
-        }
-        
-      },(err: any) => {
-        alert("Delete idea failed!");
-        location.reload();
-        
-
-      }
-      )
-
-    
-    }
-   
-  }
+  //   })
 
 
+  // }
+
+  // deleteIdea(id: number) {
+  //   if(confirm("Are you sure to delete this category?")){
+  //     this.api.deleteIdea(id).subscribe(async (res: any) => {
+
+  //       if (res.status == 200) {
+  //         // await this.getlistCategory();
+  //         await location.reload();
+  //         alert("Delete idea successfully!");
+
+  //       }
+
+  //     },(err: any) => {
+  //       alert("Delete idea failed!");
+  //       location.reload();
 
 
-  
-
-  selectedFiles?: FileList;
-  currentFile?: File;
-
-  selectFile(event: any, fieldName: string): void {
-    // this.selectedFiles = event.target.files;
-    // this.formData = new FormData();
-  
-    // if (this.selectedFiles!.length > 0) {
-    // for (let i = 0; i < this.selectedFiles!.length; i++) {
-    //   const file: File = this.selectedFiles![i];
-    //   this.formData.append('file[]', file, file.name);
-    // }
-
-    if (event.target.files.length > 0) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const file: File = event.target.files[0];
-    
-        this.ideaForm.get(fieldName)!.setValue(file);
-       
-      }
-    }
-
-   
-  }
-
-  addIdea() {
-    var formData = new FormData();
-    for(let key in this.ideaForm.value){
-      //check null or empty value
-      if(this.ideaForm.get(key)?.value != null && this.ideaForm.get(key)?.value != ""){
-        formData.append(key, this.ideaForm.get(key)?.value);
-      }
-
-    
-    }
-    this.api.addEvent(formData).subscribe((response) => {
-
-      const data = JSON.parse(response);
-      if (data.status == 200) {
-        alert("Add idea successfully!");
-        location.reload();
-      } else {
-        alert("Add idea failed!");
-      }
-
-    },
-      (err: any) => {
-        alert("Add idea failed!");
-      })
-  }
-
-  events: any[] = [];
+  //     }
+  //     )
 
 
-  getListIdea() {
-    
-    
-    this.api.getIdeas().subscribe((response) => {
-      const data = JSON.parse(response);
-      if(data.status == 200){
-        
-        this.events = data.data;
-       
-      } else {
-        alert("Get ideas failed!");
-      }
-      
-      
-      
-      
-    }, (err: any) => {
-      alert("Get ides failed!");
-    })
-  }
+  //   }
 
-
-  // editEvent() {
-  //   const deadlineIdea = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-  //   const deadlineComment = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-  //   const formData = {
-  //     name: this.eventForm.value.name,
-     
-  //     deadlineIdea: deadlineIdea,
-  //     deadlineComment: deadlineComment
-
-  //   };
-  //   this.api.submitRegistrationForm(formData).subscribe((response) => {
-  //     console.log(response);
-  //   });
   // }
 
 
 
-  
+
+
+
+  // selectedFiles?: FileList;
+  // currentFile?: File;
+
+  // selectFile(event: any, fieldName: string): void {
+  //   // this.selectedFiles = event.target.files;
+  //   // this.formData = new FormData();
+
+  //   // if (this.selectedFiles!.length > 0) {
+  //   // for (let i = 0; i < this.selectedFiles!.length; i++) {
+  //   //   const file: File = this.selectedFiles![i];
+  //   //   this.formData.append('file[]', file, file.name);
+  //   // }
+
+  //   if (event.target.files.length > 0) {
+  //     for (let i = 0; i < event.target.files.length; i++) {
+  //       const file: File = event.target.files[0];
+
+  //       this.ideaForm.get(fieldName)!.setValue(file);
+
+  //     }
+  //   }
+
+
+  // }
+
+  // addIdea() {
+  //   var formData = new FormData();
+  //   for(let key in this.ideaForm.value){
+  //     //check null or empty value
+  //     if(this.ideaForm.get(key)?.value != null && this.ideaForm.get(key)?.value != ""){
+  //       formData.append(key, this.ideaForm.get(key)?.value);
+  //     }
+
+
+  //   }
+  //   this.api.addEvent(formData).subscribe((response) => {
+
+  //     const data = JSON.parse(response);
+  //     if (data.status == 200) {
+  //       alert("Add idea successfully!");
+  //       location.reload();
+  //     } else {
+  //       alert("Add idea failed!");
+  //     }
+
+  //   },
+  //     (err: any) => {
+  //       alert("Add idea failed!");
+  //     })
+  // }
+
+  // events: any[] = [];
+
+
+  // getListIdea() {
+
+
+  //   this.api.getIdeas().subscribe((response) => {
+  //     const data = JSON.parse(response);
+  //     if(data.status == 200){
+
+  //       this.events = data.data;
+
+  //     } else {
+  //       alert("Get ideas failed!");
+  //     }
+
+
+
+
+  //   }, (err: any) => {
+  //     alert("Get ides failed!");
+  //   })
+  // }
+
+
+  // // editEvent() {
+  // //   const deadlineIdea = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
+  // //   const deadlineComment = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
+  // //   const formData = {
+  // //     name: this.eventForm.value.name,
+
+  // //     deadlineIdea: deadlineIdea,
+  // //     deadlineComment: deadlineComment
+
+  // //   };
+  // //   this.api.submitRegistrationForm(formData).subscribe((response) => {
+  // //     console.log(response);
+  // //   });
+  // // }
 
 
 
@@ -161,49 +157,53 @@ export class CreateIdeaComponent {
 
 
 
-  constructor(
-    private http: HttpClient,
-    private api: ApiService,
-    private router: Router,
-    private fb: FormBuilder,
-    private dialog: MatDialog, private datePipe: DatePipe) {
-
-      this.ideaForm = this.fb.group({
-        id: new FormControl(''),
-        files: new FormControl(null),
-        title: new FormControl('', Validators.required),
-        content: new FormControl('', Validators.required),
-        anonymous: new FormControl(null, Validators.required),
-        categoryId: new FormControl('', Validators.required),
-        status: new FormControl('', Validators.required),
-        eventId: new FormControl('', Validators.required),
-
-
-      })
-
-  } //dependency injection
 
 
 
-  // createAccountForm = new FormGroup({
 
-  //   firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-  //   lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+  // constructor(
+  //   private http: HttpClient,
+  //   private api: ApiService,
+  //   private router: Router,
+  //   private fb: FormBuilder,
+  //   private dialog: MatDialog, private datePipe: DatePipe) {
 
-  //   email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
-  //   password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-  //   role: new FormControl('', [Validators.required]),
-  //   department: new FormControl('', [Validators.required]),
-  //   avatar: new FormControl(File)
-  //  })
+  //     this.ideaForm = this.fb.group({
+  //       id: new FormControl(''),
+  //       files: new FormControl(null),
+  //       title: new FormControl('', Validators.required),
+  //       content: new FormControl('', Validators.required),
+  //       anonymous: new FormControl(null, Validators.required),
+  //       categoryId: new FormControl('', Validators.required),
+  //       status: new FormControl('', Validators.required),
+  //       eventId: new FormControl('', Validators.required),
+
+
+  //     })
+
+  // } //dependency injection
 
 
 
-  ngOnInit(): void {
-    // this.newAccount();
-    this.getListIdea();
+  // // createAccountForm = new FormGroup({
 
-  }
+  // //   firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+  // //   lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+
+  // //   email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
+  // //   password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  // //   role: new FormControl('', [Validators.required]),
+  // //   department: new FormControl('', [Validators.required]),
+  // //   avatar: new FormControl(File)
+  // //  })
+
+
+
+  // ngOnInit(): void {
+  //   // this.newAccount();
+  //   this.getListIdea();
+
+  // }
 
   // CreateNewAccount(data: any) {
   //   //get password from localstorage
@@ -245,7 +245,7 @@ export class CreateIdeaComponent {
 
   //   // if(this.loginForm.invalid){
   //   //     return false;
-  //   // } 
+  //   // }
   //   // truyen du lieu vao form
   //   // console.log(data.email, data.password);
   //   // this.router.navigateByUrl('/students');
@@ -344,6 +344,6 @@ export class CreateIdeaComponent {
   // }
 
 
-  
+
 
 }
