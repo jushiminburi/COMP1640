@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+
 import PerfectScrollbar from 'perfect-scrollbar';
 
 @Component({
@@ -9,6 +10,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
 })
 export class AdminComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
+    
+   
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         window.scrollTo(0, 0); // load lại giao diện

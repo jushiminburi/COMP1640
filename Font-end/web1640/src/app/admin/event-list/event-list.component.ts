@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
+
 
 interface NewDeadline {
 
@@ -15,8 +17,11 @@ interface NewDeadline {
 })
 export class EventListComponent implements OnInit {
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    
+    
   }
+
+  constructor() { }
 
   newDeadline: NewDeadline = {
     Topic: null,

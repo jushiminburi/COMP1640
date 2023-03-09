@@ -40,6 +40,12 @@ import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
 import { IdeaComponent } from './idea/idea.component';
 import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -71,14 +77,16 @@ import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
     ProfileStaffComponent,
     CreateIdeaComponent,
     IdeaComponent,
-    ListIdeaComponent  ],
+    ListIdeaComponent,
+    SnackBarComponent  ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    }), NgToastModule, MatPaginatorModule, NgxPaginationModule
+    }), NgToastModule, MatPaginatorModule, NgxPaginationModule, MatSnackBarModule, MatFormFieldModule, MatInputModule,
+    MatButtonModule, NgbModule
   ],
   providers: [
     ApiService

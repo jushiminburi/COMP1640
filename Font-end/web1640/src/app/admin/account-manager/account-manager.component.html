@@ -41,17 +41,15 @@
                                 <img class="bg-transparent border " [src]="account.avatar " width="35 " alt=" ">
 
                             </td>
-                            <td class="align-middle text-center ">{{account.username}}</td>
+                            <td class="align-middle text-center ">{{account.firstName}} {{account.lastName}}</td>
                             <td class="align-middle text-center ">{{account.email}}</td>
                             <td class="align-middle text-center ">{{account.role}}</td>
                             <td class="align-middle text-center ">{{account.department}}</td>
                             <td class="align-middle text-center ">
                                 <!-- <button type="button " class="btn btn-info radius-15 me-3 " data-bs-toggle="modal " data-bs-target="#exampleModal " >Edit</button> -->
-                                <button type="button" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" (click)="getAnUser(account.userId)"> Edit</button>
+                                <button type="button" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getAnUser(account.userId)"> Edit</button>
 
-                                <button type="button " (click)="delete(account.userId) "
-                                    class="btn btn-danger radius-15 ">Delete</button>
+                                <button type="button " (click)="delete(account.userId) " class="btn btn-danger radius-15 ">Delete</button>
                             </td>
 
                         </tr>
@@ -62,16 +60,14 @@
 
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
                     <div class="modal-dialog ">
                         <div class="modal-content ">
                             <div class="modal-header ">
 
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Account</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
 
@@ -85,40 +81,30 @@
                                             <div class="row ">
                                                 <div class="col-12 ">
 
-                                                    <form class="form-horizontal " [formGroup]="editAccountForm "
-                                                        (ngSubmit)="EditAccountForm(editAccountForm.value) " novalidate>
+                                                    <form class="form-horizontal " [formGroup]="editAccountForm " (ngSubmit)="EditAccountForm(editAccountForm.value) " novalidate>
                                                         <div class="form-row ">
                                                             <div class="form-group col-md-6 ">
                                                                 <label>First Name</label>
-                                                                <input type="text " formControlName="firstName "
-                                                                    placeholder="Nguyen Van " class="form-control "
-                                                                    required>
-                                                                <div class="text-danger text-center invalid-feedback d-block "
-                                                                    *ngIf="editAccountForm.controls.firstName?.valid && (editAccountForm!.controls.firstName?.dirty || editAccountForm.controls.firstName?.touched) ">
+                                                                <input type="text " formControlName="firstName" placeholder="Nguyen Van " class="form-control " required>
+                                                                <div class="text-danger text-center invalid-feedback d-block " *ngIf="editAccountForm.controls.firstName?.valid && (editAccountForm!.controls.firstName?.dirty || editAccountForm.controls.firstName?.touched) ">
 
-                                                                    <span
-                                                                        [hidden]="!editAccountForm.controls.firstName.errors?.[ 'required'] ">
+                                                                    <span [hidden]="!editAccountForm.controls.firstName.errors?.[ 'required'] ">
                                                                         FirstName is required!
                                                                     </span>
-                                                                    <span
-                                                                        [hidden]="!editAccountForm.controls.firstName.errors?.[ 'minlength'] ">
+                                                                    <span [hidden]="!editAccountForm.controls.firstName.errors?.[ 'minlength'] ">
                                                                         FirstName must be at least 3 characters long!
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-md-6 ">
                                                                 <label>Last Name</label>
-                                                                <input type="text " formControlName="lastName "
-                                                                    placeholder="A " class="form-control " required>
-                                                                <div class="text-danger text-center invalid-feedback d-block "
-                                                                    *ngIf="!editAccountForm.controls.lastName?.valid && (editAccountForm.controls.lastName?.dirty || editAccountForm.controls.lastName?.touched) ">
+                                                                <input type="text " formControlName="lastName" placeholder="A " class="form-control " required>
+                                                                <div class="text-danger text-center invalid-feedback d-block " *ngIf="!editAccountForm.controls.lastName?.valid && (editAccountForm.controls.lastName?.dirty || editAccountForm.controls.lastName?.touched) ">
 
-                                                                    <span
-                                                                        [hidden]="!editAccountForm.controls.lastName.errors?.[ 'required'] ">
+                                                                    <span [hidden]="!editAccountForm.controls.lastName.errors?.[ 'required'] ">
                                                                         LastName is required!
                                                                     </span>
-                                                                    <span
-                                                                        [hidden]="!editAccountForm.controls.lastName.errors?.[ 'minlength'] ">
+                                                                    <span [hidden]="!editAccountForm.controls.lastName.errors?.[ 'minlength'] ">
                                                                         LastName must be at least 2 characters long!
                                                                     </span>
                                                                 </div>
@@ -127,21 +113,16 @@
 
                                                         <div class="form-group ">
                                                             <label>Email</label>
-                                                            <input type="email " placeholder="svetlana1997@example.com "
-                                                                formControlName="email " class="form-control " required>
-                                                            <div class="text-danger text-center invalid-feedback d-block "
-                                                                *ngIf="!editAccountForm.controls.email?.valid && (editAccountForm.controls.email?.dirty || editAccountForm.controls.email?.touched) ">
+                                                            <input type="email " placeholder="svetlana1997@example.com " formControlName="email" class="form-control " required>
+                                                            <div class="text-danger text-center invalid-feedback d-block " *ngIf="!editAccountForm.controls.email?.valid && (editAccountForm.controls.email?.dirty || editAccountForm.controls.email?.touched) ">
 
-                                                                <span
-                                                                    [hidden]="!editAccountForm.controls.email.errors?.[ 'required'] ">
+                                                                <span [hidden]="!editAccountForm.controls.email.errors?.[ 'required'] ">
                                                                     Email is required!
                                                                 </span>
-                                                                <span
-                                                                    [hidden]="!editAccountForm.controls.email.errors?.[ 'email'] ">
+                                                                <span [hidden]="!editAccountForm.controls.email.errors?.[ 'email'] ">
                                                                     Email is invalid!
                                                                 </span>
-                                                                <span
-                                                                    [hidden]="!editAccountForm.controls.email.errors?.[ 'minlength'] ">
+                                                                <span [hidden]="!editAccountForm.controls.email.errors?.[ 'minlength'] ">
                                                                     Email must be at least 3 characters long!
                                                                 </span>
 
@@ -156,8 +137,7 @@
                                                                 <label>Role</label>
 
 
-                                                                <select class="form-select text-center "
-                                                                    formControlName="role " required>
+                                                                <select class="form-select text-center " formControlName="role" required>
 
                                                                     <option
                                                                         *ngFor="let opt of ngOptionrole, let i=index "
@@ -185,8 +165,7 @@
 
                                                             <div class="form-group col-md-6 ">
                                                                 <label>Department</label>
-                                                                <select class="form-select text-center "
-                                                                    formControlName="department " required>
+                                                                <select class="form-select text-center " formControlName="department" required>
 
                                                                     <option *ngFor="let opt of ngDepartment "
                                                                         [value]="opt ">
@@ -208,22 +187,17 @@
 
 
 
-                                                        <div
-                                                            class=" col-sm-12 form-group text-center align-content-center ">
+                                                        <div class=" col-sm-12 form-group text-center align-content-center ">
                                                             <label>Image</label>
-                                                            <input type="file" class="form-control "
-                                                                formControlName="avatar ">
+                                                            <input type="file" class="form-control " formControlName="avatar ">
 
 
                                                         </div>
 
 
                                                         <div class="modal-footer ">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit "
-                                                                (click)="editUser(this.editAccountForm.get( 'userId')?.value) "
-                                                                class="btn btn-primary ">Save changes</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit " (click)="editUser(this.editAccountForm.get('userId')?.value)" data-bs-dismiss="modal" class="btn btn-primary ">Save changes</button>
                                                         </div>
 
 
@@ -247,29 +221,24 @@
                 </div>
 
 
-
-
-                <div class="pagination">
+                <!-- 
+                 <div class="pagination">
                     <button [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
                     <span>Page {{ currentPage }} of {{ totalPages }}</span>
                     <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-                </div>
+            </div> -->
 
                 <div class="pagination justify-content-end">
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination round-pagination ">
                             <li class="page-item">
-                                <button  class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
+                                <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
                             </li>
-                            <li class="page-item-action"><a class="page-link" href="javascript:;javascript:;">1</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="javascript:;">2</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="javascript:;">3</a>
-                            </li>
-                            <li class="page-item">
-                                <button   class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-                            </li>
+                            <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
+
+                                <li class="page-item">
+                                    <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+                                </li>
                         </ul>
                     </nav>
                 </div>

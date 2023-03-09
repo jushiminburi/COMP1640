@@ -194,6 +194,7 @@ export class CreateAccountComponent implements OnInit {
               password: this.createAccountForm?.get('password')?.value,
             },
           });
+          
         
           dialogRef.afterClosed().subscribe(() => {
             // Xử lý sau khi dialog đóng lại (nếu cần)

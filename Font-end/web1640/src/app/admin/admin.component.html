@@ -21,7 +21,7 @@
                     <div class="menu-title"> Dashboard</div>
                 </a>
             </li>
-            
+
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon icon-color-1"><i class="bx bx-folder"></i>
@@ -33,11 +33,11 @@
                     </li>
                     <li> <a [routerLink]="['/admin/eventanddeadline']"><i class="bx bx-comment-edit"></i>Event And Deadline</a>
                     </li>
-                    
+
                 </ul>
             </li>
             <!-- <li class="menu-label">Web Apps</li> -->
-           
+
 
             <li>
                 <a href="javascript:;" class="has-arrow">
@@ -48,7 +48,7 @@
                 <ul>
                     <li>
                         <a [routerLink]="['/admin/accountmanager']" href="#"><i class="bx bx-menu"></i>All Account</a>
-                        
+
                     </li>
                     <li> <a [routerLink]="['/admin/createaccount']"><i class="bx bx-comment-edit"></i>Create New Account</a>
                     </li>
@@ -66,16 +66,21 @@
     <app-header></app-header>
     <!--end header-->
     <!--page-wrapper-->
+    <lib-ng-toast></lib-ng-toast>
     <div class="page-wrapper">
         <!--page-content-wrapper-->
         <div class="page-content-wrapper">
+
             <router-outlet></router-outlet>
         </div>
         <!--end page-content-wrapper-->
     </div>
+
     <!--end page-wrapper-->
     <!--start overlay-->
-    <div class="overlay toggle-btn-mobile"></div>
+    <div class="overlay toggle-btn-mobile">
+
+    </div>
     <!--end overlay-->
     <!--Start Back To Top Button--><a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
     <!--End Back To Top Button-->
@@ -114,7 +119,11 @@
             <label class="custom-control-label" for="ColorLessIcons">Color Less Icons</label>
         </div>
     </div>
+
+
 </div>
+
+
 
 <script>
     import PerfectScrollbar from 'perfect-scrollbar';
