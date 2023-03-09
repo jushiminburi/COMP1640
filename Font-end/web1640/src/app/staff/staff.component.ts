@@ -10,7 +10,6 @@ import { Router, NavigationEnd } from '@angular/router';
 export class StaffComponent implements AfterViewInit, OnInit {
   ngOnInit (): void
   {
-throw new Error( 'Method not implemented.' );
   }
 
   ngAfterViewInit(): void {

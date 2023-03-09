@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { IdeaComponent } from './idea/idea.component';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountManagerComponent } from './admin/account-manager/account-manager.component';
 import { AdminComponent } from './admin/admin.component';
@@ -16,7 +17,8 @@ import { DashboardsAdminComponent } from './admin/dashboards/dashboards.componen
 import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
-
+import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
+import { ProfileStaffComponent } from './staff/profile-staff/profile-staff.component';
 
 
 const routes: Routes = [
@@ -42,8 +44,15 @@ const routes: Routes = [
  },
   { path: 'staff', component: StaffComponent ,
 children:[
-  {path:'createidea' , component: CreateIdeaComponent}
-]},
+  {path:'create-idea' , component: CreateIdeaComponent},
+{path: 'profile-staff', component: ProfileStaffComponent},
+
+],},
+
+{path: 'idea' , component: IdeaComponent ,
+children:[
+  {path: 'list-idea' , component: ListIdeaComponent}
+]}
 
 ]
 

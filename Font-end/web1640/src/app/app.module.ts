@@ -38,6 +38,8 @@ import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
+import { IdeaComponent } from './idea/idea.component';
+import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
 
 
 
@@ -64,11 +66,12 @@ import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-
     
     DashboardsAdminComponent,
     MostPopularIdeaComponent,
-    
+
     SwitcherWrapperComponent,
     ProfileStaffComponent,
-    CreateIdeaComponent
-  ],
+    CreateIdeaComponent,
+    IdeaComponent,
+    ListIdeaComponent  ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
