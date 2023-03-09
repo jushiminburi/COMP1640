@@ -258,7 +258,8 @@
                 <div class="pagination justify-content-end">
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination round-pagination ">
-                            <li class="page-item"><a class="page-link" href="javascript:;">Previous</a>
+                            <li class="page-item">
+                                <button  class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
                             </li>
                             <li class="page-item-action"><a class="page-link" href="javascript:;javascript:;">1</a>
                             </li>
@@ -266,7 +267,8 @@
                             </li>
                             <li class="page-item"><a class="page-link" href="javascript:;">3</a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="javascript:;">Next</a>
+                            <li class="page-item">
+                                <button   class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
                             </li>
                         </ul>
                     </nav>
