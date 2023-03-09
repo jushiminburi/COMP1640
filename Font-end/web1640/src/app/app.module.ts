@@ -46,6 +46,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommentsComponent } from './comments/comments.component';
+import { CommentsListComponent } from './comments/comments-list/comments-list.component';
 
 
 
@@ -78,7 +80,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CreateIdeaComponent,
     IdeaComponent,
     ListIdeaComponent,
-    SnackBarComponent  ],
+    SnackBarComponent,
+    CommentsComponent,
+    CommentsListComponent  ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({

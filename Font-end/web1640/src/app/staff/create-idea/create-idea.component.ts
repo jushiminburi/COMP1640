@@ -6,12 +6,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
 
-@Component({
+@Component( {
   selector: 'app-create-idea',
   templateUrl: './create-idea.component.html',
-  styleUrls: ['./create-idea.component.css']
-})
-export class CreateIdeaComponent {
+  styleUrls: [ './create-idea.component.css' ]
+} )
+export class CreateIdeaComponent
+{
 
   // ngOptionTopic = ["", "Topic 1", "Topic 2", "Topic 3", "Topic 4",]
 
