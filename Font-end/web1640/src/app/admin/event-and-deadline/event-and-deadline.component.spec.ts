@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EventAndDeadLineComponent } from './event-and-deadline.component';
 
-import { EventAndDeadlineComponent } from './event-and-deadline.component';
+
 
 describe('EventAndDeadlineComponent', () => {
-  let component: EventAndDeadlineComponent;
-  let fixture: ComponentFixture<EventAndDeadlineComponent>;
+  let component: EventAndDeadLineComponent;
+  let fixture: ComponentFixture<EventAndDeadLineComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventAndDeadlineComponent ]
+      declarations: [ EventAndDeadLineComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EventAndDeadlineComponent);
+    fixture = TestBed.createComponent(EventAndDeadLineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

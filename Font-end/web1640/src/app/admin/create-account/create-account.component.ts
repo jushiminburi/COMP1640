@@ -28,10 +28,6 @@ export class CreateAccountComponent implements OnInit {
    
   }
 
- 
-
-  
-
   constructor(
     private http: HttpClient,
     private api: ApiService,
@@ -69,11 +65,6 @@ export class CreateAccountComponent implements OnInit {
       department: null,
       avatar: null
     })
-
-      
-    
-      
-      
     
   }
 
@@ -82,10 +73,6 @@ export class CreateAccountComponent implements OnInit {
 
     this.currentFile = event.target.files[0];
    
-    
-    
-    
-        
     this.createAccountForm.get('avatar')?.setValue(this.currentFile);
     
     // console.log(this.createAccountForm);

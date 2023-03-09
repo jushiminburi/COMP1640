@@ -18,6 +18,7 @@ import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
 
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
       {path: 'accountmanager', component: AccountManagerComponent},
       {path: 'eventlist', component: EventListComponent },
       {path: 'eventanddeadline', component: EventAndDeadLineComponent}
+      
    
       
     ],
