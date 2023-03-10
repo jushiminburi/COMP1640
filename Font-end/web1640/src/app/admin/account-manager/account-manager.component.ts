@@ -195,7 +195,7 @@ export class AccountManagerComponent implements OnInit {
   changePage(i: number): void {
     // const element = document.getElementById('paginator');
     // element!.classList.add('active');
-    
+
 
     this.currentPage = i
     this.loadStudents();
