@@ -34,11 +34,18 @@ module.exports = {
   },
   async getListEvent (req, res) {
     try {
-      const list = await Event.find({}, { _id: 0, __v: 0 })
+      const page = parseInt(req.query.page) || 1
+      const limit = parseInt(req.query.limit) || 5
+      const skip = (limit * page) - limit
+      const list = await Event.find({}, { _id: 0, __v: 0 }).skip(skip).limit(limit)
       if (list.error) {
         return apiResponse.response_status(res, list.error.message, 400)
       }
-      return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, list)
+      const totalEvent = await Event.find().lean().countDocuments()
+      return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
+        list,
+        totalEvent
+      })
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }

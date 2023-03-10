@@ -5,6 +5,7 @@ const { isQAM } = require('../middlewares/auth.middleware')
 
 router.post('/add', isQAM, CategoryController.createCategory)
 router.get('/list', CategoryController.getListCategory)
+router.get('/list-idea/:id', CategoryController.listIdeaCategory)
 router.delete('/delete/:id', isQAM, CategoryController.deleteCategory)
 
 module.exports = router

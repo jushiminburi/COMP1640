@@ -9,7 +9,9 @@ const Ideas = mongoose.model('Ideas', new mongoose.Schema({
   file: { type: Number, default: 0, required: true },
   eventId: { type: Number, required: true },
   categoryId: { type: Number, required: true },
-  userId: { type: Number, required: true }
+  userId: { type: Number, required: true },
+  likes: [{ type: mongoose.Schema.Types.Number, ref: 'User' }],
+  dislikes: [{ type: mongoose.Schema.Types.Number, ref: 'User' }]
 }, { timestamps: true }))
 
 function validateIdeas (idea) {
