@@ -153,10 +153,6 @@ export class AccountManagerComponent implements OnInit {
           })
 
 
-
-
-
-
           // this.router.navigate(['/admin'])
         } else if (data.status == 400) {
           this.toast.warning({ detail: "Edit Account Failed!", duration: 3000, position: "top-right" })

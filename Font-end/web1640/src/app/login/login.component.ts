@@ -93,8 +93,8 @@ export class LoginComponent {
             // window.location.reload();
           });
           // this.router.navigate(['/admin'])
-        } else if (user.role == 3) {
-          this.router.navigateByUrl('/QAM');
+        } else if (user.role == 2) {
+          this.router.navigateByUrl('/qam');
         } 
         else if (user.role == 4) {
           this.router.navigateByUrl('/staff');

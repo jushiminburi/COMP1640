@@ -28,34 +28,20 @@
                             <br>
                             <h4 class="mb-0 text-center">Category List</h4>
                             <hr>
-                            <ul class="list-group mb-2 ">
+                            <ul class="list-group mb-2 " *ngFor="let category of categories">
                                 <div class="row">
 
-                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip"
-                                        title="List Idea">
-                                        <p class="mb-0"><i class='bx bx-globe'></i> Category 1
+                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip" title="List Idea">
+                                        <p class="mb-0"><i class='bx bx-globe'></i> {{category.name}}
                                         </p>
                                     </li>
-                                    <button class="col-md-2 btn btn-danger" data-toggle="tooltip"
-                                        title="Delete Category"><i class="fadeIn animated bx bx-trash-alt"></i></button>
-                                </div>
-
-                            </ul>
-                            <ul class="list-group">
-                                <div class="row ">
-
-                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip"
-                                        title="List Idea">
-                                        <p class="mb-0"><i class='bx bx-globe'></i> Category 2
-                                        </p>
-                                    </li>
-                                    <button class="col-md-2 btn btn-danger" data-toggle="tooltip"
-                                        title="Delete Category"><i class="fadeIn animated bx bx-trash-alt"></i></button>
+                                    <button (click)="deleteCategory(category.id)" class="col-md-2 btn btn-danger" data-toggle="tooltip" title="Delete Category"><i class="fadeIn animated bx bx-trash-alt"></i></button>
                                 </div>
 
                             </ul>
 
-                            
+
+
 
                         </div>
 
@@ -101,13 +87,12 @@
 
                                 <div *ngIf="isShowForm">
                                     <div class="row me-2">
-                                        <form (ngSubmit)="addCategory(categoryForm.value)" novalidate>
+                                        <form [formGroup]="categoryForm" (ngSubmit)="addCategory()" novalidate>
 
                                             <div class="form-group">
                                                 <h4>Name Category </h4>
 
-                                                <input type="text" class="form-control"
-                                                    placeholder="Enter Name Category" formControlName="Newcategory" />
+                                                <input type="text" class="form-control" placeholder="Enter Name Category" formControlName="name" />
                                                 <!--<div class="text-danger text-center invalid-feedback d-block" *ngIf="!addcategoryForm.controls.Newcategory?.valid && (addcategoryForm.controls.Newcategory?.dirty || addcategoryForm.controls.Newcategory?.touched)">
 
                                             <span [hidden]="!addcategoryForm.controls.Newcategory.errors?.['required']">
@@ -118,8 +103,7 @@
                                             </span>
                                         </div>-->
                                                 <br>
-                                                <button class="btn btn-success" type="submit"
-                                                    [disabled]="!categoryForm.valid"> <i
+                                                <button class="btn btn-success" type="submit"> <i
                                                         class="fadeIn animated bx bx-trash-alt"></i>
                                                     Add new Category</button>
                                             </div>
@@ -134,7 +118,7 @@
                                 <h3 class="mb-0 text-center">Idea List </h3>
                                 <br>
 
-                                <h6 class="mb-0 text-center text-danger">Total Idea: 10 </h6>
+                                <h6 class="mb-0 text-center text-danger">Total Idea: {{categories.length}} </h6>
                                 <hr />
                                 <ul>
                                     <div class="table-responsive">
@@ -151,8 +135,8 @@
                                                 <tr *ngFor="let category of categories">
                                                     <td>{{category.id}}</td>
                                                     <td>{{category.name}}</td>
-                                                    <td>{{category.createdAt}}</td>
-                                                    <td>{{category.updatedAt}}</td>
+                                                    <td>{{category.createdAt | date : "medium" }}</td>
+                                                    <td>{{category.updatedAt | date : "medium"}}</td>
                                                 </tr>
                                             </tbody>
 
@@ -165,8 +149,7 @@
                                         <ul class="pagination round-pagination ">
                                             <li class="page-item"><a class="page-link" href="javascript:;">Previous</a>
                                             </li>
-                                            <li class="page-item-action"><a class="page-link"
-                                                    href="javascript:;javascript:;">1</a>
+                                            <li class="page-item-action"><a class="page-link" href="javascript:;javascript:;">1</a>
                                             </li>
                                             <li class="page-item active"><a class="page-link" href="javascript:;">2</a>
                                             </li>

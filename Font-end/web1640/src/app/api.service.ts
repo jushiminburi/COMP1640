@@ -39,8 +39,8 @@ export class ApiService {
       })
     };
    
-      return this.http.get(api + `category/delete/${id}}`
-      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+      return this.http.delete(api + `category/delete/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
 
   }
@@ -71,12 +71,18 @@ export class ApiService {
     };
     const category = {name: name}
     
-    return this.http.post(api + 'category/add', category, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+    return this.http.post(api + 'category/add', category, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+  editEvent(event: any){
+    return this.http.put(api + `event/update/${event.id}`, event, {responseType: 'text'})
 
   }
 
 
-  deleteEvent(id: number){
+  deleteEvent(id: any){
+    console.log(id);
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -86,7 +92,7 @@ export class ApiService {
       })
     };
    
-      return this.http.get(api + `event/delete/${id}}`
+      return this.http.delete(api + `event/delete/${id}`
       , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
 
@@ -118,7 +124,7 @@ export class ApiService {
     };
     
     
-    return this.http.post(api + 'category/add', data, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+    return this.http.post(api + 'event/add', data, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
   }
 

@@ -1,17 +1,19 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from 'src/app/api.service';
 
-interface NewDeadline {
+interface Event {
 
-  Topic: string | null,
-  DLTopic: string | null,
-  DLComment: string | null,
-  Description: string | null,
+  name: string,
+  deadlineIdea: string,
+  deadlineComment: string,
+
+
 }
 
 @Component({
@@ -20,230 +22,135 @@ interface NewDeadline {
   styleUrls: ['./event-and-deadline.component.css']
 })
 
-export class EventAndDeadLineComponent {
-  // newDeadline: NewDeadline = {
-  //   Topic: null,
-  //   DLTopic: null,
-  //   DLComment: null,
-  //   Description: null,
+export class EventAndDeadLineComponent implements OnInit {
+
+  eventForm!: FormGroup;
+
+  addEvent(data: any) {
+    console.log(data);
+    const datePipe = new DatePipe('en-US');
+    const formattedDateIdea = datePipe.transform(data.deadlineIdea, 'yyyy-MM-dd HH:mm');
+    const formattedDateComment = datePipe.transform(data.deadlineComment, 'yyyy-MM-dd HH:mm');
+
+    data.deadlineIdea = formattedDateIdea;
+    data.deadlineComment = formattedDateComment;
+
+
+    if (confirm("Are you sure to add this event?")) {
+      this.api.addEvent(data).subscribe((response) => {
+        const data = JSON.parse(response);
+        if (data.status == 200) {
+          this.toast.success({ detail: "Edit event successfully!", summary: "Success", duration: 3000 });
+          this.router.navigate(['admin/eventlist']);
+        } else {
+          this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
+        }
+      }, (err: any) => {
+        this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
+      }
+      )
+
+    }
 
 
 
-  // };
-
-  // deadlineForm = new FormGroup({
-  //   Topic: new FormControl('', [Validators.required]),
-  //   DLTopic: new FormControl('', [Validators.required]),
-  //   DLComment: new FormControl('', [Validators.required]),
-  //   Description: new FormControl('', [Validators.required]),
-  // })
-
-  
-  
-  // DeadlineForm = new FormGroup({
-  //   Topic: new FormControl(''),
-  //   DLTopic: new FormControl(''),
-  //   DLComment: new FormControl(''),
-  //   Description: new FormControl(''),
-
-  // })
-
-  // createDeadline = new FormGroup({
-  //   Topic: new FormControl(''),
-  //   DLTopic: new FormControl(''),
-  //   DLComment: new FormControl(''),
-  //   Description: new FormControl(''),
-    
-  // }
-  // )
-  // CreateDeadline(data: any) {
-  //   //get password from localstorage
-  //   var deadline: any = localStorage.getItem('deadline');
-  //   var topic = JSON.parse(deadline).Topic;;
-  //   // console.log("dsadsds" + phone);
-
-  //   this.deadline = {
-  //     Topic: data.Topic,
-  //     DLTopic: data.DLTopic,
-  //     DLComment: data.DLComment,
-  //     Description: data.Description,
-  //   }
-
-  //   console.log("hii");
-  
-
-
-  // }
-  // deadline: NewDeadline = {
-  
-  //   Topic: null,
-  //   DLTopic: null,
-  //   DLComment: null,
-  //   Description: null,
-
-
-  // };
-
-  // status: any;
-  // categoryForm!: FormGroup;
-
-  // categories: any[] = [];
-
-
-  // isShowForm = false;
-  
-  // getlistCategory() {
-  //   this.api.getCategory().subscribe((res: any) => {
-  //     const data = JSON.parse(res);
-  //     this.categories = data.data;
-      
-      
-  //   })
-
-
-  // }
-
-  // deleteCategory(id: number) {
-  //   if(confirm("Are you sure to delete this category?")){ 
-  //     this.api.deleteCategory(id).subscribe(async (res: any) => {
-       
-  //       if (res.status == 200) {
-  //         // await this.getlistCategory();
-  //         await location.reload();
-  //         alert("Delete category successfully!");
-          
-  //       }
-        
-  //     },(err: any) => {
-  //       alert("Delete category failed!");
-  //       location.reload();
-        
-
-  //     }
-  //     )
-
-    
-  //   }
-   
-  // }
-
-
-  // addCategory(data: any) {
-
-  //   if (this.categoryForm.invalid) {
-  //     alert("Please fill all fields!");
-  //     return;
-
-    
-  //   } else {
-  //     const name = data.value.name;
-  //     this.api.addCategory(name).subscribe(async (res: any) => {
-  //       if (res.status == 200) {
-  //         await location.reload();
-  //         alert("Add category successfully!");
-          
-  //       }
-        
-  //     }, (err: any) => {
-  //       alert("Add category failed!");
-  //       location.reload();
-        
-
-  //     }
-  //     )
-
-  //   }
-   
-
-
-  // }
-
-  // eventForm = new FormGroup({
-  //   name: new FormControl('', Validators.required),
-  //   deadlineIdea: new FormControl('', Validators.required),
-  //   deadlineComment: new FormControl('', Validators.required),
-  // });
-
-  // addEvent() {
-  //   const deadlineIdea = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-  //   const deadlineComment = this.datePipe.transform(this.eventForm.value.deadlineComment, 'yyyy-MM-dd');
-  //   const data = {
-  //     name: this.eventForm.value.name,
-     
-  //     deadlineIdea: deadlineIdea,
-  //     deadlineComment: deadlineComment
-
-  //   };
-  //   this.api.addEvent(data).subscribe((response) => {
-
-  //     const data = JSON.parse(response);
-  //     if (data.status == 200) {
-  //       alert("Add event successfully!");
-  //       location.reload();
-  //     } else {
-  //       alert("Add event failed!");
-  //     }
-
-  //   },
-  //     (err: any) => {
-  //       alert("Add event failed!");
-  //     })
-  // }
-
-  // events: any[] = [];
+  }
 
 
   // getAnEvent() {
-    
-    
+
+
   //   this.api.getEvents().subscribe((response) => {
   //     const data = JSON.parse(response);
   //     if(data.status == 200){
-        
+
   //       this.events = data.data;
-       
+
   //     } else {
   //       alert("Get events failed!");
   //     }
-      
-      
-      
-      
+
+
+
+
   //   }, (err: any) => {
   //     alert("Get events failed!");
   //   })
   // }
+  Id: any = "";
 
 
 
 
+  constructor(private api: ApiService, private router: Router,
+    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toast: NgToastService) {
+    this.eventForm = this.fb.group({
+      
 
-  // constructor(
-  //   private http: HttpClient,
-  //   private api: ApiService,
-  //   private router: Router,
-  //   private fb: FormBuilder,
-  //   private dialog: MatDialog, private datePipe: DatePipe) {
-
-  //     this.categoryForm = this.fb.group({
-  //       id: new FormControl(null),
-  //       name: new FormControl('', [Validators.required]),
-  //       createdAt: new FormControl(null),
-  //       updatedAt: new FormControl(null)
-  //     })
-
-  // } //dependency injection
+      name: new FormControl('', [Validators.required]),
+      deadlineIdea: new FormControl(null),
+      deadlineComment: new FormControl(null)
+    })
+  }
 
 
 
 
-  // ngOnInit(): void {
-  //   // this.newAccount();
-  //   this.getAnEvent();
+  // loadEvents(): void {
+  //   this.api.getEvents().subscribe(
+  //     res => {
+  //       console.log(res);
+  //       var events = JSON.parse(res).data;
+  //       console.log(events);
 
+
+  //       for(let event of events) {
+  //         let deadlineIdea: Date = new Date(event.deadlineIdea);
+  //         if(new Date() > deadlineIdea) {
+  //           event['status'] = "Done";
+  //         } else {
+  //           event['status'] = "Doing";
+  //         }
+
+  //       }
+  //       this.events = events;
+  //       // this.totalPages = Math.ceil(users.data.totalUser / this.limit);
+  //       // this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i + 1)
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     }
+  //   );
   // }
-  
+
+  // changePage(i: number): void {
+  //   // const element = document.getElementById('paginator');
+  //   // element!.classList.add('active');
+
+
+  //   this.currentPage = i
+  //   this.loadStudents();
+  // }
+
+
+  // nextPage() {
+  //   this.currentPage++;
+  //   this.loadStudents();
+  // }
+
+  // previousPage() {
+  //   this.currentPage--;
+  //   this.loadStudents();
+  // }
+
+
+
+  ngOnInit() {
+
+    
+
+  }
+
 }
 
 
- 

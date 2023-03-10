@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessDialogComponentComponent } from './success-dialog-component/success-dialog-component.component';
+import { NgToastModule, NgToastService } from 'ng-angular-popup';
 
 
 
@@ -33,7 +34,7 @@ export class CreateAccountComponent implements OnInit {
     private api: ApiService,
     private router: Router,
     private fb: FormBuilder,
-    private dialog: MatDialog) {
+    private dialog: MatDialog, private toastService: NgToastService) {
 
   } //dependency injection
 
@@ -57,13 +58,13 @@ export class CreateAccountComponent implements OnInit {
     // this.newAccount();
 
     this.createAccountForm = this.fb.group({
-      firstName: null,
-      lastName: null,
-      email: null,
-      password: null,
-      role: null,
-      department: null,
-      avatar: null
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      role: new FormControl('', [Validators.required]),
+      department: new FormControl('', [Validators.required]),
+      avatar: new FormControl('')
     })
     
   }
@@ -73,7 +74,7 @@ export class CreateAccountComponent implements OnInit {
 
     this.currentFile = event.target.files[0];
    
-    this.createAccountForm.get('avatar')?.setValue(this.currentFile);
+    this.createAccountForm.get(fieldName)?.setValue(this.currentFile);
     
     // console.log(this.createAccountForm);
 
@@ -101,7 +102,12 @@ export class CreateAccountComponent implements OnInit {
 
     for(let key in this.createAccountForm.value){
       console.log(key);
-      formData.append(key, this.createAccountForm.get(key)!.value);
+      //if avatar == null or undefined => not append
+      
+      if(this.createAccountForm.get(key)!.value){
+        formData.append(key, this.createAccountForm.get(key)!.value);
+      }
+      
     }
 
     
@@ -173,8 +179,13 @@ export class CreateAccountComponent implements OnInit {
     // formData.append('password', this.myForm?.get('password')?.value);
     // formData.append('department', this.myForm?.get('Department')?.value);
 
-    console.log(formData);
-    
+    console.log(formData.get('lastName'));
+    console.log(formData.get('firstName'));
+    console.log(formData.get('email'));
+    console.log(formData.get('password'));
+    console.log(formData.get('role'));
+    console.log(formData.get('department'));
+    console.log(formData.get('avatar'));
     this.api.createNewAccount( formData
     ).subscribe(res => {
 
@@ -187,18 +198,20 @@ export class CreateAccountComponent implements OnInit {
         if (data.status == 200) {
           
          
-          const dialogRef = this.dialog.open(SuccessDialogComponentComponent, {
-            data: {
-              username: data.data.username,
-              email: data.data.email,
-              password: this.createAccountForm?.get('password')?.value,
-            },
-          });
+          // const dialogRef = this.dialog.open(SuccessDialogComponentComponent, {
+          //   data: {
+          //     username: data.data.username,
+          //     email: data.data.email,
+          //     password: this.createAccountForm?.get('password')?.value,
+          //   },
+          // });
           
         
-          dialogRef.afterClosed().subscribe(() => {
-            // Xử lý sau khi dialog đóng lại (nếu cần)
-          });
+          // dialogRef.afterClosed().subscribe(() => {
+          //   // Xử lý sau khi dialog đóng lại (nếu cần)
+          // });
+
+          this.toastService.success({detail: 'Create Account Successful!', summary: 'Success', duration: 3000})
           this.createAccountForm.reset();
           
           this.router.navigate(['/admin/createaccount'])
