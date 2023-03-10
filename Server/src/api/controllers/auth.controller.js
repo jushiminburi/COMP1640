@@ -8,6 +8,7 @@ const getNextSequenceValue = require('../utils/icrement.db')
 require('dotenv').config()
 const path = require('path')
 const fs = require('fs')
+const directoryFile = path.join(__dirname, '../../../upload/')
 
 let refreshTokens = []
 const schemaLoginUser = Joi.object({
@@ -23,28 +24,37 @@ function unlinkFile (file) {
     }
   })
 }
+function checkFile (list, res) {
+  if (list.length > 1) {
+    list.forEach(element => {
+      unlinkFile(directoryFile + element)
+    })
+    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400)
+  }
+  if (list[0].endsWith('.pdf') || list[0].endsWith('.docs')) {
+    unlinkFile(directoryFile + list[0])
+    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400)
+  }
+}
 
 exports.registerUser = async (req, res) => {
-  const directoryFile = path.join(__dirname, '../../../upload/user/')
+  const directoryFile = path.join(__dirname, '../../../upload/')
   const listFile = req.listFile
+  checkFile(listFile, res)
   try {
     const { email, password, department, role, lastName, firstName } = req.body
     const result = validate(req.body)
     if (result.error) {
-      if (listFile.length !== 0) {
-        listFile.forEach(element => {
-          unlinkFile(directoryFile + element)
-        })
-      }
+      listFile.forEach(element => {
+        unlinkFile(directoryFile + element)
+      })
       return apiResponse.response_status(res, result.error.message, 400)
     }
     const user = await User.findOne({ email })
     if (user) {
-      if (listFile.length !== 0) {
-        listFile.forEach(element => {
-          unlinkFile(directoryFile + element)
-        })
-      }
+      listFile.forEach(element => {
+        unlinkFile(directoryFile + element)
+      })
       return apiResponse.response_status(res, Languages.EMAIL_EXSITS, 400)
     }
     {
@@ -66,11 +76,9 @@ exports.registerUser = async (req, res) => {
       return apiResponse.response_data(res, Languages.REGISTER_SUCCESS, 200, user)
     }
   } catch (error) {
-    if (listFile.length !== 0) {
-      listFile.forEach(element => {
-        unlinkFile(directoryFile + element)
-      })
-    }
+    listFile.forEach(element => {
+      unlinkFile(directoryFile + element)
+    })
     return apiResponse.response_error_500(res, error.message)
   }
 }

@@ -9,15 +9,14 @@ require('dotenv').config()
 function validateUser (user) {
   const schema = Joi.object({
     email: Joi.string().min(6).max(255).email(),
-    firstName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}$/),
-    lastName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}$/),
+    firstName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}/),
+    lastName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}/),
     department: Joi.string().min(1).max(30),
     role: Joi.number().max(5).min(1)
   })
   return schema.validate(user)
 }
 module.exports = {
-
   async changePassword  (req, res) {
     try {
       const { userId, password } = req.body

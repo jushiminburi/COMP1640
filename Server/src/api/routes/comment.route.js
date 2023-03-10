@@ -1,9 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const { isStaff, verifyToken } = require('../middlewares/auth.middleware')
+const { verifyToken } = require('../middlewares/auth.middleware')
 const CommentController = require('../controllers/comment.controller')
+const { uploadFiles } = require('../middlewares/file.middleware')
 
-router.post('/create', [isStaff, uploadAvatars], IdeaController.createIdea)
-router.get('/list', verifyToken, IdeaController.paginationListIdea)
-
+router.post('/create', [verifyToken, uploadFiles], CommentController.createComment)
+router.get('/list', CommentController.listComment)
+router.put('/update/:id', verifyToken, CommentController.updateComment)
+router.delete('/delete/:id', verifyToken, CommentController.deleteComment)
+router.delete('/delete-reply/:id', verifyToken, CommentController.deleteComment)
 module.exports = router

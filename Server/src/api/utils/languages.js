@@ -6,6 +6,7 @@ module.exports = {
   REFRES_TOKEN_NOT_VALID: 'Refresh token is not valid',
   LOGOUT_SUCCESSFUL: 'Logged out successfully!',
   ACCOUNT_NOT_EXISTS: 'Account is not exists',
+  UPLOAD_AVATAR_FAIL: 'Upload avatar fail!',
 
   // Register text
   REGISTER_SUCCESS: 'Register user successful!',
@@ -34,6 +35,7 @@ module.exports = {
 
   // Category
   CATEGORY_EXSITS: 'Category is already exsits!',
+  CATEGORY_IDEA_EXSITS: 'Category is exsits idea!',
   CATEGORY_SUCCESS: 'Category create successful!',
   CATEGORY_NOT_EXSITS: 'Category is not exsits!',
   CATEGORY_EXPIRED: 'Category expired',
@@ -41,5 +43,20 @@ module.exports = {
   CATEGORY_DELETE_SUCCESS: 'Category delete sucessful!',
 
   // Idea
-  CREATE_IDEA_SUCCESS: 'Idea create successful!'
+  CREATE_IDEA_SUCCESS: 'Idea create successful!',
+  IDEA_NOT_FOUND: 'Idea not found',
+  UNLIKE_IDEA_SUCCESSFULL: 'UnLike idea successful',
+  DISLIKE_IDEA_SUCCESSFUL: 'Dislike idea successful',
+  UNDISLIKE_IDEA_SUCCESSFULL: 'UnDisLike idea successful',
+  LIKE_IDEA_SUCCESSFUL: 'Like idea successful',
+
+  // Comment
+  COMMENT_NOT_YOUSELF: 'This comment is not yourself',
+  COMMENT_NOT_FOUND: 'Comment not found',
+  UPDATE_COMMENT_SUCCESS: 'Updated comment',
+  DELETE_COMMENT_SUCCESS: 'Deleted comment',
+
+  // Text
+  LONG_TIME: 'a long time',
+  JUST_FINISHED: 'just finished'
 }
