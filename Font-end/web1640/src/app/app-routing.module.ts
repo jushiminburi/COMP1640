@@ -37,15 +37,16 @@ const routes: Routes = [
       {path: 'accountmanager', component: AccountManagerComponent},
       {path: 'eventlist', component: EventListComponent },
       {path: 'eventanddeadline', component: EventAndDeadLineComponent}
-      
-   
-      
+
+
+
     ],
  },
   { path: 'staff', component: StaffComponent ,
 children:[
   {path:'create-idea' , component: CreateIdeaComponent},
 {path: 'profile-staff', component: ProfileStaffComponent},
+
 
 ],},
 

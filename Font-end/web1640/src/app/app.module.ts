@@ -55,7 +55,7 @@ import { CommentsListComponent } from './comments/comments-list/comments-list.co
   declarations: [
     AppComponent,
     LoginComponent,
-    
+
     AdminComponent,
     StaffComponent,
     CreateAccountComponent,
@@ -68,10 +68,10 @@ import { CommentsListComponent } from './comments/comments-list/comments-list.co
     QamComponent,
     CategorymanagerComponent,
     SwitcherWrapperComponent,
-   
+
     EventListComponent,
     EventAndDeadLineComponent,
-    
+
     DashboardsAdminComponent,
     MostPopularIdeaComponent,
 
@@ -82,7 +82,7 @@ import { CommentsListComponent } from './comments/comments-list/comments-list.co
     ListIdeaComponent,
     SnackBarComponent,
     CommentsComponent,
-    CommentsListComponent  ],
+    CommentsListComponent ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
