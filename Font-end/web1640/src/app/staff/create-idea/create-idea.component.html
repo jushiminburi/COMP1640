@@ -191,12 +191,22 @@
 										<h4 class="mb-0 text-primary">Create New Idea</h4>
 									</div>
 									<hr/>
+									<div id="step-1" class="tab-pane" role="isStaff" aria-labelledby="step-1" style="font-size: 20px;">
+                    <h5>Choose Event</h5>
+										<select style="font-size: 16px;" class="dropdown-center">
+                      <option>1</option>
+                        <option>event 2</option>
+                        <option>event 3</option>
+                      </select></div>
+
+									<div id="step-2" class="tab-pane" role="isStaff" aria-labelledby="step-2">
+
 									<div class="form-body" >
 
 											<div class="form-group">
 												<label>Title:</label>
 												<input type="text" class="form-control " />
-						
+
 
 										</div>
 
@@ -231,8 +241,14 @@
 						</div>
 					</div>
 				</div>
+
+
 										<div class="form-group">
-											<div class="form-group">
+
+                        <div class="custom-control custom-checkbox">
+													<input type="checkbox" class="custom-control-input" id="customCheck1">
+													<label class="custom-control-label" for="customCheck1">Incognito</label>
+												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input" id="customCheck1">
 													<label class="custom-control-label" for="customCheck1">I Agree Terms & Conditions</label>
@@ -242,5 +258,3 @@
 										<button type="button" class="btn btn-primary px-5 radius-30">Save</button>
 									</div></div>
 								</div>
-							</div>
-						</div>

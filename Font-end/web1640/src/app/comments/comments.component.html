@@ -20,7 +20,8 @@
                     <div class="parent-icon icon-color-2">
                         <i class="bx bx-home-alt"></i>
                     </div>
-<div class="menu-title"><a [routerLink]="['/staff']" href="#">Home Page</a></div>                </a>
+                    <div class="menu-title"><a [routerLink]="['/staff']" href="#">Home Page</a></div>
+                </a>
             </li>
             <li>
                 <a href="javascript:;" class="has-arrow">
@@ -31,11 +32,20 @@
                 </a>
                 <ul>
                     <li>
-                        <a [routerLink]="['/idea/list-idea']" href="#"><i class="bx bx-menu"></i>See All Ideas</a>
+                        <a [routerLink]="['/idea/list-idea']" href="#"><i class="bx bx-menu"></i>See All Ideas</a
+            >
           </li>
 
-        </ul>
-      </li>
+                    <li>
+                        <a [routerLink]="['/staff/event-idea']">
+
+               Create New Idea
+
+            </a>
+                    </li>
+                </ul>
+            </li>
+
     </ul>
     <!--end navigation-->
   </div>
