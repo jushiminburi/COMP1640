@@ -39,7 +39,7 @@ module.exports = {
     const directoryFile = path.join(__dirname, '../../../upload/')
     const listFile = req.listFile
     try {
-      const { title, content, anonymous, categoryId, eventId } = req.body
+      const { title, content, anonymous, categoryId, eventId, deadlineIdea } = req.body
       const userId = req.userId
       const resultValidate = validate(req.body)
       if (resultValidate.error) {
@@ -59,10 +59,15 @@ module.exports = {
         }
         return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
       }
-      const valueStartDate = new Date(categoryValue.startDate).getTime()
+      const valueDealineIdea = new Date(deadlineIdea).getTime()
       const now = new Date().getTime()
-      if (valueStartDate > now) {
-        return apiResponse.response_status(res, Languages.CATEGORY_EXPIRED, 400)
+      if (valueDealineIdea > now) {
+        if (listFile.length !== 0) {
+          listFile.forEach(element => {
+            unlinkFile(directoryFile + element)
+          })
+        }
+        return apiResponse.response_status(res, Languages.EVENT_EXPIRED, 400)
       }
       const id = await getNextSequenceValue('ideaId')
       if (listFile.length > 0) {
