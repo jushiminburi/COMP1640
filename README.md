@@ -23,4 +23,3 @@ Chạy trong terminal của project:
 cd Sever
 npm i
 node server.js
->>>>>>> release

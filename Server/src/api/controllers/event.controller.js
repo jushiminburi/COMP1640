@@ -63,8 +63,8 @@ module.exports = {
         const startDateDB = new Date(event.deadlineIdea).getTime()
         if (valueDealineIdea > startDateDB && valueDeadlineComment > valueDealineIdea) {
           const id = await getNextSequenceValue('eventId')
-          const updateEvent = Event.findOneAndUpdate(id, { $set: { deadlineIdea, deadlineComment } })
-          return apiResponse.response_data(res, Languages.EVENT_UPDATED_SUCCESS, 200, updateEvent)
+          await Event.findOneAndUpdate(id, { $set: { deadlineIdea, deadlineComment } })
+          return apiResponse.response_status(res, Languages.SUCCESSFUL, 200)
         } else {
           return apiResponse.response_status(res, Languages.EVENT_SET_TIME_FAIL, 400)
         }
