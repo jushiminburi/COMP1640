@@ -4,13 +4,6 @@ const Languages = require('../utils/languages')
 const getNextSequenceValue = require('../utils/icrement.db')
 const { Ideas } = require('../models/idea.model')
 
-function removeElement (array, elem) {
-  const index = array.indexOf(elem)
-  if (index > -1) {
-    array.splice(index, 1)
-  }
-}
-
 module.exports = {
   async createCategory (req, res) {
     try {
@@ -106,52 +99,6 @@ module.exports = {
         ideas,
         totalIdea
       })
-    } catch (error) {
-      return apiResponse.response_error_500(res, error.message)
-    }
-  },
-  async likeIdea (req, res) {
-    try {
-      const userId = req.userId
-      const ideaId = req.params.ideaId
-      const idea = await Ideas.findOne({ id: ideaId })
-      if (idea == null) {
-        return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
-      }
-      if (idea.likes.includes(userId)) {
-        removeElement(idea.likes, userId)
-        await idea.save()
-        return apiResponse.response_status(res, Languages.UNLIKE_IDEA_SUCCESSFULL, 200)
-      }
-      idea.likes.push(userId)
-      if (idea.dislikes.includes(userId)) {
-        removeElement(idea.dislikes, userId)
-      }
-      await idea.save()
-      return apiResponse.response_status(res, Languages.LIKE_IDEA_SUCCESSFUL, 200)
-    } catch (error) {
-      return apiResponse.response_error_500(res, error.message)
-    }
-  },
-  async dislikeIdea (req, res) {
-    try {
-      const userId = req.userId
-      const ideaId = req.params.ideaId
-      const idea = await Ideas.findOne({ id: ideaId })
-      if (idea == null) {
-        return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
-      }
-      if (idea.dislikes.includes(userId)) {
-        removeElement(idea.dislikes, userId)
-        await idea.save()
-        return apiResponse.response_status(res, Languages.UNDISLIKE_IDEA_SUCCESSFULL, 200)
-      }
-      idea.likes.push(userId)
-      if (idea.likes.includes(userId)) {
-        removeElement(idea.likes, userId)
-      }
-      await idea.save()
-      return apiResponse.response_status(res, Languages.DISLIKE_IDEA_SUCCESSFUL, 200)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }
