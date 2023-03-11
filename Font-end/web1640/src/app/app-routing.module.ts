@@ -19,6 +19,7 @@ import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
 import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
 import { ProfileStaffComponent } from './staff/profile-staff/profile-staff.component';
+import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-idea.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,10 @@ const routes: Routes = [
   { path: 'testtem', component: TesttemComponent },
   {path: 'qam', component: QamComponent,
     children: [
-      { path: 'categorymanager', component: CategorymanagerComponent }
+      { path: 'categorymanager', component: CategorymanagerComponent },
+      {path: 'dashboard', component: DashboardsAdminComponent},
+      {path: 'idea', component: MostPopularIdeaComponent },
+
     ]},
   { path: 'resetpassword', component: ResetPasswordComponent},
   { path: 'admin', component: AdminComponent,
@@ -36,7 +40,8 @@ const routes: Routes = [
       {path: 'createaccount', component: CreateAccountComponent },
       {path: 'accountmanager', component: AccountManagerComponent},
       {path: 'eventlist', component: EventListComponent },
-      {path: 'eventanddeadline', component: EventAndDeadLineComponent}
+      {path: 'eventanddeadline', component: EventAndDeadLineComponent},
+
 
 
 

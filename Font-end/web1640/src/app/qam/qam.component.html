@@ -15,12 +15,27 @@
         <!--navigation-->
         <ul class="metismenu" id="menu">
             <li>
-                <a [routerLink]="['/qam']" href="#">
-                    <div class="parent-icon icon-color-2"><i class="lni lni-reddit"></i>
+                <a [routerLink]="['/qam/accountmanager']" href="#">
+                    <div class="parent-icon icon-color-2"><i class="lni lni-bar-chart"></i>
                     </div>
-                    <div class="menu-title"> Most popular idea</div>
+                    <div class="menu-title"> Dashboard</div>
                 </a>
             </li>
+            <li>
+                <a [routerLink]="['/qam/idea']" href="javascript:;" >
+                    <div class="parent-icon icon-color-2"><i class="lni lni-reddit"></i>
+                    </div>
+                    <div class="menu-title">Idea</div>
+                </a>
+                <!-- <ul>
+                    <li> <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Analytics</a>
+                    </li>
+                    <li> <a href="index2.html"><i class="bx bx-right-arrow-alt"></i>Sales</a>
+                    </li>
+                </ul> -->
+            </li>
+           
+
             <li>
                 <a [routerLink]="['/qam/categorymanager']" href="#">
                     <div class="parent-icon icon-color-2"><i class="lni lni-layers"></i>
@@ -28,13 +43,7 @@
                     <div class="menu-title"> Category Manager</div>
                 </a>
             </li>
-            <li>
-                <a [routerLink]="['/qam/accountmanager']" href="#">
-                    <div class="parent-icon icon-color-2"><i class="lni lni-bar-chart"></i>
-                    </div>
-                    <div class="menu-title"> View Static</div>
-                </a>
-            </li>
+           
             <li>
                 <a [routerLink]="['/qam']" href="#">
                     <div class="parent-icon icon-color-2"><i class="lni lni-exit-down"></i>
