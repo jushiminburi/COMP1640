@@ -117,7 +117,7 @@ export class CreateIdeaComponent
 
   deleteIdea(id: number) {
     if(confirm("Are you sure to delete this category?")){
-      this.api.deleteIdea(id).subscribe(async (res: any) => {
+      this.api.deleteIdeas(id).subscribe(async (res: any) => {
 
         if (res.status == 200) {
           // await this.getlistCategory();
@@ -187,7 +187,7 @@ export class CreateIdeaComponent
     //   formData.append('files', this.selectedFiles[i]);
     // }
 
-    this.api.addIdea(formData).subscribe((response) => {
+    this.api.addIdeas(formData).subscribe((response) => {
 
       const data = JSON.parse(response);
       if (data.status == 200) {
