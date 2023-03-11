@@ -51,6 +51,7 @@ export class EventListComponent implements OnInit {
   constructor(private api: ApiService, private router: Router,
     private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toast: NgToastService) {
     this.eventForm = this.fb.group({
+      id: ['', Validators.required],
       name: ['', Validators.required],
       deadlineIdea: ['', Validators.required],
       deadlineComment: ['', Validators.required],
@@ -93,17 +94,18 @@ export class EventListComponent implements OnInit {
     data.deadlineComment = formattedDateComment;
 
 
-    if (confirm("Are you sure to add this event?")) {
+    if (confirm("Are you sure to edit this event?")) {
       this.api.editEvent(data).subscribe((response) => {
         const data = JSON.parse(response);
         if (data.status == 200) {
-          this.toast.success({ detail: "Add event successfully!", summary: "Success", duration: 3000 });
+          this.toast.success({ detail: "Edit event successfully!", summary: "Success", duration: 3000 });
           this.router.navigate(['admin/eventlist']);
         } else {
-          this.toast.error({ detail: "Add event failed!", summary: "Error", duration: 3000 });
+          this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
         }
       }, (err: any) => {
-        this.toast.error({ detail: "Add event failed!", summary: "Error", duration: 3000 });
+        this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
+        console.log(err);
       }
       )
 
@@ -119,7 +121,7 @@ export class EventListComponent implements OnInit {
     this.api.getEvents().subscribe(
       res => {
 
-        var events = JSON.parse(res).data;
+        var events = JSON.parse(res).data.list
         let event = events.filter((event: any) => event.id == id)[0];
 
         //convert date to dd/mm/yyyy - dùng moment cũng đc để chuyển giữa múi giờ.
@@ -137,7 +139,7 @@ export class EventListComponent implements OnInit {
         event.deadlineIdea = formattedDateIdea;
         event.deadlineComment = formattedDateComment;
         this.eventForm.patchValue(event);
-        console.log(event.deadlineIdea);
+        console.log(event);
 
       }, error => {
         console.log(error);
@@ -152,7 +154,7 @@ export class EventListComponent implements OnInit {
     this.api.getEvents().subscribe(
       res => {
         console.log(res);
-        var events = JSON.parse(res).data;
+        var events = JSON.parse(res).data.list;
         console.log(events);
 
 

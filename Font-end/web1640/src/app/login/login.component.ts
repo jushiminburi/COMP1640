@@ -94,10 +94,27 @@ export class LoginComponent {
           });
           // this.router.navigate(['/admin'])
         } else if (user.role == 2) {
-          this.router.navigateByUrl('/qam');
+          this.router.navigateByUrl('/qam').then(() => {
+            this.toast.success({detail: "Login Successful!", position: "top-right", duration:3000})
+        this.loginForm.reset();
+
+            
+            // Reload the current page
+            // window.location.reload();
+          });
         } 
         else if (user.role == 4) {
-          this.router.navigateByUrl('/staff');
+          
+         
+
+          this.router.navigateByUrl('/staff').then(() => {
+            this.toast.success({detail: "Login Successful!", position: "top-right", duration:3000})
+        this.loginForm.reset();
+
+            
+            // Reload the current page
+            // window.location.reload();
+          });
         }
         
 
