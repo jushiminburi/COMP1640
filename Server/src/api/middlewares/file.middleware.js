@@ -13,19 +13,12 @@ const storage = multer.diskStorage({
   }
 })
 const fileFilter = (req, file, cb) => {
-  const allowedMimes = [
-    'image/jpeg',
-    'image/jpg',
-    'image/png',
-    'image/svg',
-    'file/pdf',
-    'file/docs',
-    'file/doc'
-  ]
-  if (allowedMimes.includes(file.mimetype)) {
+  const ext = path.extname(file.originalname)
+  const allowed = ['.png', '.jpg', '.jpeg', '.pdf', '.doc', '.docs']
+  if (allowed.includes(ext)) {
     cb(null, true)
   } else {
-    return cb(new Error('file type is only include jpeg, jpg, png, svg, docs, doc, pdf.'), false)
+    return cb(new Error('docs, doc, pdf'), false)
   }
 }
 
@@ -35,10 +28,10 @@ const fileLimits = {
   files: 5
 }
 
-const upload = multer({ storage, fileFilter, limits: fileLimits }).array('files', 5)
-const uploadFilesMiddleware = util.promisify(upload)
+const uploadFile = multer({ storage, fileFilter, limits: fileLimits }).array('files', 5)
+const uploadFilesMiddleware = util.promisify(uploadFile)
 
-const uploadFiles = async (req, res, next) => {
+exports.uploadFiles = async (req, res, next) => {
   listFile = []
   await uploadFilesMiddleware(req, res)
   if (listFile.length !== 0) {
@@ -46,4 +39,3 @@ const uploadFiles = async (req, res, next) => {
   } else { req.listFile = [] }
   next()
 }
-module.exports = uploadFiles

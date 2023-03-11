@@ -1,4 +1,3 @@
-# COMP1640
 
 ## Run code fe
 - Cài nodejs về nếu chưa có
@@ -19,3 +18,9 @@ Chạy trong terminal của project:
 
 
 - Tạo mới các file component: mở terminal ở mục muốn tạo file -> ng g c tenComponentMoi
+
+<!-- TObuild BE  -->
+cd Sever
+npm i
+node server.js
+>>>>>>> release
