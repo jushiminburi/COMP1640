@@ -30,7 +30,7 @@ export class CategorymanagerComponent implements OnInit {
 
   getlistCategory() {
     this.api.getCategory().subscribe((res: any) => {
-      const data = JSON.parse(res);
+      const data = JSON.parse(res)
       this.categories = data.data;
     })
 

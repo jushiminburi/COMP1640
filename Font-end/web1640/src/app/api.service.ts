@@ -71,6 +71,8 @@ export class ApiService {
     };
     const category = {name: name}
 
+    return this.http.post(api + 'category/add', category, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
   }
 
   editEvent(formData: FormData){
@@ -281,7 +283,7 @@ export class ApiService {
     };
 
 
-    return this.http.post(api + 'category/add', data, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+    return this.http.post(api + 'event/add', data, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
   }
 
