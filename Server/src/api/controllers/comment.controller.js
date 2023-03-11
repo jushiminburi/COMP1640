@@ -46,7 +46,7 @@ module.exports = {
     const listFile = req.listFile
     try {
       const userId = req.userId
-      const { ideaId, content, commentId } = req.body
+      const { ideaId, content, commentId, deadlineComment } = req.body
       const resultValidate = validate(req.body)
       if (resultValidate.error) {
         if (listFile.length !== 0) {
@@ -56,6 +56,16 @@ module.exports = {
         }
         return apiResponse.response_status(res, resultValidate.error.message, 400)
       }
+      const valueDeadlineComment = new Date(deadlineComment).getTime()
+      const now = new Date().getTime()
+        if (valueDeadlineComment > now){
+          if (listFile.length !== 0) {
+            listFile.forEach(element => {
+              unlinkFile(directoryFile + element)
+            })
+          }
+          return apiResponse.response_status(res, Languages.EVENT_EXPIRED, 400)
+        }
       if (listFile.length > 0) {
         const fileId = await getNextSequenceValue('fileId')
         await Files.create({ id: fileId, file: listFile })
