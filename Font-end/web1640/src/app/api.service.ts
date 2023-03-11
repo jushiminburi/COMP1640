@@ -10,7 +10,7 @@ const api = "http://139.162.47.239/api/";
 export class ApiService {
 
   constructor(private http: HttpClient) { }
-  login(email:string='', password:string=''): Observable<any>{    
+  login(email:string='', password:string=''): Observable<any>{
     var userInfo = { email:email, password:password }
     var dataJson = JSON.stringify(userInfo);
     console.log(userInfo);
@@ -22,7 +22,7 @@ export class ApiService {
     return this.http.post(api + 'user/login'
     , dataJson// data minh se gui len
     , {headers: headers} //bao gui kieu json cho phia server va kieu du lieu tra ve tu server la json text
-  ) 
+  )
   }//l
   // getAll():Observable<Account[]>{
   //   return this.http.get<Account[]>(api).pipe(
@@ -38,9 +38,9 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
-      return this.http.delete(api + `category/delete/${id}`
-      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+      return this.http.get(api + `category/delete/${id}}`
+      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
 
   }
@@ -54,7 +54,7 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
+
       return this.http.get(api + 'category/list'
       , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
@@ -70,8 +70,6 @@ export class ApiService {
       })
     };
     const category = {name: name}
-    
-    return this.http.post(api + 'category/add', category, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   }
 
@@ -102,8 +100,8 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
-      return this.http.delete(api + `event/delete/${id}`
+
+      return this.http.get(api + `event/delete/${id}}`
       , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
 
@@ -266,7 +264,7 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
+
       return this.http.get(api + 'event/list'
       , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
@@ -281,15 +279,15 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-    
-    
-    return this.http.post(api + 'event/add', data, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+
+
+    return this.http.post(api + 'category/add', data, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
   }
 
 
 
-  deleteIdea(id: number){
+  deleteIdeas(id: number){
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -298,8 +296,8 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
-      return this.http.get(api + `idea/delete/${id}}`
+
+      return this.http.get(api + `ideas/delete/${id}}`
       , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
 
@@ -314,14 +312,14 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
-      return this.http.get(api + 'idea/list'
+
+      return this.http.get(api + 'ideas/list'
       , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
 
   }
 
-  addIdea(formData: FormData) {
+  addIdeas(formData: FormData) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -329,68 +327,68 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-    
+
     return this.http.post(api + 'idea/add', formData, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
   }
 
-  
 
-  getAnAcount(email:string=''){    
+
+  getAnAcount(email:string=''){
     const userInfo = { email:email}
     const headers = new HttpHeaders().set('Content-Type', 'application/json') ;
     return this.http.post(api + 'getAnAcount', userInfo, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }
-  testtestNewAccount(email: string='', testtestNewAccount: Object){    
+  testtestNewAccount(email: string='', testtestNewAccount: Object){
     const userInfo = { email: email, newaccount: testtestNewAccount}
     const headers = new HttpHeaders().set('Content-Type', 'application/json') ;
     return this.http.post(api + 'testtestNewAccount', userInfo, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }
-  createNewAccount(formData: FormData){  
-    
-    
-     
-    
+  createNewAccount(formData: FormData){
+
+
+
+
 
     const headers = new HttpHeaders({
-      
+
       'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
     });
-    
-   
+
+
     console.log(localStorage.getItem('accessToken'));
-    
-    
-    
-    
+
+
+
+
     return this.http.post(api + 'user/register', formData, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }
 
-  editUser(id: string, formData: FormData){ 
-    
+  editUser(id: string, formData: FormData){
+
     let form = {
-      
+
       firstName: formData.get('firstName'),
       lastName: formData.get('lastName'),
       email: formData.get('email'),
       department: formData.get('department'),
       role: formData.get('role'),
-      
+
     }
     console.log(form);
-    
-    
-     
-    
+
+
+
+
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      
+
       'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
     });
-    
+
     return this.http.put(api + `user/update/${id}`, form, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }
 
@@ -399,26 +397,26 @@ export class ApiService {
     const helper = new JwtHelperService();
     const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
     formData = {...formData, userId: user!.id}
-    
-    
+
+
     console.log(user)
     newForm.append('userId', user.id.toString());
     console.log(newForm.get('userId'));
     console.log(formData);
-    
-    
-    
-    
+
+
+
+
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
     return this.http.put(api + 'user/change-password'
     , newForm// data minh se gui len
     , {headers:headers, responseType: 'text'} //bao gui kieu json cho phia server va kieu du lieu tra ve tu server la json text
-  ) 
+  )
   }//resetPassword
   getUsers(page?: number, limit?: number): Observable<any>{
-    
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -431,7 +429,7 @@ export class ApiService {
 
       })
     };
-    
+
     // const headers = new HttpHeaders();
     // headers.append('Content-Type', 'multipart/form-data');
     // headers.append('Accept', 'application/json');
@@ -465,8 +463,8 @@ export class ApiService {
       }),
       body: {}
     };
-  
+
     return this.http.post(api + `user/delete/${id}`, {}, httpOptions);
   }
-  
+
 }

@@ -48,6 +48,7 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentsListComponent } from './comments/comments-list/comments-list.component';
+import { IdeaEditComponent } from './staff/idea-edit/idea-edit.component';
 
 
 
@@ -82,7 +83,8 @@ import { CommentsListComponent } from './comments/comments-list/comments-list.co
     ListIdeaComponent,
     SnackBarComponent,
     CommentsComponent,
-    CommentsListComponent ],
+    CommentsListComponent,
+    IdeaEditComponent ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
