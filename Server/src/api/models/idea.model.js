@@ -11,7 +11,11 @@ const Ideas = mongoose.model('Ideas', new mongoose.Schema({
   categoryId: { type: Number, required: true },
   userId: { type: Number, required: true },
   likes: [{ type: mongoose.Schema.Types.Number, ref: 'User' }],
-  dislikes: [{ type: mongoose.Schema.Types.Number, ref: 'User' }]
+  dislikes: [{ type: mongoose.Schema.Types.Number, ref: 'User' }],
+  totalLike: { type: Number, default: 0 },
+  totalDislike: { type: Number, default: 0 },
+  totalComment: { type: Number, default: 0 },
+  totalViews: { type: Number, default: 0 }
 }, { timestamps: true }))
 
 function validateIdeas (idea) {

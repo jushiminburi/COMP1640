@@ -9,6 +9,7 @@ require('dotenv').config()
 const path = require('path')
 const fs = require('fs')
 const directoryFile = path.join(__dirname, '../../../upload/')
+const { transporter, mailCreatedAccountOptions } = require('../utils/sendEmail')
 
 let refreshTokens = []
 const schemaLoginUser = Joi.object({
@@ -73,6 +74,7 @@ exports.registerUser = async (req, res) => {
         userId
       })
       await user.save()
+      transporter.sendMail(mailCreatedAccountOptions(user.email, password))
       return apiResponse.response_data(res, Languages.REGISTER_SUCCESS, 200, user)
     }
   } catch (error) {

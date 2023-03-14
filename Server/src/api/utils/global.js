@@ -5,7 +5,7 @@ module.exports = {
   BASEURL_PROD: 'http://139.162.47.239/upload',
 
   // Server
-  BASEURL_FILE: 'http://139.162.47.239/upload/',
+  BASEURL_FILE: 'http://139.162.47.239/upload/'
   // BASEURL_AVATAR: 'http://139.162.47.239/upload/',
   // BASEURL_PROD: 'http://139.162.47.239/',
 }

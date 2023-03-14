@@ -56,6 +56,13 @@ module.exports = {
   UPDATE_COMMENT_SUCCESS: 'Updated comment',
   DELETE_COMMENT_SUCCESS: 'Deleted comment',
 
+  // Department
+  DEPARTMENT_EXSITS: 'Department is exsits!',
+  DEPARTMENT_NOT_EXSITS: 'Department is not exsits!',
+  DEPARTMENT_UPDATED_SUCCESS: 'Department updated successful',
+  DEPARTMENT_DELETE_SUCCESS: 'Department deleted successful',
+  DEPARTMENT_CREATE_SUCCESS: 'Department created successful',
+  DEPARTMENT_NOT_DELETE: 'Department is not deleted',
   // Text
   LONG_TIME: 'a long time',
   JUST_FINISHED: 'just finished'

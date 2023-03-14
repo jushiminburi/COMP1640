@@ -8,6 +8,8 @@ const Files = require('../models/file.model')
 const { Category } = require('../models/category.model')
 const path = require('path')
 const { BASEURL_FILE } = require('../utils/global')
+const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEmail')
+const { User } = require('../models/user.model')
 
 function unlinkFile (file) {
   fs.unlink(file, function (err) {
@@ -18,7 +20,11 @@ function unlinkFile (file) {
     }
   })
 }
-
+async function sendIdeaQAC () {
+  const qac = await User.find({ role: 3 })
+  const email = qac.map(user => user.email)
+  transporter.sendMail(mailNewIdeaNotificationOptions(email))
+}
 function removeElement (array, elem) {
   const index = array.indexOf(elem)
   if (index > -1) {
@@ -74,7 +80,11 @@ module.exports = {
         const fileId = await getNextSequenceValue('fileId')
         await Files.create({ id: fileId, file: listFile })
         await new Ideas({ id, userId, title, content, anonymous, categoryId, file: fileId, eventId }).save()
-      } else { await new Ideas({ id, userId, title, content, anonymous, categoryId, eventId }).save() }
+        sendIdeaQAC()
+      } else {
+        await new Ideas({ id, userId, title, content, anonymous, categoryId, eventId }).save()
+        sendIdeaQAC()
+      }
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
       if (listFile.length !== 0) {
@@ -90,6 +100,7 @@ module.exports = {
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
+      const userId = req.userId
       const ideas = await Ideas.aggregate([
         {
           $lookup: {
@@ -165,6 +176,7 @@ module.exports = {
             _id: '$_id',
             idea: { $first: '$$ROOT' },
             comment: { $first: '$comment' }
+
           }
         },
         {
@@ -183,6 +195,22 @@ module.exports = {
             anonymous: 1,
             categoryId: 1,
             createdAt: 1,
+            totalLike: { $size: '$likes' },
+            totalDislike: { $size: '$dislikes' },
+            isLike: {
+              $cond: {
+                if: { $in: [userId, '$likes'] },
+                then: true,
+                else: false
+              }
+            },
+            isDislike: {
+              $cond: {
+                if: { $in: [userId, '$dislikes'] },
+                then: true,
+                else: false
+              }
+            },
             comment: {
               id: '$comment.id',
               content: '$comment.content',
@@ -287,13 +315,16 @@ module.exports = {
       }
       if (idea.likes.includes(userId)) {
         removeElement(idea.likes, userId)
+        idea.totalLike -= 1
         await idea.save()
         return apiResponse.response_status(res, Languages.UNLIKE_IDEA_SUCCESSFULL, 200)
       }
-      idea.likes.push(userId)
       if (idea.dislikes.includes(userId)) {
         removeElement(idea.dislikes, userId)
+        idea.totalDislike -= 1
       }
+      idea.likes.push(userId)
+      idea.totalLike += 1
       await idea.save()
       return apiResponse.response_status(res, Languages.LIKE_IDEA_SUCCESSFUL, 200)
     } catch (error) {
@@ -310,13 +341,16 @@ module.exports = {
       }
       if (idea.dislikes.includes(userId)) {
         removeElement(idea.dislikes, userId)
+        idea.totalDislike -= 1
         await idea.save()
         return apiResponse.response_status(res, Languages.UNDISLIKE_IDEA_SUCCESSFULL, 200)
       }
-      idea.likes.push(userId)
       if (idea.likes.includes(userId)) {
         removeElement(idea.likes, userId)
+        idea.totalLike -= 1
       }
+      idea.likes.push(userId)
+      idea.totalDislike += 1
       await idea.save()
       return apiResponse.response_status(res, Languages.DISLIKE_IDEA_SUCCESSFUL, 200)
     } catch (error) {

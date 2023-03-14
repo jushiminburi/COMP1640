@@ -33,7 +33,6 @@ module.exports = {
       return apiResponse.response_error_500(res, error.message)
     }
   },
-
   async updateUser (req, res) {
     try {
       const id = req.params.id
@@ -95,5 +94,4 @@ module.exports = {
       return apiResponse.response_error_500(res, error.message)
     }
   }
-
 }

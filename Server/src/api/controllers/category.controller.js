@@ -14,7 +14,7 @@ module.exports = {
       }
       const category = await Category.findOne({ name })
       if (category) {
-        return apiResponse.response_status(res, Languages.CATEGORY_EXSITS, 400)
+        return apiResponse.response_status(res, Languages.CATEGORY_EXSITS, 404)
       }
       const id = await getNextSequenceValue('categoryId')
       const newCategory = new Category({ name, id })
@@ -46,7 +46,7 @@ module.exports = {
     try {
       const id = req.params.id
       const category = await Category.findOneAndDelete({ id })
-      if (category != null) {
+      if (category == null) {
         return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
       }
       const ideaCategory = await Ideas.find({ categoryId: id })

@@ -9,6 +9,7 @@ const directoryFile = path.join(__dirname, '../../../upload/')
 const { BASEURL_FILE } = require('../utils/global')
 const moment = require('moment')
 const { CommentReply } = require('../models/commentReply.model')
+const { Ideas } = require('../models/idea.model')
 
 function unlinkFile (file) {
   fs.unlink(file, function (err) {
@@ -58,20 +59,22 @@ module.exports = {
       }
       const valueDeadlineComment = new Date(deadlineComment).getTime()
       const now = new Date().getTime()
-        if (valueDeadlineComment > now){
-          if (listFile.length !== 0) {
-            listFile.forEach(element => {
-              unlinkFile(directoryFile + element)
-            })
-          }
-          return apiResponse.response_status(res, Languages.EVENT_EXPIRED, 400)
+      if (valueDeadlineComment > now) {
+        if (listFile.length !== 0) {
+          listFile.forEach(element => {
+            unlinkFile(directoryFile + element)
+          })
         }
+        return apiResponse.response_status(res, Languages.EVENT_EXPIRED, 400)
+      }
       if (listFile.length > 0) {
         const fileId = await getNextSequenceValue('fileId')
         await Files.create({ id: fileId, file: listFile })
         if (commentId === undefined) {
           const id = await getNextSequenceValue('commentId')
           await new Comment({ ideaId, id, userId, content, file: fileId }).save()
+          await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
+            { new: true })
         } else {
           const baseComment = await Comment.findOne({ id: commentId })
           if (baseComment == null) {
@@ -84,6 +87,8 @@ module.exports = {
         if (commentId === undefined) {
           const id = await getNextSequenceValue('commentId')
           await new Comment({ ideaId, id, userId, content }).save()
+          await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
+            { new: true })
         } else {
           const baseComment = await Comment.findOne({ id: commentId })
           if (baseComment == null) {
@@ -243,6 +248,8 @@ module.exports = {
         return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
       }
       await Comment.findOneAndDelete({ id: commentId, userId })
+      await Ideas.findOneAndUpdate({ id: commentId }, { $inc: { totalComment: -1 } },
+        { new: true })
       return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
