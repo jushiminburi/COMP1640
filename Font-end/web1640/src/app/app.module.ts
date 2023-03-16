@@ -26,7 +26,11 @@ import { TopicmanagerComponent } from './qam/topicmanager/topicmanager.component
 import { SwitcherWrapperComponent } from './switcher-wrapper/switcher-wrapper.component';
 import { TopicAndDeadLineComponent } from './admin/topic-and-dead-line/topic-and-dead-line.component';
 import { TopicListComponent } from './admin/topic-list/topic-list.component';
-import { ModalModule } from 'ngx-bootstrap/modal'; 
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
+import { IdeaOfEventComponent } from './staff/idea-of-event/idea-of-event.component';
+import { EachEventComponent } from './staff/each-event/each-event.component';
+import { EachIdeaComponent } from './staff/each-idea/each-idea.component'; 
 
 
 
@@ -46,7 +50,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AccountManagerComponent,
     QamComponent,
     TopicmanagerComponent,
-    SwitcherWrapperComponent
+    SwitcherWrapperComponent,
+    StaffHomePageComponent,
+    IdeaOfEventComponent,
+    EachEventComponent,
+    EachIdeaComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,

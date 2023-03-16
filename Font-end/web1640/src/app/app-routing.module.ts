@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { QamComponent } from './qam/qam.component';
 import { TopicmanagerComponent } from './qam/topicmanager/topicmanager.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { EachEventComponent } from './staff/each-event/each-event.component';
+import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
 import { StaffComponent } from './staff/staff.component';
 import { TesttemComponent } from './testtem/testtem.component';
 
@@ -29,7 +31,11 @@ const routes: Routes = [
       { path: 'topiclist', component: TopicListComponent}
     ],
  },
-  { path: 'staff', component: StaffComponent },
+  { path: 'staff', component: StaffComponent ,
+    children: [
+      {path: 'homepage', component: StaffHomePageComponent},
+      {path: 'eachevent', component: EachEventComponent}
+    ]},
 
 ]
 
