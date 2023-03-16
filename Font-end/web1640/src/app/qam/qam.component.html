@@ -1,3 +1,4 @@
+
 <!-- wrapper -->
 <div class="wrapper">
     <!--sidebar-wrapper-->
@@ -14,19 +15,23 @@
         </div>
         <!--navigation-->
         <ul class="metismenu" id="menu">
+
+
+
+
             <li>
-                <a [routerLink]="['/qam/accountmanager']" href="#">
-                    <div class="parent-icon icon-color-2"><i class="lni lni-bar-chart"></i>
+                <a [routerLink]="['/qam/category-manager']" href="#">
+                    <div class="parent-icon icon-color-5"><i class="lni lni-package"></i>
                     </div>
-                    <div class="menu-title"> Dashboard</div>
+                    <div class="menu-title"> Category Manager</div>
                 </a>
-            </li>
-            <li>
+            </li> <li>
                 <a [routerLink]="['/qam/idea']" href="javascript:;" >
-                    <div class="parent-icon icon-color-2"><i class="lni lni-reddit"></i>
+                    <div class="parent-icon icon-color-5"><i class="lni lni-bulb"></i>
                     </div>
                     <div class="menu-title">Idea</div>
                 </a>
+
                 <!-- <ul>
                     <li> <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Analytics</a>
                     </li>
@@ -34,21 +39,22 @@
                     </li>
                 </ul> -->
             </li>
-           
-
-            <li>
-                <a [routerLink]="['/qam/categorymanager']" href="#">
-                    <div class="parent-icon icon-color-2"><i class="lni lni-layers"></i>
+             <li>
+                <a [routerLink]="['/qam/dash-board']" href="#">
+                    <div class="parent-icon icon-color-5"><i class="lni lni-dashboard"></i>
                     </div>
-                    <div class="menu-title"> Category Manager</div>
+                    <div class="menu-title">Dashboards</div>
                 </a>
             </li>
-           
+
             <li>
-                <a [routerLink]="['/qam']" href="#">
-                    <div class="parent-icon icon-color-2"><i class="lni lni-exit-down"></i>
+                <a [routerLink]="['/qam/document-download']" href="#">
+                    <div class="parent-icon icon-color-5"><i class="lni lni-download"></i>
                     </div>
                     <div class="menu-title"> Download document</div>
+                    <div class="button-details">Details
+                        <a [routerLink]="['/qam/event-detail']" routerLinkActive="router-link-active" href="" ></a>
+                    </div>
                 </a>
             </li>
 
@@ -63,7 +69,8 @@
     <div class="page-wrapper">
         <!--page-content-wrapper-->
         <div class="page-content-wrapper">
-            <router-outlet></router-outlet>
+     <router-outlet></router-outlet>
+
         </div>
         <!--end page-content-wrapper-->
     </div>
@@ -79,5 +86,56 @@
 </div>
 <!-- end wrapper -->
 <!--start switcher-->
+              <!--start switcher-->
+	<div class="switcher-wrapper">
+		<div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
+		</div>
+		<div class="switcher-body">
+			<h5 class="mb-0 text-uppercase">Theme Customizer</h5>
+			<hr/>
+			<h6 class="mb-0">Theme Styles</h6>
+			<hr/>
+			<div class="d-flex align-items-center justify-content-between">
+				<div class="custom-control custom-radio">
+					<input type="radio" id="darkmode" name="customRadio" class="custom-control-input">
+					<label class="custom-control-label" for="darkmode">Dark Mode</label>
+				</div>
+				<div class="custom-control custom-radio">
+					<input type="radio" id="lightmode" name="customRadio" checked class="custom-control-input">
+					<label class="custom-control-label" for="lightmode">Light Mode</label>
+				</div>
+			</div>
+			<hr/>
+			<div class="custom-control custom-switch">
+				<input type="checkbox" class="custom-control-input" id="DarkSidebar">
+				<label class="custom-control-label" for="DarkSidebar">Dark Sidebar</label>
+			</div>
+			<hr/>
+			<div class="custom-control custom-switch">
+				<input type="checkbox" class="custom-control-input" id="ColorLessIcons">
+				<label class="custom-control-label" for="ColorLessIcons">Color Less Icons</label>
+			</div>
+		</div>
+	</div>
+	<!--end switcher-->
+	<!-- JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/popper.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<!--plugins-->
+	<script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<!-- App JS -->
+	<script src="assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!--<app-switcherWrapper></app-switcherWrapper>-->
+<!--end switcher-->
+<script>
+  import PerfectScrollbar from "perfect-scrollbar";
+  const socialListScrollbar = new PerfectScrollbar(".dashboard-social-list");
+  const topCountriesScrollbar = new PerfectScrollbar(
+    ".dashboard-top-countries"
+  );
+  </script>
