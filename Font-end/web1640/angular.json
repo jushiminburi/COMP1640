@@ -37,24 +37,20 @@
                             "src/assets/syndashadmin-10/main-files/vertical/assets/css/icons.css",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/css/app.css",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/css/dark-sidebar.css",
-                            "src/assets/syndashadmin-10/main-files/vertical/assets/css/dark-theme.css"
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/css/dark-theme.css",
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/fancy-file-uploader/fancy_fileupload.css",
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css"
                         ],
                         "scripts": [
-
                             "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
-
-
                             "src/assets/syndashadmin-10/main-files/vertical/assets/js/pace.min.js",
-
                             "src/assets/syndashadmin-10/main-files/vertical/assets/js/jquery.min.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/js/popper.min.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/js/bootstrap.min.js",
-
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/simplebar/js/simplebar.min.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/metismenu/js/metisMenu.min.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js",
-
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/vectormap/jquery-jvectormap-in-mill.js",
@@ -63,15 +59,18 @@
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/vectormap/jquery-jvectormap-au-mill.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/apexcharts-bundle/js/apexcharts.min.js",
                             "src/assets/syndashadmin-10/main-files/vertical/assets/js/index.js",
-
-                            "src/assets/syndashadmin-10/main-files/vertical/assets/js/app.js"
-
-
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/js/app.js",
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/fancy-file-uploader/jquery.ui.widget.js",
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/fancy-file-uploader/jquery.fileupload.js",
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/fancy-file-uploader/jquery.iframe-transport.js",
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js",
+                            "src/assets/syndashadmin-10/main-files/vertical/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"
                         ]
                     },
                     "configurations": {
                         "production": {
-                            "budgets": [{
+                            "budgets": [
+                                {
                                     "type": "initial",
                                     "maximumWarning": "500kb",
                                     "maximumError": "1mb"

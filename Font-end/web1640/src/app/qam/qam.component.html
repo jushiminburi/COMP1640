@@ -122,6 +122,7 @@
         </div>
         <!--end page-content-wrapper-->
     </div>
+
     <!--end page-wrapper-->
     <!--start overlay-->
     <div class="overlay toggle-btn-mobile"></div>
@@ -134,5 +135,10 @@
 </div>
 <!-- end wrapper -->
 <!--start switcher-->
+<app-switcherWrapper></app-switcherWrapper>
 
-<!--<app-switcherWrapper></app-switcherWrapper>-->
+<script>
+    import PerfectScrollbar from 'perfect-scrollbar';
+    const socialListScrollbar = new PerfectScrollbar('.dashboard-social-list');
+    const topCountriesScrollbar = new PerfectScrollbar('.dashboard-top-countries');
+</script>
