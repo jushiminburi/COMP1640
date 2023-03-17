@@ -32,8 +32,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgToastModule } from 'ng-angular-popup';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ProfileStaffComponent } from './staff/profile-staff/profile-staff.component';
-import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
@@ -56,8 +54,12 @@ import { ProfileUserComponent } from './qac/profile-user/profile-user.component'
 import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
-import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
+
 import { CategorymanagerComponent } from './qam/category-manager/category-manager.component';
+import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
+import { IdeaOfEventComponent } from './staff/idea-of-event/idea-of-event.component';
+import { EachIdeaComponent } from './staff/each-idea/each-idea.component';
+import { EachEventComponent } from './staff/each-event/each-event.component';
 
 
 @NgModule({
@@ -66,7 +68,6 @@ import { CategorymanagerComponent } from './qam/category-manager/category-manage
     LoginComponent,
 
     AdminComponent,
-    StaffComponent,
     CreateAccountComponent,
     HeaderComponent,
     FooterComponent,
@@ -85,19 +86,25 @@ import { CategorymanagerComponent } from './qam/category-manager/category-manage
     MostPopularIdeaComponent,
     CategorymanagerComponent,
     SwitcherWrapperComponent,
-    ProfileStaffComponent,
-    CreateIdeaComponent,
+  
     SnackBarComponent,
     CommentsComponent,
     CommentsListComponent,
     DocumentDownloadComponent,
     DashBoardComponent,
     QacComponent,
-    ProfileUserComponent,
-    ViewIdeaComponent,
+  
     EmailComponent,
 
-    EventDetailComponent ],
+    EventDetailComponent ,
+    StaffComponent,
+    StaffHomePageComponent,
+    IdeaOfEventComponent,
+    EachIdeaComponent,
+    EachEventComponent,
+
+    
+  ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, SweetAlert2Module.forRoot(),
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({

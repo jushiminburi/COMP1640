@@ -13,10 +13,8 @@ import { StaffComponent } from './staff/staff.component';
 import { TesttemComponent } from './testtem/testtem.component';
 
 import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
-import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
-import { ProfileStaffComponent } from './staff/profile-staff/profile-staff.component';
 import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-idea.component';
 import { DashBoardComponent } from './qam/dash-board/dash-board.component';
 import { QacComponent } from './qac/qac.component';
@@ -25,6 +23,8 @@ import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
 import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
+import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
+import { EachEventComponent } from './staff/each-event/each-event.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -57,17 +57,14 @@ const routes: Routes = [
       {path: 'eventanddeadline', component: EventAndDeadLineComponent},
 
 
-
-
     ],
  },
-  { path: 'staff', component: StaffComponent ,
-children:[
-  {path:'create-idea' , component: CreateIdeaComponent},
-{path: 'profile-staff', component: ProfileStaffComponent},
+ { path: 'staff', component: StaffComponent ,
+ children: [
+   {path: 'homepage', component: StaffHomePageComponent},
+   {path: 'eachevent', component: EachEventComponent}
+ ]},
 
-
-],},
 
 
 ]
