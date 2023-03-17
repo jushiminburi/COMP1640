@@ -96,6 +96,9 @@ import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
     EmailComponent,
 
     EventDetailComponent ],
+    TopicmanagerComponent,
+    SwitcherWrapperComponent
+  ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,
     AppRoutingModule, ReactiveFormsModule, MatDialogModule,  ToastrModule.forRoot({
