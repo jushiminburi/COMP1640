@@ -1,29 +1,29 @@
 const nodemailer = require('nodemailer')
-
-const sendEmail = async (email, subject, text) => {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.HOST,
-      service: process.env.SERVICE,
-      port: 587,
-      secure: true,
-      auth: {
-        user: process.env.USER,
-        pass: process.env.PASS
-      }
-    })
-
-    await transporter.sendMail({
-      from: process.env.USER,
+module.exports = {
+  transporter: nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    service: 'gmail',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'greenwich.systems@gmail.com',
+      pass: 'wwqntrteocofkjam'
+    }
+  }),
+  mailCreatedAccountOptions: (email, password) => {
+    return {
+      from: 'greenwich.systems@gmail.com',
       to: email,
-      subject,
-      text
-    })
-
-    console.log('email sent sucessfully')
-  } catch (error) {
-    console.log(error, 'email not sent')
+      subject: 'Staff Account Created',
+      text: `Your user account has been created! /n You can login account with account is your email and password is "${password}"`
+    }
+  },
+  mailNewIdeaNotificationOptions: (email) => {
+    return {
+      from: 'greenwich.systems@gmail.com',
+      to: email,
+      subject: 'Staff created new idea',
+      text: 'Your user account has been created! /n You can login account with account is your email and password is ""'
+    }
   }
 }
-
-module.exports = sendEmail

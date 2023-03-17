@@ -1,12 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 
-
-const httpOptions ={
-  headers:new HttpHeaders({'Content-Type':'Application/json'})
-}
-const api = "http://143.42.74.14:8888/api/";
+const api = "http://139.162.47.239/api/";
 @Injectable({
   providedIn: 'root'
 })
@@ -42,21 +39,98 @@ export class ApiService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json') ;
     return this.http.post(api + 'testtestNewAccount', userInfo, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }
-  createNewAccount(account: Object){    
-    const userInfo = {account: account}
-    const headers = new HttpHeaders().set('Content-Type', 'application/json') ;
-    return this.http.post(api + 'createNewStudent', userInfo, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+  createNewAccount(formData: FormData){  
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      username: formData.get('username'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+      department: formData.get('department'),
+      role: formData.get('role'),
+    }
+    
+     
+  
+
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    
+    console.log(data);
+    
+    
+    
+    return this.http.post(api + 'user/register', data, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }
-  resetPassword(newPassword:string='', reNewPassword:string=''): Observable<any>{
-    var account: any = localStorage.getItem('account')
-    var email = JSON.parse(account).email;
-    console.log(email);
-    const password = {email: email,newPassword:newPassword, reNewPassword: reNewPassword }
-    console.log(password);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json') ;
-    return this.http.post(api + 'changePassword'
-    , password// data minh se gui len
+  changePassword(formData: Object){
+    let newForm = new FormData();
+    const helper = new JwtHelperService();
+    const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    formData = {...formData, userId: user!.id}
+    
+    
+    console.log(user)
+    newForm.append('userId', user.id.toString());
+    console.log(newForm.get('userId'));
+    console.log(formData);
+    
+    
+    
+    
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    return this.http.put(api + 'user/change-password'
+    , newForm// data minh se gui len
     , {headers:headers, responseType: 'text'} //bao gui kieu json cho phia server va kieu du lieu tra ve tu server la json text
   ) 
   }//resetPassword
+  getUsers(page: string, limit: string): Observable<any>{
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        // 'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+        // 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+        // 'Accept': 'application/json'
+
+      })
+    };
+    
+    // const headers = new HttpHeaders();
+    // headers.append('Content-Type', 'multipart/form-data');
+    // headers.append('Accept', 'application/json');
+    // headers.append('Authorization', 'Baeare ' + localStorage.getItem('accessToken'));
+
+    console.log(localStorage.getItem('accessToken'));
+    // console.log(JSON.stringify(formData));
+    // const dataUser = JSON.stringify(formData)
+    
+    
+    return this.http.get(api + 'user/list-user'
+      , {headers:httpOptions.headers, responseType: 'text', params: {page: page.toString(),
+        limit: limit.toString()}})//stringify de chuyen doi tu object sang json
+  }
+
+
+
+  deleteUser(id: string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+        'Accept': 'application/json'
+      }),
+      body: {}
+    };
+  
+    return this.http.post(api + `user/delete/${id}`, {}, httpOptions);
+  }
+  
 }

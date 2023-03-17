@@ -27,6 +27,7 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.minLength(9), Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   })
+  
   onSubmit(data: any) {
 
     this.api.login(
@@ -37,6 +38,7 @@ export class LoginComponent {
       
       
       localStorage.setItem('accessToken', res.accessToken);
+      console.log(res.accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
       console.log(res.message);
       if (res.status != 200) {
@@ -50,12 +52,14 @@ export class LoginComponent {
         console.log(user);
 
         if (user.role == 1) {
-          this.router.navigateByUrl('/admin');
-        } else if (user.role == 2) {
-          this.router.navigateByUrl('/QAM');
+          this.router.navigateByUrl('/admin').then(() => {
+            // Reload the current page
+            window.location.reload();
+          });
+          // this.router.navigate(['/admin'])
         } else if (user.role == 3) {
-          this.router.navigateByUrl('/QAC');
-        }
+          this.router.navigateByUrl('/QAM');
+        } 
         else if (user.role == 4) {
           this.router.navigateByUrl('/staff');
         }
@@ -72,6 +76,7 @@ export class LoginComponent {
 
       error => {
         alert("Email or password is incorrect! Please try again")
+        
         this.router.navigate(['/login']);
       }
 

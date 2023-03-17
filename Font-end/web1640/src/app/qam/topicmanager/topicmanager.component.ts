@@ -16,6 +16,7 @@ interface LoginDetails {
 
 export class TopicmanagerComponent implements OnInit {
   status: any;
+  addTopicForm! : FormGroup;
   constructor(
     private http: HttpClient,
     private api: ApiService,
@@ -28,11 +29,7 @@ export class TopicmanagerComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  addTopicForm = new FormGroup({
-    Newtopic: new FormControl('', [Validators.required, Validators.minLength(3)]),
-
-
-  })
+  
   onSubmit(data: any) {
 
 

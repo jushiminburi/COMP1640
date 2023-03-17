@@ -3,21 +3,20 @@ const { User } = require('../models/user.model')
 const Languages = require('../utils/languages')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
+const { BASEURL_AVATAR } = require('../utils/global')
 require('dotenv').config()
 
 function validateUser (user) {
   const schema = Joi.object({
     email: Joi.string().min(6).max(255).email(),
-    firstName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]$/),
-    lastName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]$/),
-    fullName: Joi.string().min(1).max(100).pattern(/^[a-zA-Z]$/),
+    firstName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}/),
+    lastName: Joi.string().min(1).max(50).pattern(/^[a-zA-Z]{2,30}/),
     department: Joi.string().min(1).max(30),
     role: Joi.number().max(5).min(1)
   })
   return schema.validate(user)
 }
 module.exports = {
-
   async changePassword  (req, res) {
     try {
       const { userId, password } = req.body
@@ -34,7 +33,6 @@ module.exports = {
       return apiResponse.response_error_500(res, error.message)
     }
   },
-
   async updateUser (req, res) {
     try {
       const id = req.params.id
@@ -79,7 +77,13 @@ module.exports = {
       const limit = parseInt(req.query.limit) || 5
       // const keyword = req.query.keyword
       const skip = (limit * page) - limit
-      const listUser = await User.find({}, { _id: 0, password: 0, __v: 0 }).skip(skip).limit(limit)
+      const list = await User.find({}, { _id: 0, password: 0, __v: 0 }).skip(skip).limit(limit)
+      const listUser = list.map(user => {
+        return {
+          ...user._doc,
+          avatar: `${BASEURL_AVATAR}${user.avatar}`
+        }
+      })
       const totalUser = await User.find().countDocuments()
       const response = apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
         listUser,
@@ -90,5 +94,4 @@ module.exports = {
       return apiResponse.response_error_500(res, error.message)
     }
   }
-
 }

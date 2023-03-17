@@ -6,32 +6,64 @@ const Languages = require('../utils/languages')
 const bcrypt = require('bcrypt')
 const getNextSequenceValue = require('../utils/icrement.db')
 require('dotenv').config()
+const path = require('path')
+const fs = require('fs')
+const directoryFile = path.join(__dirname, '../../../upload/')
+const { transporter, mailCreatedAccountOptions } = require('../utils/sendEmail')
 
 let refreshTokens = []
 const schemaLoginUser = Joi.object({
   email: Joi.string().required().email(),
   password: Joi.string().required()
 })
+function unlinkFile (file) {
+  fs.unlink(file, function (err) {
+    if (err) {
+      console.log('Error deleting file:', err)
+    } else {
+      console.log(`File deleted successfully.${file}`)
+    }
+  })
+}
+function checkFile (list, res) {
+  if (list.length > 1) {
+    list.forEach(element => {
+      unlinkFile(directoryFile + element)
+    })
+    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400)
+  }
+  if (list[0].endsWith('.pdf') || list[0].endsWith('.docs')) {
+    unlinkFile(directoryFile + list[0])
+    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400)
+  }
+}
 
 exports.registerUser = async (req, res) => {
+  const directoryFile = path.join(__dirname, '../../../upload/')
+  const listFile = req.listFile
+  checkFile(listFile, res)
   try {
-    const { username, email, password, department, role, lastName, firstName } = req.body
+    const { email, password, department, role, lastName, firstName } = req.body
     const result = validate(req.body)
     if (result.error) {
+      listFile.forEach(element => {
+        unlinkFile(directoryFile + element)
+      })
       return apiResponse.response_status(res, result.error.message, 400)
     }
     const user = await User.findOne({ email })
-    const usernameAcc = await User.findOne({ username })
     if (user) {
+      listFile.forEach(element => {
+        unlinkFile(directoryFile + element)
+      })
       return apiResponse.response_status(res, Languages.EMAIL_EXSITS, 400)
-    } else if (usernameAcc) {
-      return apiResponse.response_status(res, Languages.USERNAME_EXSITS, 400)
-    } else {
+    }
+    {
       const salt = await bcrypt.genSalt(10)
       const hashPassword = await bcrypt.hash(password, salt)
       const userId = await getNextSequenceValue('userId')
       const user = new User({
-        username,
+        avatar: listFile.length > 0 ? listFile[0] : 'default-avatar.png',
         email,
         password: hashPassword,
         department,
@@ -42,9 +74,13 @@ exports.registerUser = async (req, res) => {
         userId
       })
       await user.save()
+      transporter.sendMail(mailCreatedAccountOptions(user.email, password))
       return apiResponse.response_data(res, Languages.REGISTER_SUCCESS, 200, user)
     }
   } catch (error) {
+    listFile.forEach(element => {
+      unlinkFile(directoryFile + element)
+    })
     return apiResponse.response_error_500(res, error.message)
   }
 }

@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "install": "^0.13.0",
-    "moment-timezone": "^0.5.40"
+    "ngx-bootstrap": "^10.2.0"
   }
 }

@@ -80,22 +80,19 @@
                                     </div>
                                 </div>
 
-                                <button (click)="isShowForm = true" *ngIf="!isShowForm"
-                                    class="col-md-4 btn btn-success"> <i class="fadeIn animated bx bx-trash-alt"></i>
+                                <button (click)="isShowForm = true" *ngIf="!isShowForm" class="col-md-4 btn btn-success"> <i class="fadeIn animated bx bx-trash-alt"></i>
                                     Add new Topic</button>
                                 <br>
 
                                 <div *ngIf="isShowForm">
                                     <div class="row me-2">
-                                        <form [formGroup]="addTopicForm" (ngSubmit)="onSubmit(addTopicForm.value)" novalidate>
+                                        <form (ngSubmit)="onSubmit(addTopicForm.value)" novalidate>
 
                                             <div class="form-group">
                                                 <h4>Name Topic </h4>
 
-                                                <input type="text" class="form-control"
-                                                    placeholder="Enter your new topic" formControlName="Newtopic" />
-                                                <div class="text-danger text-center invalid-feedback d-block"
-                                                    *ngIf="!addTopicForm.controls.Newtopic?.valid && (addTopicForm.controls.Newtopic?.dirty || addTopicForm.controls.Newtopic?.touched)">
+                                                <input type="text" class="form-control" placeholder="Enter your new topic" formControlName="Newtopic" />
+                                                <!--<div class="text-danger text-center invalid-feedback d-block" *ngIf="!addTopicForm.controls.Newtopic?.valid && (addTopicForm.controls.Newtopic?.dirty || addTopicForm.controls.Newtopic?.touched)">
 
                                                     <span [hidden]="!addTopicForm.controls.Newtopic.errors?.['required']">
                                                         Password is required!
@@ -103,10 +100,9 @@
                                                     <span [hidden]="!addTopicForm.controls.Newtopic.errors?.['minlength']">
                                                         Password must be at least 3 characters long!
                                                     </span>
-                                                </div>
+                                                </div>-->
                                                 <br>
-                                                <button (click)="addNewTopic();" class="btn btn-success" type="submit"
-                                                [disabled]="!addTopicForm.valid"> <i
+                                                <button (click)="addNewTopic();" class="btn btn-success" type="submit" [disabled]="!addTopicForm.valid"> <i
                                                         class="fadeIn animated bx bx-trash-alt"></i>
                                                     Add new Topic</button>
                                             </div>

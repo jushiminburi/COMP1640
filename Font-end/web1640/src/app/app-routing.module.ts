@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountManagerComponent } from './admin/account-manager/account-manager.component';
 import { AdminComponent } from './admin/admin.component';
 import { CreateAccountComponent } from './admin/create-account/create-account.component';
+import { TopicAndDeadLineComponent } from './admin/topic-and-dead-line/topic-and-dead-line.component';
+import { TopicListComponent } from './admin/topic-list/topic-list.component';
 import { LoginComponent } from './login/login.component';
 import { QamComponent } from './qam/qam.component';
 import { TopicmanagerComponent } from './qam/topicmanager/topicmanager.component';
@@ -22,7 +24,9 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent,
     children: [
       { path: 'createaccount', component: CreateAccountComponent },
-      { path: 'accountmanager', component: AccountManagerComponent}
+      { path: 'accountmanager', component: AccountManagerComponent},
+      { path: 'topicanddeadline', component: TopicAndDeadLineComponent},
+      { path: 'topiclist', component: TopicListComponent}
     ],
  },
   { path: 'staff', component: StaffComponent },
