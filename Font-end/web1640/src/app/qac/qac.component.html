@@ -15,34 +15,23 @@
         </div>
         <!--navigation-->
         <ul class="metismenu" id="menu">
-            <li>
-                <a href="emailbox.html">
-                    <div class="parent-icon icon-color-2">
-                        <i class="bx bx-home-alt"></i>
+           <li>
+                <a [routerLink]="['/qac/view-idea']" href="#">
+                    <div class="parent-icon icon-color-5"><i class="lni lni-layers"></i>
                     </div>
-                    <div class="menu-title"><a [routerLink]="['/staff']" href="#">Home Page</a></div>
+                    <div class="menu-title">News Feed</div>
                 </a>
-            </li>
-            <li>
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon icon-color-1">
-                        <i class="bx bx-folder"></i>
+      </li>
+    <li>
+                <a [routerLink]="['/qac/profile-user']" href="#">
+                    <div class="parent-icon icon-color-5"><i class="lni lni-layers"></i>
                     </div>
-                    <div class="menu-title">Ideas</div>
+                    <div class="menu-title"> Profile </div>
                 </a>
-                <ul>
-                    <li>
-                        <a [routerLink]="['/idea/list-idea']" href="#"><i class="bx bx-menu"></i>See All Ideas</a
-            >
-          </li>
-                    <li> <a [routerLink]="['/staff/create-idea']">Create New Idea
-
-            </a>
-                    </li>
-                </ul>
-            </li>
+                </li>
 
     </ul>
+
     <!--end navigation-->
   </div>
 

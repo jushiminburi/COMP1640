@@ -4,14 +4,14 @@ import { Router, NavigationEnd } from '@angular/router';
 import PerfectScrollbar from 'perfect-scrollbar';
 
 @Component({
- 
+
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
-    
-   
+
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         window.scrollTo(0, 0); // load lại giao diện
@@ -20,7 +20,7 @@ export class AdminComponent implements AfterViewInit, OnInit {
     });
   }
 
-  ngOptionRole = ["Admin", "Staff", "QMA"];
+  ngOptionRole = ["Admin", "Staff", "QMA","QAC"];
   constructor(private router: Router) { }
 
 

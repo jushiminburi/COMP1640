@@ -22,7 +22,6 @@ import { CreateAccountComponent } from './admin/create-account/create-account.co
 import { MatDialogModule } from '@angular/material/dialog';
 import { SuccessDialogComponentComponent } from './admin/create-account/success-dialog-component/success-dialog-component.component';
 import { QamComponent } from './qam/qam.component';
-import { CategorymanagerComponent } from './qam/categorymanager/categorymanager.component';
 import { SwitcherWrapperComponent } from './switcher-wrapper/switcher-wrapper.component';
 
 import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
@@ -38,8 +37,6 @@ import { CreateIdeaComponent } from './staff/create-idea/create-idea.component';
 
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
-import { IdeaComponent } from './idea/idea.component';
-import { ListIdeaComponent } from './idea/list-idea/list-idea.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,9 +45,18 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentsListComponent } from './comments/comments-list/comments-list.component';
-import { IdeaEditComponent } from './staff/idea-edit/idea-edit.component';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashBoardComponent } from './qam/dash-board/dash-board.component';
+import { CategoryManagerComponent } from './qam/category-manager/category-manager.component';
+
+import { QacComponent } from './qac/qac.component';
+import { ProfileUserComponent } from './qac/profile-user/profile-user.component';
+import { EmailComponent } from './qac/email/email.component';
+import { EventDetailComponent } from './qam/event-detail/event-detail.component';
+import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
+import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
 
 
 @NgModule({
@@ -68,7 +74,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ResetPasswordComponent,
     AccountManagerComponent,
     QamComponent,
-    CategorymanagerComponent,
+
     SwitcherWrapperComponent,
 
     EventListComponent,
@@ -80,12 +86,18 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SwitcherWrapperComponent,
     ProfileStaffComponent,
     CreateIdeaComponent,
-    IdeaComponent,
-    ListIdeaComponent,
     SnackBarComponent,
     CommentsComponent,
     CommentsListComponent,
-    IdeaEditComponent ],
+    DocumentDownloadComponent,
+    DashBoardComponent,
+    CategoryManagerComponent,
+    QacComponent,
+    ProfileUserComponent,
+    ViewIdeaComponent,
+    EmailComponent,
+
+    EventDetailComponent ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, SweetAlert2Module.forRoot(),
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
@@ -93,7 +105,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }), NgToastModule, MatPaginatorModule, NgxPaginationModule, MatSnackBarModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, NgbModule
+    MatButtonModule, NgbModule, BrowserAnimationsModule
   ],
   providers: [
     ApiService

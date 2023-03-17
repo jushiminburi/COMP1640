@@ -8,6 +8,7 @@ const api = "http://139.162.47.239/api/";
   providedIn: 'root'
 })
 export class ApiService {
+  getCategoryById: any;
 
   constructor(private http: HttpClient) { }
   login(email:string='', password:string=''): Observable<any>{
@@ -45,6 +46,9 @@ export class ApiService {
 
 
   }
+  // listCategory():Observable<Category>{
+  //   return this.http.get<Category>(this.)
+  // }
 
   getCategory() {
 
@@ -61,6 +65,39 @@ export class ApiService {
 
 
   }
+  getDepartment ()
+  {
+
+    const httpOptions = {
+      headers: new HttpHeaders( {
+        'Authorization': 'Bearer ' + localStorage.getItem( 'accessToken' ),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      } )
+    };
+
+    return this.http.get( api + 'departments/list'
+      , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
+
+
+  }
+  getListCategory ()
+  {
+
+    const httpOptions = {
+      headers: new HttpHeaders( {
+        'Authorization': 'Bearer ' + localStorage.getItem( 'accessToken' ),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      } )
+    };
+
+    return this.http.get( api + 'categories/list'
+      , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
+
+
+  }
+
 
   addCategory(name: string) {
     const httpOptions = {
@@ -77,18 +114,18 @@ export class ApiService {
   }
 
   editEvent(formData: FormData){
-   
+
     console.log(formData);
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      
+
       'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
     });
-    
+
     return this.http.put(api + 'event/update', formData, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
- 
+
 
   }
 
@@ -124,7 +161,7 @@ export class ApiService {
       }),
       params: { page: page.toString(), limit: limit.toString() }
     };
-   
+
       return this.http.get(api + 'category/list'
       , {headers:httpOptions.headers, responseType: 'text', params: httpOptions.params})//stringify de chuyen doi tu object sang json
 
@@ -139,22 +176,22 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-    
-    
+
+
     return this.http.post(api + 'comment/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   }
 
   editComment(id: number, formData: FormData){
-    
+
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      
+
       'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
     });
-    
+
     return this.http.put(api + `comment/update/${id}`, formData, {headers:headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   }
@@ -170,7 +207,7 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
+
       return this.http.delete(api + `comment/delete/${id}`
       , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
@@ -184,7 +221,7 @@ export class ApiService {
 
 
 
- 
+
 
   // addReplyComment(formData: FormData) {
   //   const httpOptions = {
@@ -194,8 +231,8 @@ export class ApiService {
   //       'Access-Control-Allow-Origin': '*',
   //     })
   //   };
-    
-    
+
+
   //   return this.http.post(api + 'comment/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   // }
@@ -204,15 +241,15 @@ export class ApiService {
 
 
   // editReplyComment(id: number, formData: FormData){
-    
+
 
   //   const headers = new HttpHeaders({
   //     'Content-Type': 'application/json',
-      
+
   //     'Access-Control-Allow-Origin': '*',
   //     'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
   //   });
-    
+
   //   return this.http.put(api + `comment/update/${id}`, formData, {headers:headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   // }
@@ -228,7 +265,7 @@ export class ApiService {
         'Access-Control-Allow-Origin': '*',
       })
     };
-   
+
       return this.http.delete(api + `comment/delete/${id}`
       , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 

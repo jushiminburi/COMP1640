@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "chart.js": "^4.2.1",
     "ngx-bootstrap": "^10.2.0"
   }
 }

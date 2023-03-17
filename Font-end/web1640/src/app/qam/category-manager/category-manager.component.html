@@ -16,8 +16,7 @@
 
     </div>
     <!--end breadcrumb-->
-
-    <div class="user-profile-page">
+ <div class="user-profile-page">
         <div class="row">
 
 
@@ -100,7 +99,6 @@
                                                 </div>
 
                                                 <!--<div class="text-danger text-center invalid-feedback d-block" *ngIf="!addcategoryForm.controls.Newcategory?.valid && (addcategoryForm.controls.Newcategory?.dirty || addcategoryForm.controls.Newcategory?.touched)">
-
                                             <span [hidden]="!addcategoryForm.controls.Newcategory.errors?.['required']">
                                                 Password is required!
                                             </span>
@@ -141,8 +139,8 @@
                                                 <tr *ngFor="let category of categories">
                                                     <td>{{category.id}}</td>
                                                     <td>{{category.name}}</td>
-                                                    <td>{{category.createdAt | date : "medium" }}</td>
-                                                    <td>{{category.updatedAt | date : "medium"}}</td>
+                                                    <td>{{category.startDate | date : "medium" }}</td>
+                                                    <td>{{category.endDate | date : "medium"}}</td>
                                                 </tr>
                                             </tbody>
 
@@ -177,5 +175,3 @@
             </div>
         </div>
     </div>
-
-    <!--end page-content-wrapper-->
