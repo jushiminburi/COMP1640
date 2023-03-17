@@ -6,9 +6,10 @@ const Comment = mongoose.model('Comment', new mongoose.Schema({
   ideaId: { type: Number, required: true },
   content: { type: String, maxlength: 10000, required: true },
   file: { type: Number, default: 0, required: true },
-  totalReply: { type: Number, default: 0 },
   userId: { type: Number, required: true },
-  isEdited: { type: Boolean, default: false }
+  isEdited: { type: Boolean, default: false },
+  likes: [{ type: mongoose.Schema.Types.Number, ref: 'User' }],
+  totalLike: { type: Number, default: 0 }
 }, {
   timestamps: true
 }))

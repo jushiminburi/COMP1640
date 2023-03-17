@@ -45,13 +45,13 @@ module.exports = {
   async deleteDepartment (req, res) {
     try {
       const id = req.params.id
-      const department = await Department.findOneAndDelete({ id })
-      if (department == null) {
-        return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
-      }
       const userDepartment = await User.find({ departmentId: id })
       if (userDepartment != null) {
         return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_DELETE, 404)
+      }
+      const department = await Department.findOneAndDelete({ id })
+      if (department == null) {
+        return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
       }
       return apiResponse.response_status(res, Languages.DEPARTMENT_DELETE_SUCCESS, 200)
     } catch (error) {
