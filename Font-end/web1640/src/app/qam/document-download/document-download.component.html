@@ -35,28 +35,15 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
                                 <br>
-
-
-
-
                                 </div>
                                 <hr>
-
-
                                 <h3 class="mb-0 text-center">Document Download</h3>
                                 <br>
 
  <div class="col-1">
-
                                    <button type="button" class="btn btn-outline-danger m-1 px-5;">Download File Zip</button>
 </div>
-
                                 </div>
                                 <ul>
                                     <div class="table-responsive">
@@ -89,7 +76,11 @@
                                                     <td>01/01 - 03/03</td>
                                                     <td>Event 1</td>
                                                     <td>40</td>
-                                                    <td>Details</td>
+                                                    <td >
+                                    <a [routerLink]="['/qam/events/:id']" href="#" >Details
+                                        <!-- <span (click)="getEvent(events.id)"></span> -->
+                                    </a>
+                                                    </td>
                                                     <!-- <td><a routerLink="/qam/detail/{{events.id}}"> -->
       <!-- <span class="badge">Details{{events.id}}</span></a></td> -->
                                                     <td><u style="color:blue">CSV</u></td>
