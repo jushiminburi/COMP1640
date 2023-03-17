@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-staff',
+ 
   templateUrl: './staff.component.html',
   styleUrls: ['./staff.component.css']
 })
-export class StaffComponent {
+export class StaffComponent implements OnInit{
+
+  ngListEvent = ["Event 1", "Event 2", "Event 3", "Event 4", "Event 5"];
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+  
 
 }
