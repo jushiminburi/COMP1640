@@ -141,8 +141,8 @@ export class ApiService {
       })
     };
 
-      return this.http.get(api + `event/delete/${id}}`
-      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+      return this.http.delete(api + `event/delete/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
 
   }

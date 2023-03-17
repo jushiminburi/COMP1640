@@ -24,7 +24,7 @@ interface Event {
   styleUrls: ['./event-and-deadline.component.css']
 })
 
-export class EventAndDeadLineComponent implements OnInit, AfterViewInit {
+export class EventAndDeadLineComponent implements OnInit {
 
   eventForm!: FormGroup;
 
@@ -113,52 +113,47 @@ export class EventAndDeadLineComponent implements OnInit, AfterViewInit {
       
 
       name: new FormControl('', [Validators.required]),
-      deadlineIdea: new FormControl(null),
-      deadlineComment: new FormControl(null)
+      deadlineIdea: new FormControl(null, [Validators.required]),
+      deadlineComment: new FormControl(null, [Validators.required])
     })
   }
-  ngAfterViewInit(): void {
-    const now = new Date();
-    console.log(now);
-    this.eventForm.get('deadlineIdea')?.valueChanges.subscribe(value => {
-      const deadlineIdea = this.eventForm.get('deadlineIdea')?.value;
-      if (deadlineIdea < now) {
-        console.log("deadlineIdea < now");
-        this.eventForm.get('deadlineIdea')?.setErrors({ 'incorrect': true });
-      } else {
-        this.eventForm.get('deadlineIdea')?.setErrors(null);
-      }
+  // ngAfterViewInit(): void {
+  //   const now = new Date();
+  //   console.log(now);
+  //   this.eventForm.get('deadlineIdea')?.valueChanges.subscribe(value => {
+      
+  //     const deadlineIdea = this.eventForm.get('deadlineIdea')?.value;
+  //     if (deadlineIdea < now) {
+  //       console.log("deadlineIdea < now");
+  //       this.eventForm.get('deadlineIdea')?.setErrors({ incorrect: true });
+  //     } else {
+  //       this.eventForm.get('deadlineIdea')?.setErrors(null);
+  //     }
 
 
-      if(deadlineIdea > this.eventForm.get('deadlineComment')?.value) {
-        this.eventForm.get('deadlineIdea')?.setErrors({'incorrect': true });
-      } else {
-        this.eventForm.get('deadlineIdea')?.setErrors(null);
-      }
-    });
+  //     if(deadlineIdea > this.eventForm.get('deadlineComment')?.value) {
+  //       this.eventForm.get('deadlineIdea')?.setErrors({incorrect: true });
+  //     } else {
+  //       this.eventForm.get('deadlineIdea')?.setErrors(null);
+  //     }
+  //   });
 
-    this.eventForm.get('deadlineComment')?.valueChanges.subscribe(value => {
-      const deadlineComment = this.eventForm.get('deadlineComment')?.value;
-      if (deadlineComment < now) {
-        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
-      } else {
-        this.eventForm.get('deadlineComment')?.setErrors(null);
-      }
+  //   this.eventForm.get('deadlineComment')?.valueChanges.subscribe(value => {
+  //     const deadlineComment = this.eventForm.get('deadlineComment')?.value;
+  //     if (deadlineComment < now) {
+  //       this.eventForm.get('deadlineComment')?.setErrors({incorrect: true });
+  //     } else {
+  //       this.eventForm.get('deadlineComment')?.setErrors(null);
+  //     }
 
-      if(deadlineComment < this.eventForm.get('deadlineIdea')?.value) {
-        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
-      } else {
-        this.eventForm.get('deadlineComment')?.setErrors(null);
-      }
-    });
-
+  //     if(deadlineComment < this.eventForm.get('deadlineIdea')?.value) {
+  //       this.eventForm.get('deadlineComment')?.setErrors({incorrect: true });
+  //     } else {
+  //       this.eventForm.get('deadlineComment')?.setErrors(null);
+  //     }
+  //   });
     
-
-  
-
-
-    
-  }
+  // }
 
 
 
@@ -213,39 +208,45 @@ export class EventAndDeadLineComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-
-    const now = new Date();
-    console.log(now);
+  
     this.eventForm.get('deadlineIdea')?.valueChanges.subscribe(value => {
-      const deadlineIdea = this.eventForm.get('deadlineIdea')?.value;
-      if (deadlineIdea < now) {
-        console.log("deadlineIdea < now");
-        this.eventForm.get('deadlineIdea')?.setErrors({ 'incorrect': true });
-      } else {
+      const now = new Date();
+      const deadlineIdea = new Date(Date.parse( this.eventForm.get('deadlineIdea')?.value));
+      const deadlineComment = new Date(Date.parse( this.eventForm.get('deadlineComment')?.value));
+      
+      console.log(now > deadlineIdea? "true" : "false");
+      if (deadlineIdea <= now) {
+        
+        this.eventForm.get('deadlineIdea')?.setErrors({ incorrect: true });
+      } else{
         this.eventForm.get('deadlineIdea')?.setErrors(null);
       }
 
 
-      if(deadlineIdea > this.eventForm.get('deadlineComment')?.value) {
-        this.eventForm.get('deadlineIdea')?.setErrors({'incorrect': true });
-      } else {
-        this.eventForm.get('deadlineIdea')?.setErrors(null);
-      }
+      // if(deadlineIdea > deadlineComment) {
+      //   this.eventForm.get('deadlineIdea')?.setErrors({incorrect: true });
+      // } else {
+      //   this.eventForm.get('deadlineIdea')?.setErrors(null);
+      // }
     });
 
     this.eventForm.get('deadlineComment')?.valueChanges.subscribe(value => {
-      const deadlineComment = this.eventForm.get('deadlineComment')?.value;
-      if (deadlineComment < now) {
-        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
+      const now = new Date();
+      const deadlineIdea = new Date(Date.parse( this.eventForm.get('deadlineIdea')?.value));
+      const deadlineComment = new Date(Date.parse( this.eventForm.get('deadlineComment')?.value));
+      if (deadlineComment <= now) {
+        console.log("deadlineComment < now");
+        this.eventForm.get('deadlineComment')?.setErrors({incorrect: true });
       } else {
-        this.eventForm.get('deadlineComment')?.setErrors(null);
+        if(deadlineComment <= deadlineIdea) {
+          this.eventForm.get('deadlineComment')?.setErrors({invalid: true });
+        } else {
+          this.eventForm.get('deadlineComment')?.setErrors(null);
+        }
+        
       }
 
-      if(deadlineComment < this.eventForm.get('deadlineIdea')?.value) {
-        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
-      } else {
-        this.eventForm.get('deadlineComment')?.setErrors(null);
-      }
+      
     });
 
     

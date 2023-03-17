@@ -23,8 +23,7 @@
                 <div class="row">
                     <div class="col-4">
 
-                        <div *ngFor="let opt of ngListEvent" class="chip">{{opt}} <span class="closebtn"
-                                onclick="this.parentElement.style.display='none'">&times;</span>
+                        <div *ngFor="let opt of ngListEvent" class="chip">{{opt}} <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
                         </div>
                     </div>
 
@@ -38,15 +37,12 @@
                     <div class="accordion accordion-flush col-5 " id="accordionExample">
                         <div class="accordion-item text-center align-content-center m-auto">
                             <h2 class="accordion-header" id="headingOne">
-                                <button
-                                    class="accordion-button col-3 btn bg-info text-white text-center align-content-center m-auto "
-                                    type="button" data-bs-toggle="collapse" data-bs-target="#Filter"
-                                    aria-expanded="true" aria-controls="Filter">
+                                <button class="accordion-button col-3 btn bg-info text-white text-center align-content-center m-auto " type="button" data-bs-toggle="collapse" data-bs-target="#Filter" aria-expanded="true" aria-controls="Filter">
                                     Filter
                                 </button>
                             </h2>
-                            <div id="Filter" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                                data-bs-parent="#accordionExample">
+                            <!-- <input type="file" id="files" name="files" multiple> -->
+                            <div id="Filter" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body card-body ">
                                     <div class="row ">
                                         <div class="col-sm-4">
@@ -54,8 +50,7 @@
                                             <h6>Event</h6>
 
                                             <div class="form-check" *ngFor="let opt of ngListEvent">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                                 <label class="form-check-label  font-14" for="flexCheckDefault">
                                                     {{opt}}
                                                 </label>
@@ -67,8 +62,7 @@
 
 
                                             <div class="form-check" *ngFor="let opt of ngListCategory">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                                 <label class="form-check-label font-14" for="flexCheckDefault">
                                                     {{opt}}
                                                 </label>
@@ -80,8 +74,7 @@
 
 
                                             <div class="form-check" *ngFor="let opt of ngListDepartment">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                                 <label class="form-check-label  font-14" for="flexCheckDefault">
                                                     {{opt}}
                                                 </label>
@@ -121,7 +114,7 @@
 
         <idea-of-event></idea-of-event>
 
-        
+
 
 
     </div>
