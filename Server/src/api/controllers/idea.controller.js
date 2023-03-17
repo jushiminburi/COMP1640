@@ -97,11 +97,48 @@ module.exports = {
   },
   async paginationListIdea (req, res) {
     try {
+      const { eventId, categoryId, departmentId } = req.query
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
       const userId = req.userId
       const ideas = await Ideas.aggregate([
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'categoryId',
+            foreignField: 'id',
+            as: 'category'
+          }
+        },
+        {
+          $lookup: {
+            from: 'events',
+            localField: 'eventId',
+            foreignField: 'id',
+            as: 'event'
+          }
+        },
+        {
+          $lookup: {
+            from: 'departments',
+            localField: 'user.department',
+            foreignField: 'id',
+            as: 'user.department'
+          }
+        },
+        {
+          $unwind: { path: '$user.department', preserveNullAndEmptyArrays: true }
+        },
+        {
+          $match: {
+            $and: [
+              eventId ? { 'event.id': parseInt(eventId) } : {},
+              categoryId ? { 'category.id': parseInt(categoryId) } : {},
+              departmentId ? { 'department.id': parseInt(departmentId) } : {}
+            ]
+          }
+        },
         {
           $lookup: {
             from: 'files',
@@ -193,23 +230,16 @@ module.exports = {
             title: 1,
             content: 1,
             anonymous: 1,
-            categoryId: 1,
             createdAt: 1,
-            totalLike: { $size: '$likes' },
-            totalDislike: { $size: '$dislikes' },
+            totalLike: 1,
+            totalDislike: 1,
+            totalViews: 1,
+            totalComment: 1,
             isLike: {
-              $cond: {
-                if: { $in: [userId, '$likes'] },
-                then: true,
-                else: false
-              }
+              $in: [userId, '$likes']
             },
             isDislike: {
-              $cond: {
-                if: { $in: [userId, '$dislikes'] },
-                then: true,
-                else: false
-              }
+              $in: [userId, '$dislikes']
             },
             comment: {
               id: '$comment.id',
@@ -257,6 +287,12 @@ module.exports = {
                 }
               }
             },
+            'category.id': 1,
+            'category.name': 1,
+            'event.id': 1,
+            'event.name': 1,
+            'event.deadlineIdea': 1,
+            'event.deadlineComment': 1,
             'user.username': 1,
             'user.userId': 1,
             'user.email': 1,

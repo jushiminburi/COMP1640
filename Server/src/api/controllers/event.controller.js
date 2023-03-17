@@ -60,7 +60,7 @@ module.exports = {
       } else {
         const valueDealineIdea = new Date(deadlineIdea).getTime()
         const valueDeadlineComment = new Date(deadlineComment).getTime()
-        const startDateDB = new Date(event.deadlineIdea).getTime()
+        const startDateDB = new Date().getTime()
         if (valueDealineIdea > startDateDB && valueDeadlineComment > valueDealineIdea) {
           const id = await getNextSequenceValue('eventId')
           await Event.findOneAndUpdate(id, { $set: { deadlineIdea, deadlineComment } })
