@@ -3,6 +3,7 @@ const apiResponse = require('../helpers/api.response.helper')
 const Languages = require('../utils/languages')
 const getNextSequenceValue = require('../utils/icrement.db')
 const { Ideas } = require('../models/idea.model')
+const mongoose = require('mongoose')
 
 module.exports = {
   async createCategory (req, res) {
@@ -43,19 +44,24 @@ module.exports = {
     }
   },
   async deleteCategory (req, res) {
+    const session = await mongoose.startSession()
     try {
-      const id = req.params.id
-      const category = await Category.findOneAndDelete({ id })
-      if (category == null) {
-        return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
-      }
-      const ideaCategory = await Ideas.find({ categoryId: id })
-      if (ideaCategory != null) {
-        return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
-      }
-      return apiResponse.response_status(res, Languages.CATEGORY_DELETE_SUCCESS, 200)
+      await session.withTransaction(async () => {
+        const categoryId = parseInt(req.params.id)
+        const ideaCategory = await Ideas.find({ categoryId }).session(session)
+        if (ideaCategory.length > 0) {
+          return apiResponse.response_status(res, Languages.CATEGORY_HAS_IDEA, 400)
+        }
+        const deletedCategory = await Category.findOneAndDelete({ id: categoryId }).session(session)
+        if (!deletedCategory) {
+          return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
+        }
+        return apiResponse.response_status(res, Languages.CATEGORY_DELETE_SUCCESS, 200)
+      })
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
+    } finally {
+      session.endSession()
     }
   },
   async listIdeaCategory (req, res) {

@@ -308,7 +308,7 @@ module.exports = {
   async likeIdea (req, res) {
     try {
       const userId = req.userId
-      const ideaId = req.params.ideaId
+      const ideaId = req.params.id
       const idea = await Ideas.findOne({ id: ideaId })
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
@@ -325,6 +325,7 @@ module.exports = {
       }
       idea.likes.push(userId)
       idea.totalLike += 1
+      idea.totalViews += 1
       await idea.save()
       return apiResponse.response_status(res, Languages.LIKE_IDEA_SUCCESSFUL, 200)
     } catch (error) {
@@ -334,7 +335,7 @@ module.exports = {
   async dislikeIdea (req, res) {
     try {
       const userId = req.userId
-      const ideaId = req.params.ideaId
+      const ideaId = req.params.id
       const idea = await Ideas.findOne({ id: ideaId })
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
@@ -351,6 +352,7 @@ module.exports = {
       }
       idea.likes.push(userId)
       idea.totalDislike += 1
+      idea.totalViews += 1
       await idea.save()
       return apiResponse.response_status(res, Languages.DISLIKE_IDEA_SUCCESSFUL, 200)
     } catch (error) {
