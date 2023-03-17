@@ -68,10 +68,10 @@
                                     <h6 class="text-center">{{event.name}}</h6>
                                 </div>
                                 <div class="col-lg-3 ">
-                                    <p [ngClass]="{ 'text-bg-danger':
-                                        event.status === 'Done',
-                                        'text-bg-sucess': event.status ===
-                                        'Doing' }" class="">{{event.status}}</p>
+                                    <p [ngClass]="{ 'text-bg-warning':
+                                        event.status == 'Doing',
+                                        'text-bg-success': event.status ==
+                                        'Done' }" class="">{{event.status}}</p>
                                 </div>
                             </div>
                             <div class="row ">

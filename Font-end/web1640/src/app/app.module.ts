@@ -49,6 +49,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentsListComponent } from './comments/comments-list/comments-list.component';
 import { IdeaEditComponent } from './staff/idea-edit/idea-edit.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 
@@ -86,7 +87,7 @@ import { IdeaEditComponent } from './staff/idea-edit/idea-edit.component';
     CommentsListComponent,
     IdeaEditComponent ],
   imports: [
-    BrowserModule, HttpClientModule, FormsModule,
+    BrowserModule, HttpClientModule, FormsModule, SweetAlert2Module.forRoot(),
     AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',

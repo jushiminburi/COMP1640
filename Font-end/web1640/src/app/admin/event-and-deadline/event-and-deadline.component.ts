@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from 'src/app/api.service';
+
+import Swal from 'sweetalert2';
 
 interface Event {
 
@@ -22,7 +24,7 @@ interface Event {
   styleUrls: ['./event-and-deadline.component.css']
 })
 
-export class EventAndDeadLineComponent implements OnInit {
+export class EventAndDeadLineComponent implements OnInit, AfterViewInit {
 
   eventForm!: FormGroup;
 
@@ -36,21 +38,44 @@ export class EventAndDeadLineComponent implements OnInit {
     data.deadlineComment = formattedDateComment;
 
 
-    if (confirm("Are you sure to add this event?")) {
-      this.api.addEvent(data).subscribe((response) => {
-        const data = JSON.parse(response);
-        if (data.status == 200) {
-          this.toast.success({ detail: "Edit event successfully!", summary: "Success", duration: 3000 });
-          this.router.navigate(['admin/eventlist']);
-        } else {
-          this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, add it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.api.addEvent(data).subscribe((response) => {
+          const data = JSON.parse(response);
+          if (data.status == 200) {
+            this.toast.success({ detail: "Add event successfully!", summary: "Success", duration: 3000 });
+            this.router.navigate(['admin/eventlist']);
+          } else {
+            this.toast.error({ detail: "Add event failed!", summary: "Error", duration: 3000 });
+          }
+        }, (err: any) => {
+          this.toast.error({ detail: "Add event failed!", summary: "Error", duration: 3000 });
         }
-      }, (err: any) => {
-        this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
+        )
       }
-      )
+    })
+    //   this.api.addEvent(data).subscribe((response) => {
+    //     const data = JSON.parse(response);
+    //     if (data.status == 200) {
+    //       this.toast.success({ detail: "Edit event successfully!", summary: "Success", duration: 3000 });
+    //       this.router.navigate(['admin/eventlist']);
+    //     } else {
+    //       this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
+    //     }
+    //   }, (err: any) => {
+    //     this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
+    //   }
+    //   )
 
-    }
+    // }
 
 
 
@@ -91,6 +116,48 @@ export class EventAndDeadLineComponent implements OnInit {
       deadlineIdea: new FormControl(null),
       deadlineComment: new FormControl(null)
     })
+  }
+  ngAfterViewInit(): void {
+    const now = new Date();
+    console.log(now);
+    this.eventForm.get('deadlineIdea')?.valueChanges.subscribe(value => {
+      const deadlineIdea = this.eventForm.get('deadlineIdea')?.value;
+      if (deadlineIdea < now) {
+        console.log("deadlineIdea < now");
+        this.eventForm.get('deadlineIdea')?.setErrors({ 'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineIdea')?.setErrors(null);
+      }
+
+
+      if(deadlineIdea > this.eventForm.get('deadlineComment')?.value) {
+        this.eventForm.get('deadlineIdea')?.setErrors({'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineIdea')?.setErrors(null);
+      }
+    });
+
+    this.eventForm.get('deadlineComment')?.valueChanges.subscribe(value => {
+      const deadlineComment = this.eventForm.get('deadlineComment')?.value;
+      if (deadlineComment < now) {
+        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineComment')?.setErrors(null);
+      }
+
+      if(deadlineComment < this.eventForm.get('deadlineIdea')?.value) {
+        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineComment')?.setErrors(null);
+      }
+    });
+
+    
+
+  
+
+
+    
   }
 
 
@@ -146,6 +213,40 @@ export class EventAndDeadLineComponent implements OnInit {
 
 
   ngOnInit() {
+
+    const now = new Date();
+    console.log(now);
+    this.eventForm.get('deadlineIdea')?.valueChanges.subscribe(value => {
+      const deadlineIdea = this.eventForm.get('deadlineIdea')?.value;
+      if (deadlineIdea < now) {
+        console.log("deadlineIdea < now");
+        this.eventForm.get('deadlineIdea')?.setErrors({ 'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineIdea')?.setErrors(null);
+      }
+
+
+      if(deadlineIdea > this.eventForm.get('deadlineComment')?.value) {
+        this.eventForm.get('deadlineIdea')?.setErrors({'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineIdea')?.setErrors(null);
+      }
+    });
+
+    this.eventForm.get('deadlineComment')?.valueChanges.subscribe(value => {
+      const deadlineComment = this.eventForm.get('deadlineComment')?.value;
+      if (deadlineComment < now) {
+        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineComment')?.setErrors(null);
+      }
+
+      if(deadlineComment < this.eventForm.get('deadlineIdea')?.value) {
+        this.eventForm.get('deadlineComment')?.setErrors({'incorrect': true });
+      } else {
+        this.eventForm.get('deadlineComment')?.setErrors(null);
+      }
+    });
 
     
 
