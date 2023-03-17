@@ -49,7 +49,7 @@ import { CommentsListComponent } from './comments/comments-list/comments-list.co
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashBoardComponent } from './qam/dash-board/dash-board.component';
-import { CategoryManagerComponent } from './qam/category-manager/category-manager.component';
+
 
 import { QacComponent } from './qac/qac.component';
 import { ProfileUserComponent } from './qac/profile-user/profile-user.component';
@@ -57,6 +57,7 @@ import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
 import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
+import { CategorymanagerComponent } from './qam/category-manager/category-manager.component';
 
 
 @NgModule({
@@ -82,7 +83,7 @@ import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
 
     DashboardsAdminComponent,
     MostPopularIdeaComponent,
-
+    CategorymanagerComponent,
     SwitcherWrapperComponent,
     ProfileStaffComponent,
     CreateIdeaComponent,
@@ -91,7 +92,6 @@ import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
     CommentsListComponent,
     DocumentDownloadComponent,
     DashBoardComponent,
-    CategoryManagerComponent,
     QacComponent,
     ProfileUserComponent,
     ViewIdeaComponent,

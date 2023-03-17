@@ -7,7 +7,7 @@ import { CreateAccountComponent } from './admin/create-account/create-account.co
 
 import { LoginComponent } from './login/login.component';
 import { QamComponent } from './qam/qam.component';
-import { CategoryManagerComponent } from './qam/category-manager/category-manager.component';
+import { CategorymanagerComponent } from './qam/category-manager/category-manager.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StaffComponent } from './staff/staff.component';
 import { TesttemComponent } from './testtem/testtem.component';
@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'testtem', component: TesttemComponent },
   {path: 'qam', component: QamComponent,
     children: [
-      { path: 'category-manager', component: CategoryManagerComponent },
+      { path: 'category-manager', component: CategorymanagerComponent },
       {path: 'dash-board', component: DashBoardComponent},
       {path: 'idea', component: MostPopularIdeaComponent },
       {
