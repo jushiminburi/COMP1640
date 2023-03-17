@@ -56,6 +56,8 @@ module.exports = {
   COMMENT_NOT_FOUND: 'Comment not found',
   UPDATE_COMMENT_SUCCESS: 'Updated comment',
   DELETE_COMMENT_SUCCESS: 'Deleted comment',
+  UNLIKE_COMMENT_SUCCESSFULL: 'UnLike comment successful!',
+  LIKE_COMMENT_SUCCESSFULL: 'Like comment successful!',
 
   // Department
   DEPARTMENT_EXSITS: 'Department is exsits!',

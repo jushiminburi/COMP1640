@@ -20,6 +20,12 @@ function unlinkFile (file) {
     }
   })
 }
+function removeElement (array, elem) {
+  const index = array.indexOf(elem)
+  if (index > -1) {
+    array.splice(index, 1)
+  }
+}
 function timeComment (diffMinutes) {
   let message
   if (diffMinutes < 1) {
@@ -47,7 +53,7 @@ module.exports = {
     const listFile = req.listFile
     try {
       const userId = req.userId
-      const { ideaId, content, commentId, deadlineComment } = req.body
+      const { ideaId, content, deadlineComment } = req.body
       const resultValidate = validate(req.body)
       if (resultValidate.error) {
         if (listFile.length !== 0) {
@@ -70,33 +76,15 @@ module.exports = {
       if (listFile.length > 0) {
         const fileId = await getNextSequenceValue('fileId')
         await Files.create({ id: fileId, file: listFile })
-        if (commentId === undefined) {
-          const id = await getNextSequenceValue('commentId')
-          await new Comment({ ideaId, id, userId, content, file: fileId }).save()
-          await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
-            { new: true })
-        } else {
-          const baseComment = await Comment.findOne({ id: commentId })
-          if (baseComment == null) {
-            return apiResponse.response_status(res, Languages.COMMENT_NOT_FOUND, 400)
-          }
-          const replyId = await getNextSequenceValue('commentReplyId')
-          await new CommentReply({ ideaId, id: replyId, userId, content, commentId, file: fileId }).save()
-        }
+        const id = await getNextSequenceValue('commentId')
+        await new Comment({ ideaId, id, userId, content, file: fileId }).save()
+        await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
+          { new: true })
       } else {
-        if (commentId === undefined) {
-          const id = await getNextSequenceValue('commentId')
-          await new Comment({ ideaId, id, userId, content }).save()
-          await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
-            { new: true })
-        } else {
-          const baseComment = await Comment.findOne({ id: commentId })
-          if (baseComment == null) {
-            return apiResponse.response_status(res, Languages.COMMENT_NOT_FOUND, 400)
-          }
-          const replyId = await getNextSequenceValue('commentReplyId')
-          await new CommentReply({ ideaId, id: replyId, userId, content, commentId }).save()
-        }
+        const id = await getNextSequenceValue('commentId')
+        await new Comment({ ideaId, id, userId, content }).save()
+        await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
+          { new: true })
       }
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
@@ -265,6 +253,28 @@ module.exports = {
       }
       await CommentReply.findOneAndDelete({ id: commentId, userId })
       return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
+    } catch (error) {
+      return apiResponse.response_error_500(res, error.message)
+    }
+  },
+  async likeComment (req, res) {
+    try {
+      const userId = req.userId
+      const commentId = req.params.id
+      const comment = await Comment.findOne({ id: commentId })
+      if (comment == null) {
+        return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
+      }
+      if (comment.likes.includes(userId)) {
+        removeElement(comment.likes, userId)
+        comment.totalLike -= 1
+        await comment.save()
+        return apiResponse.response_status(res, Languages.UNLIKE_COMMENT_SUCCESSFULL, 200)
+      }
+      comment.likes.push(userId)
+      comment.totalLike += 1
+      await comment.save()
+      return apiResponse.response_status(res, Languages.LIKE_COMMENT_SUCCESSFULL, 200)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }

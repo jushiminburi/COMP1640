@@ -9,4 +9,5 @@ router.get('/list', CommentController.listComment)
 router.put('/update/:id', verifyToken, CommentController.updateComment)
 router.delete('/delete/:id', verifyToken, CommentController.deleteComment)
 router.delete('/delete-reply/:id', verifyToken, CommentController.deleteComment)
+router.get('/like/:id', verifyToken, CommentController.likeComment)
 module.exports = router

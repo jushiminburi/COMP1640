@@ -350,7 +350,7 @@ module.exports = {
         removeElement(idea.likes, userId)
         idea.totalLike -= 1
       }
-      idea.likes.push(userId)
+      idea.dislikes.push(userId)
       idea.totalDislike += 1
       idea.totalViews += 1
       await idea.save()
