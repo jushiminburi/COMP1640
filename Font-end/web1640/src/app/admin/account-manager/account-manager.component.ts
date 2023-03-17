@@ -14,6 +14,8 @@ import { NgToastService } from 'ng-angular-popup';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import Swal from 'sweetalert2'
+
 interface User {
   avatar: string;
   department: string;
@@ -146,7 +148,8 @@ export class AccountManagerComponent implements OnInit {
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/admin/accountmanager']).then(() => {
               this.modalService.dismissAll();
-              this.toast.success({ detail: "Edit Account Success!", duration: 3000, position: "top-right" })
+              Swal.fire("Account edited successfully!", "", "success");
+              // this.toast.success({ detail: "Edit Account Success!", duration: 3000, position: "top-right" })
 
 
             })
@@ -181,8 +184,14 @@ export class AccountManagerComponent implements OnInit {
       res => {
         console.log(res);
         var users = JSON.parse(res);
-        console.log(users);
+        
         this.users = users.data.listUser;
+        //change avater url
+        this.users.forEach((user: any) => {
+          //change localhost to ip
+          user.avatar = user.avatar.replace("localhost:8888", "139.162.47.239");
+        })
+        console.log(users);
         this.totalPages = Math.ceil(users.data.totalUser / this.limit);
         this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i+1)
       },
@@ -261,26 +270,58 @@ export class AccountManagerComponent implements OnInit {
   })
 
   delete(id: number) {
-    if (confirm("Are you sure you want to delete this account?")) {
-      this.api.deleteUser(id).subscribe((data: any) => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/admin/accountmanager']).then(() => {
-            this.modalService.dismissAll();
-            this.toast.success({ detail: "Edit Account Success!", duration: 3000, position: "top-right" })
-          })
-        })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.api.deleteUser(id).subscribe((data: any) => {
+          // Swal.fire(
+          //   'Deleted!',
+          //   'Your file has been deleted.',
+          //   'success'
+          // )
+          this.toast.success({ detail: "Delete Account Success!", duration: 3000, position: "top-right" })
+          this.loadStudents();
+        },
 
-
-
-      },
-        error => {
-          alert("Delete Failed!")
-        }
-
-      );
-    }
-
+          error => {
+            Swal.fire(
+              'Failed!',
+              'Delete failed.',
+              'error'
+            )
+          }
+        )
+      }
+    })
   }
+
+    // if (confirm("Are you sure you want to delete this account?")) {
+    //   this.api.deleteUser(id).subscribe((data: any) => {
+    //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //       this.router.navigate(['/admin/accountmanager']).then(() => {
+    //         this.modalService.dismissAll();
+    //         this.toast.success({ detail: "Edit Account Success!", duration: 3000, position: "top-right" })
+    //       })
+    //     })
+
+
+
+    //   },
+    //     error => {
+    //       alert("Delete Failed!")
+    //     }
+
+    //   );
+    // }
+
+  // }
 
 
 

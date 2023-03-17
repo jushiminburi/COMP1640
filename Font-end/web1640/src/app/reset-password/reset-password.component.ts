@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class ResetPasswordComponent {
     private api: ApiService,
     private router: Router,
     private fb: FormBuilder,
-    private dialog: MatDialog) {
+    private dialog: MatDialog, private toast: NgToastService) {
 
   } //dependency injection
 
@@ -27,11 +28,10 @@ export class ResetPasswordComponent {
 
   ngOnInit() {
 
+    console.log(localStorage.getItem('token'))
     this.resetPasswordForm = this.fb.group({
       
       password: ['', [Validators.required, Validators.minLength(6)]],
-      
-      
       
     });
 
@@ -42,6 +42,7 @@ export class ResetPasswordComponent {
 
 
    onSubmit() {
+    
     //get password from localstorage
 
     // if(this.loginForm.invalid){

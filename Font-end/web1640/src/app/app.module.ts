@@ -43,6 +43,8 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentsListComponent } from './comments/comments-list/comments-list.component';
+
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashBoardComponent } from './qam/dash-board/dash-board.component';
 import { CategoryManagerComponent } from './qam/category-manager/category-manager.component';
@@ -103,8 +105,8 @@ import { EachEventComponent } from './staff/each-event/each-event.component';
     
   ],
   imports: [
-    BrowserModule, HttpClientModule, FormsModule,
-    AppRoutingModule, ReactiveFormsModule, MatDialogModule,  ToastrModule.forRoot({
+    BrowserModule, HttpClientModule, FormsModule, SweetAlert2Module.forRoot(),
+    AppRoutingModule, ReactiveFormsModule, MatDialogModule, ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,

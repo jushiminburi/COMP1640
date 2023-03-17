@@ -31,6 +31,7 @@ export class ApiService {
   // }
 
   deleteCategory(id: number){
+    console.log(id);
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -40,8 +41,8 @@ export class ApiService {
       })
     };
 
-      return this.http.get(api + `category/delete/${id}}`
-      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+      return this.http.delete(api + `category/delete/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
 
   }
@@ -59,8 +60,8 @@ export class ApiService {
       })
     };
 
-      return this.http.get(api + 'categories/list'
-      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+      return this.http.get(api + 'category/list'
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
 
   }
@@ -108,7 +109,7 @@ export class ApiService {
     };
     const category = {name: name}
 
-    return this.http.post(api + 'categories/add', category, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+    return this.http.post(api + 'category/add', category, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   }
 

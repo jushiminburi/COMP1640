@@ -87,6 +87,12 @@
                                                 <h4>Name Category </h4>
 
                                                 <input type="text" class="form-control" placeholder="Enter Name Category" formControlName="name" />
+                                                <div class="text-danger text-center invalid-feedback d-block" *ngIf="!categoryForm.get('name')?.valid && (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)">
+                                                    <span [hidden]="!categoryForm!.get('name')?.errors?.['required']">
+                                                   Name is required!
+                                                </span>
+                                                </div>
+
                                                 <!--<div class="text-danger text-center invalid-feedback d-block" *ngIf="!addcategoryForm.controls.Newcategory?.valid && (addcategoryForm.controls.Newcategory?.dirty || addcategoryForm.controls.Newcategory?.touched)">
                                             <span [hidden]="!addcategoryForm.controls.Newcategory.errors?.['required']">
                                                 Password is required!
