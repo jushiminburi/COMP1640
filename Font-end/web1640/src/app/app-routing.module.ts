@@ -35,15 +35,14 @@ const routes: Routes = [
       { path: 'category-manager', component: CategorymanagerComponent },
       {path: 'dash-board', component: DashBoardComponent},
       {path: 'idea', component: MostPopularIdeaComponent },
-      {
-        path:'event-detail', component: EventDetailComponent },
-
+      {path:'events/:id', component: EventDetailComponent },
       {path : 'document-download', component: DocumentDownloadComponent}]
 
    },
 
     { path: 'qac' , component: QacComponent,
-    children:[{path: 'view-idea', component: ViewIdeaComponent},{
+    children:
+    [{path: 'view-idea', component: ViewIdeaComponent},{
       path: 'profile-user', component: ProfileUserComponent
     },{path:'email', component:EmailComponent}]
   }
