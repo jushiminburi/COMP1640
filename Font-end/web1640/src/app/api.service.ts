@@ -46,6 +46,22 @@ export class ApiService {
 
 
   }
+  deleteDepartment(id: number){
+    console.log(id);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+      return this.http.delete(api + `department/delete/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+
+  }
   // listCategory():Observable<Category>{
   //   return this.http.get<Category>(this.)
   // }
@@ -76,7 +92,7 @@ export class ApiService {
       } )
     };
 
-    return this.http.get( api + 'departments/list'
+    return this.http.get( api + 'department/list'
       , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
 
 
@@ -95,6 +111,35 @@ export class ApiService {
     return this.http.get( api + 'categories/list'
       , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
 
+
+  }
+  getListDepartment ()
+  {
+
+    const httpOptions = {
+      headers: new HttpHeaders( {
+        'Authorization': 'Bearer ' + localStorage.getItem( 'accessToken' ),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      } )
+    };
+
+    return this.http.get( api + 'departments/list'
+      , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
+
+
+  }
+  addDepartment(name: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+    const department = {name: name}
+
+    return this.http.post(api + 'category/add', department, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   }
 

@@ -25,6 +25,7 @@ import { DocumentDownloadComponent } from './qam/document-download/document-down
 import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
 import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
 import { EachEventComponent } from './staff/each-event/each-event.component';
+import { DepartmentManagerComponent } from './admin/department-manager/department-manager.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -55,6 +56,7 @@ const routes: Routes = [
       {path: 'accountmanager', component: AccountManagerComponent},
       {path: 'eventlist', component: EventListComponent },
       {path: 'eventanddeadline', component: EventAndDeadLineComponent},
+      {path: 'department', component: DepartmentManagerComponent}
 
 
     ],
