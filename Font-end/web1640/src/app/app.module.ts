@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+
 import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +13,6 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LogoWebComponent } from './logo-web/logo-web.component';
 // import { Interceptor } from './Interceptor';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TesttemComponent } from './testtem/testtem.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AccountManagerComponent } from './admin/account-manager/account-manager.component';
@@ -29,7 +28,6 @@ import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-i
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
-import { NgToastModule } from 'ng-angular-popup';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -60,6 +58,10 @@ import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.
 import { IdeaOfEventComponent } from './staff/idea-of-event/idea-of-event.component';
 import { EachIdeaComponent } from './staff/each-idea/each-idea.component';
 import { EachEventComponent } from './staff/each-event/each-event.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgToastModule } from 'ng-angular-popup';
+import { DepartmentManagerComponent } from './admin/department-manager/department-manager.component';
 
 
 @NgModule({
@@ -102,6 +104,7 @@ import { EachEventComponent } from './staff/each-event/each-event.component';
     IdeaOfEventComponent,
     EachIdeaComponent,
     EachEventComponent,
+    DepartmentManagerComponent,
 
     
   ],

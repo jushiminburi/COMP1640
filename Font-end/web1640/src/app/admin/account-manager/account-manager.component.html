@@ -17,8 +17,10 @@
 
     </div>
     <div class="col-md-12  card radius-15 align-content-center ">
+        <h4 class="text-center">All Account </h4>
         <div class="card-body p-0">
-            <div class="table-responsive">
+            <div class="table-responsive p-1">
+                <div class="row col-12 card radius-15 m-auto">
                 <table class="table mb-0">
 
                     <thead>
@@ -57,6 +59,7 @@
 
                     </tbody>
                 </table>
+            </div>
 
 
                 <!-- Modal -->
@@ -228,24 +231,25 @@
                     <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
             </div> -->
 
-                <div class="pagination justify-content-end">
-                    <nav aria-label="Page navigation example ">
-                        <ul class="pagination round-pagination ">
-                            <li class="page-item">
-                                <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-                            </li>
-                            <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
-
-                                <li class="page-item">
-                                    <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-                                </li>
-                        </ul>
-                    </nav>
-                </div>
+                
 
 
 
             </div>
+        </div>
+        <div class="pagination justify-content-end">
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination round-pagination ">
+                    <li class="page-item">
+                        <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
+                    </li>
+                    <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
+
+                        <li class="page-item">
+                            <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+                        </li>
+                </ul>
+            </nav>
         </div>
     </div>
 

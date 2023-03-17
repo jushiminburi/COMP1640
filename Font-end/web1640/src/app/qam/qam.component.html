@@ -16,18 +16,15 @@
         <!--navigation-->
         <ul class="metismenu" id="menu">
 
-
-
-
             <li>
                 <a [routerLink]="['/qam/category-manager']" href="#">
-                    <div class="parent-icon icon-color-5"><i class="lni lni-package"></i>
+                    <div class="parent-icon icon-color-2"><i class="lni lni-package"></i>
                     </div>
                     <div class="menu-title"> Category Manager</div>
                 </a>
             </li> <li>
                 <a [routerLink]="['/qam/idea']" href="javascript:;" >
-                    <div class="parent-icon icon-color-5"><i class="lni lni-bulb"></i>
+                    <div class="parent-icon icon-color-2"><i class="lni lni-bulb"></i>
                     </div>
                     <div class="menu-title">Idea</div>
                 </a>
@@ -41,7 +38,7 @@
             </li>
              <li>
                 <a [routerLink]="['/qam/dash-board']" href="#">
-                    <div class="parent-icon icon-color-5"><i class="lni lni-dashboard"></i>
+                    <div class="parent-icon icon-color-2"><i class="lni lni-dashboard"></i>
                     </div>
                     <div class="menu-title">Dashboards</div>
                 </a>
@@ -49,7 +46,7 @@
 
             <li>
                 <a [routerLink]="['/qam/document-download']" href="#">
-                    <div class="parent-icon icon-color-5"><i class="lni lni-download"></i>
+                    <div class="parent-icon icon-color-2"><i class="lni lni-download"></i>
                     </div>
                     <div class="menu-title"> Download document
                     </div>
@@ -85,4 +82,43 @@
 <!-- end wrapper -->
 <!--start switcher-->
 
-<app-switcherWrapper></app-switcherWrapper>
+<div class="switcher-wrapper">
+    <div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
+    </div>
+    <div class="switcher-body">
+        <h5 class="mb-0 text-uppercase">Theme Customizer</h5>
+        <hr />
+        <h6 class="mb-0">Theme Styles</h6>
+        <hr />
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="custom-control custom-radio">
+                <input type="radio" id="darkmode" name="customRadio" class="custom-control-input">
+                <label class="custom-control-label" for="darkmode">Dark Mode</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="lightmode" name="customRadio" checked class="custom-control-input">
+                <label class="custom-control-label" for="lightmode">Light Mode</label>
+            </div>
+        </div>
+        <hr />
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="DarkSidebar">
+            <label class="custom-control-label" for="DarkSidebar">Dark Sidebar</label>
+        </div>
+        <hr />
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="ColorLessIcons">
+            <label class="custom-control-label" for="ColorLessIcons">Color Less Icons</label>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script>
+    import PerfectScrollbar from 'perfect-scrollbar';
+    const socialListScrollbar = new PerfectScrollbar('.dashboard-social-list');
+    const topCountriesScrollbar = new PerfectScrollbar('.dashboard-top-countries');
+</script>

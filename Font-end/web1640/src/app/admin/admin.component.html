@@ -24,7 +24,7 @@
 
             <li>
                 <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon icon-color-1"><i class="bx bx-folder"></i>
+                    <div class="parent-icon icon-color-2"><i class="bx bx-folder"></i>
                     </div>
                     <div class="menu-title">Event</div>
                 </a>
@@ -37,11 +37,19 @@
                 </ul>
             </li>
             <!-- <li class="menu-label">Web Apps</li> -->
+            <li>
+                <a [routerLink]="['/admin/department']" href="#">
+                    <div class="parent-icon icon-color-2"><i class="bx bx-folder"></i>
+                    </div>
+                    <div class="menu-title">Department</div>
+                </a>
+                
+            </li>
 
 
             <li>
                 <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon icon-color-1"><i class="bx bx-group"></i>
+                    <div class="parent-icon icon-color-2"><i class="bx bx-group"></i>
                     </div>
                     <div class="menu-title">Account Manager</div>
                 </a>
@@ -90,38 +98,7 @@
 </div>
 <!-- end wrapper -->
 <!--start switcher-->
-<div class="switcher-wrapper">
-    <div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
-    </div>
-    <div class="switcher-body">
-        <h5 class="mb-0 text-uppercase">Theme Customizer</h5>
-        <hr />
-        <h6 class="mb-0">Theme Styles</h6>
-        <hr />
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="custom-control custom-radio">
-                <input type="radio" id="darkmode" name="customRadio" class="custom-control-input">
-                <label class="custom-control-label" for="darkmode">Dark Mode</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="lightmode" name="customRadio" checked class="custom-control-input">
-                <label class="custom-control-label" for="lightmode">Light Mode</label>
-            </div>
-        </div>
-        <hr />
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="DarkSidebar">
-            <label class="custom-control-label" for="DarkSidebar">Dark Sidebar</label>
-        </div>
-        <hr />
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="ColorLessIcons">
-            <label class="custom-control-label" for="ColorLessIcons">Color Less Icons</label>
-        </div>
-    </div>
-
-
-</div>
+<app-switcherWrapper></app-switcherWrapper>
 
 
 
