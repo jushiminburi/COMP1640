@@ -7,6 +7,7 @@
     "ng-bootstrap": "^0.46.0",
     "ng-toast": "^1.5.6",
     "ngx-bootstrap": "^10.2.0",
+    "ngx-image-viewer": "^1.0.13",
     "ngx-pagination": "^6.0.3",
     "ngx-toastr": "^16.1.0"
   }
