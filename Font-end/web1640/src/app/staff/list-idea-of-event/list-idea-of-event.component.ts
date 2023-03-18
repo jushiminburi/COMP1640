@@ -8,11 +8,11 @@ import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'idea-of-event',
-  templateUrl: './idea-of-event.component.html',
-  styleUrls: ['./idea-of-event.component.css']
+  selector: 'list-idea-of-event',
+  templateUrl: './list-idea-of-event.component.html',
+  styleUrls: ['./list-idea-of-event.component.css']
 })
-export class IdeaOfEventComponent {
+export class ListIdeaOfEventComponent {
 
   currentPage: number = 1;
   totalPages: number = 0;

@@ -60,8 +60,9 @@ const routes: Routes = [
 
     ],
  },
- { path: 'staff', component: StaffComponent ,
+ { path: 'staff', component: StaffComponent,
  children: [
+  {path: '', redirectTo: 'homepage', pathMatch: 'full'},
    {path: 'homepage', component: StaffHomePageComponent},
    {path: 'event/:id', component: EachEventComponent}
  ]},

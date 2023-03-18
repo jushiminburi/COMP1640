@@ -19,8 +19,10 @@
 
     <div class="row ">
 
-        <div class="col-md-12 card radius-15 align-content-center border mb-0 mt-2">
-            <div class="row">
+        <!-- <div class="col-md-12 card radius-15 align-content-center border mb-0 mt-2"> -->
+            
+            <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15">
+                
                 <div class="col-7">
                     <h4 class="text-right">Name Event </h4>
 
@@ -28,15 +30,10 @@
                 <div class="col-5">
                     <h6 class="text-center align-content-center">12/03/2023 - 12/04/2023</h6>
                 </div>
-            </div>
-            <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15">
-                <div>
-                    <p class="text-center">Content Event</p>
-                </div>
 
             </div>
             <br>
-        </div>
+        <!-- </div> -->
         <div class="col-md-12 radius-15 align-content-center text-center m-auto pt-4">
             <button class="btn btn-primary" data-toggle="modal" (click)="onClick()" data-target="#exampleModal2">Create New Idea</button>
         </div>
@@ -88,10 +85,12 @@
                                         </div> -->
                                         <span>
 
-                                            <button class="btn btn-danger" type="button" (click)="onRemoveFile()">X</button>
+                                            <button class="btn btn-sm btn-danger" type="button" (click)="onRemoveFile()">X</button>
                                         </span>
+                                 
                                         <div *ngIf="imageSrc">
                                             <img width="120px" height="120px" [src]="imageSrc" alt="Preview">
+                                      
                                         </div>
 
                                         <!--<div *ngIf="fileContent">
@@ -115,7 +114,7 @@
         </div>
 
 
-        <idea-of-event></idea-of-event>
+        <list-idea-of-event></list-idea-of-event>
     </div>
 
 </div>

@@ -55,7 +55,7 @@ import { DocumentDownloadComponent } from './qam/document-download/document-down
 
 import { CategorymanagerComponent } from './qam/category-manager/category-manager.component';
 import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
-import { IdeaOfEventComponent } from './staff/idea-of-event/idea-of-event.component';
+import { ListIdeaOfEventComponent } from './staff/list-idea-of-event/list-idea-of-event.component';
 import { EachIdeaComponent } from './staff/each-idea/each-idea.component';
 import { EachEventComponent } from './staff/each-event/each-event.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -65,6 +65,8 @@ import { DepartmentManagerComponent } from './admin/department-manager/departmen
 import { ImageViewerModule } from 'ngx-image-viewer';
 
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
+import { InputCommentComponent } from './staff/input-comment/input-comment.component';
+import { ListCommentComponent } from './staff/list-comment/list-comment.component';
 
 @NgModule({
   declarations: [
@@ -103,11 +105,13 @@ import { DialogComponentComponent } from './dialog-component/dialog-component.co
     EventDetailComponent ,
     StaffComponent,
     StaffHomePageComponent,
-    IdeaOfEventComponent,
+    ListIdeaOfEventComponent,
     EachIdeaComponent,
     EachEventComponent,
     DepartmentManagerComponent,
     DialogComponentComponent,
+    InputCommentComponent,
+    ListCommentComponent,
 
     
   ],
