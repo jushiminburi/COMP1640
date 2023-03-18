@@ -19,8 +19,12 @@ export class CreateAccountComponent implements OnInit {
 
   currentFile!: File;
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
-  ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
+  ngOptionrole = ["Admin", "QAM", "QAC", "Staff"];
   public aElement?: boolean = true;
+
+  
+
+
 
  
   onclick() {
@@ -52,10 +56,27 @@ export class CreateAccountComponent implements OnInit {
   //   avatar: new FormControl(File)
   //  })
 
+  categories?: any[] = []
+
+
+  getCategories() {
+    this.api.getCategory().subscribe((data: any) => {
+      console.log(data);
+      this.categories = data.data.list
+      
+    }, error => {
+      console.log(error);
+    })
+
+    
+  }
+
+
   
 
   ngOnInit(): void {
     // this.newAccount();
+    this.getCategories();
 
     this.createAccountForm = this.fb.group({
       firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -64,7 +85,7 @@ export class CreateAccountComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
       role: new FormControl('', [Validators.required]),
       department: new FormControl('', [Validators.required]),
-      avatar: new FormControl('')
+      files: new FormControl('')
     })
     
   }
@@ -185,7 +206,7 @@ export class CreateAccountComponent implements OnInit {
     console.log(formData.get('password'));
     console.log(formData.get('role'));
     console.log(formData.get('department'));
-    console.log(formData.get('avatar'));
+    console.log(formData.get('files'));
     this.api.createNewAccount( formData
     ).subscribe(res => {
 

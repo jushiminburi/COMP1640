@@ -231,7 +231,7 @@ export class ApiService {
     // }
     // else {
   
-      return this.http.get(api +  `comment/list/${ideaId}`
+      return this.http.get(api +  `comment/list/?ideaId=${ideaId}`
       , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
     
@@ -444,12 +444,12 @@ export class ApiService {
     console.log(formData.get('categoryId'))
     console.log(formData.get('eventId'))
     console.log(formData.get('anonymous'))
+    
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
-        'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json',
+       
         'Access-Control-Allow-Origin': '*',
       })
     };
