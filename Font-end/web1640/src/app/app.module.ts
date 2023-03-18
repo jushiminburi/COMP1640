@@ -67,6 +67,8 @@ import { ImageViewerModule } from 'ngx-image-viewer';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { InputCommentComponent } from './staff/input-comment/input-comment.component';
 import { ListCommentComponent } from './staff/list-comment/list-comment.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +114,8 @@ import { ListCommentComponent } from './staff/list-comment/list-comment.componen
     DialogComponentComponent,
     InputCommentComponent,
     ListCommentComponent,
+    ProfilePageComponent,
+    ProfileUserComponent,
 
     
   ],
