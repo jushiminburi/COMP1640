@@ -1,4 +1,3 @@
-
 <!-- wrapper -->
 <div class="wrapper">
     <!--sidebar-wrapper-->
@@ -15,6 +14,13 @@
         </div>
         <!--navigation-->
         <ul class="metismenu" id="menu">
+            <li>
+                <a [routerLink]="['/qam/dash-board']" href="#">
+                    <div class="parent-icon icon-color-2"><i class="lni lni-dashboard"></i>
+                    </div>
+                    <div class="menu-title">Dashboards</div>
+                </a>
+            </li>
 
             <li>
                 <a [routerLink]="['/qam/category-manager']" href="#">
@@ -22,8 +28,9 @@
                     </div>
                     <div class="menu-title"> Category Manager</div>
                 </a>
-            </li> <li>
-                <a [routerLink]="['/qam/idea']" href="javascript:;" >
+            </li>
+            <li>
+                <a [routerLink]="['/qam/idea']" href="javascript:;">
                     <div class="parent-icon icon-color-2"><i class="lni lni-bulb"></i>
                     </div>
                     <div class="menu-title">Idea</div>
@@ -36,13 +43,7 @@
                     </li>
                 </ul> -->
             </li>
-             <li>
-                <a [routerLink]="['/qam/dash-board']" href="#">
-                    <div class="parent-icon icon-color-2"><i class="lni lni-dashboard"></i>
-                    </div>
-                    <div class="menu-title">Dashboards</div>
-                </a>
-            </li>
+
 
             <li>
                 <a [routerLink]="['/qam/document-download']" href="#">
@@ -64,7 +65,7 @@
     <div class="page-wrapper">
         <!--page-content-wrapper-->
         <div class="page-content-wrapper">
-     <router-outlet></router-outlet>
+            <router-outlet></router-outlet>
 
         </div>
         <!--end page-content-wrapper-->

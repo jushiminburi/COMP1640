@@ -30,42 +30,51 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'testtem', component: TesttemComponent },
-  {path: 'qam', component: QamComponent,
+  {
+    path: 'qam', component: QamComponent,
     children: [
-      { path: 'category-manager', component: CategorymanagerComponent },
-      {path: 'dash-board', component: DashBoardComponent},
-      {path: 'idea', component: MostPopularIdeaComponent },
-      {path:'events/:id', component: EventDetailComponent },
-      {path : 'document-download', component: DocumentDownloadComponent}]
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'categorymanager', component: CategorymanagerComponent },
+      { path: 'dashboard', component: DashBoardComponent },
+      { path: 'idea', component: MostPopularIdeaComponent },
+      { path: 'events/:id', component: EventDetailComponent },
+      { path: 'documentdownload', component: DocumentDownloadComponent }]
 
-   },
+  },
 
-    { path: 'qac' , component: QacComponent,
+  {
+    path: 'qac', component: QacComponent,
     children:
-    [{path: 'view-idea', component: ViewIdeaComponent},{
-      path: 'profile-user', component: ProfileUserComponent
-    },{path:'email', component:EmailComponent}]
+      [
+        { path: '', redirectTo: 'viewidea', pathMatch: 'full' },
+        { path: 'viewidea', component: ViewIdeaComponent },
+        { path: 'profileuser', component: ProfileUserComponent },
+        { path: 'email', component: EmailComponent }
+      ]
   }
-,
-  { path: 'resetpassword', component: ResetPasswordComponent},
-  { path: 'admin', component: AdminComponent,
+  ,
+  { path: 'resetpassword', component: ResetPasswordComponent },
+  {
+    path: 'admin', component: AdminComponent,
     children: [
-      {path: 'dashboard', component: DashboardsAdminComponent},
-      {path: 'createaccount', component: CreateAccountComponent },
-      {path: 'accountmanager', component: AccountManagerComponent},
-      {path: 'eventlist', component: EventListComponent },
-      {path: 'eventanddeadline', component: EventAndDeadLineComponent},
-      {path: 'department', component: DepartmentManagerComponent}
+      { path: 'dashboard', component: DashboardsAdminComponent },
+      { path: 'createaccount', component: CreateAccountComponent },
+      { path: 'accountmanager', component: AccountManagerComponent },
+      { path: 'eventlist', component: EventListComponent },
+      { path: 'eventanddeadline', component: EventAndDeadLineComponent },
+      { path: 'department', component: DepartmentManagerComponent }
 
 
     ],
- },
- { path: 'staff', component: StaffComponent,
- children: [
-  {path: '', redirectTo: 'homepage', pathMatch: 'full'},
-   {path: 'homepage', component: StaffHomePageComponent},
-   {path: 'event/:id', component: EachEventComponent}
- ]},
+  },
+  {
+    path: 'staff', component: StaffComponent,
+    children: [
+      { path: '', redirectTo: 'homepage', pathMatch: 'full' },
+      { path: 'homepage', component: StaffHomePageComponent },
+      { path: 'event/:id', component: EachEventComponent }
+    ]
+  },
 
 
 
