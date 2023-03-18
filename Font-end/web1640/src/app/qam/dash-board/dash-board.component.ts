@@ -23,6 +23,8 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 export class DashBoardComponent implements OnInit {
   PieChart = [];
   BarChart = [];
+  LineChart = [];
+  AreaChart = [];
 
   totalIdeas: any;
   totalComments: any;
@@ -90,13 +92,13 @@ export class DashBoardComponent implements OnInit {
     this.api.getDepartment().subscribe((d: any) => {
       var data = JSON.parse(d);
       console.log(data);
-      
+
         this.totalDepartment = data.data.totalDepartment;
         console.log(this.totalDepartment);
      })
   }
 
-  
+
 
   createAccountForm!: FormGroup;
 
@@ -126,7 +128,7 @@ export class DashBoardComponent implements OnInit {
 
   }
 
-  
+
 
   getAnUser(id: number) {
     console.log(id);
@@ -220,7 +222,7 @@ export class DashBoardComponent implements OnInit {
   //     res => {
   //       console.log(res);
   //       var users = JSON.parse(res);
-        
+
   //       this.users = users.data.listUser;
   //       //change avater url
   //       this.users.forEach((user: any) => {
@@ -341,7 +343,7 @@ ngOnInit() {
   options: {
 
       },
-    
+
   });
 
   const columnChart = new Chart('columnChart', {
@@ -393,7 +395,7 @@ ngOnInit() {
     data: {
 
       datasets: [ {
-        label: 'Numbers Of Staff With Ideas Submissions Per Departments',
+        label: 'The ratio betwwen the numbr of ideas to the number of categories',
         data: [ 12, 8, 3, 5, 7, 3 ],
         backgroundColor: [
           'rgb(224, 89, 94)',
@@ -412,8 +414,10 @@ ngOnInit() {
           'rgb(255, 204, 179)'
         ],
         borderWidth: 2
+
       } ],labels: [ 'Department 1', 'Department 2', 'Departments 3', 'Departments 4', 'Departments 5', 'Departments 6' ],
     }
   } );
+
 }
 }

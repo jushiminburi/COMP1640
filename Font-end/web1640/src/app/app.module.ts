@@ -92,14 +92,14 @@ import { ListCommentComponent } from './staff/list-comment/list-comment.componen
     MostPopularIdeaComponent,
     CategorymanagerComponent,
     SwitcherWrapperComponent,
-  
+
     SnackBarComponent,
     CommentsComponent,
     CommentsListComponent,
     DocumentDownloadComponent,
     DashBoardComponent,
     QacComponent,
-  
+
     EmailComponent,
 
     EventDetailComponent ,
@@ -112,8 +112,9 @@ import { ListCommentComponent } from './staff/list-comment/list-comment.componen
     DialogComponentComponent,
     InputCommentComponent,
     ListCommentComponent,
+    ProfileUserComponent,
 
-    
+
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, SweetAlert2Module.forRoot(),
