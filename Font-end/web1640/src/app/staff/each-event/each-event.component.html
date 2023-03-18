@@ -38,58 +38,78 @@
             <br>
         </div>
         <div class="col-md-12 radius-15 align-content-center text-center m-auto pt-4">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">Create New Idea</button>
+            <button class="btn btn-primary" data-toggle="modal" (click)="onClick()" data-target="#exampleModal2">Create New Idea</button>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-dialog modal-dialog-scrollbar">
                 <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title ">Create Idea</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+                    <form [formGroup]="createIdeaForm" enctype="multipart/form-data" (ngSubmit)="addAnIdea(createIdeaForm.value)" validate>
+                        <div class="modal-header ">
+                            <h5 class="modal-title ">Create Idea</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
                                 aria-hidden="true">&times;</span>
                         </button>
-                    </div>
-                    <div class="modal-body">
-                       
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">Hide Identity</label>
                         </div>
-                        
-                        <div class="form-group">
-                            <h5 class="text-center">Title</h5>
-                            <input type="text" class="form-control" placeholder="Title..." formControlName="">
-                        </div>
-                        <div class="form-group">
-                            <h5 class="text-center">Content</h5>
-                            <select class=" form-select" aria-label="Button group with nested dropdown">
-                                <option *ngFor="let opt of ngListCategory" class="text-center">{{opt}}</option>
+                        <div class="modal-body">
+
+                            <div class="custom-control custom-switch">
+                                <input formControlName="anonymous" type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">Hide Identity</label>
+                            </div>
+
+                            <div class="form-group">
+                                <h5 class="text-center">Title</h5>
+                                <input type="text" class="form-control" placeholder="Title..." formControlName="title">
+                            </div>
+                            <div class="form-group">
+                                <h5 class="text-center">Category</h5>
+                                <select formControlName="categoryId" class="form-select" aria-label="Button group with nested dropdown">
+                                <option *ngFor="let category of categories" [value]="category.id" class="text-center">{{category.name}}</option>
 
                             </select>
-                        </div>
+                            </div>
 
-                        <div class="form-group">
-                            <h5 class="text-center">Content</h5>
-                            <textarea class="form-control" placeholder="Content..." rows="3" cols="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <h5 class="text-center">Document</h5>
-                            <div class="card radius-15">
-                                <div class="card-body">
-                                    <form>
-                                        <input id="image-uploadify" type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" multiple>
-                                    </form>
+                            <div class="form-group">
+                                <h5 class="text-center">Content</h5>
+                                <textarea formControlName="content" class="form-control" placeholder="Content..." rows="3" cols="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <h5 class="text-center">Document</h5>
+                                <div class="card radius-15">
+                                    <div class="card-body">
+
+                                        <input (change)="onFileSelected($event)" formControlName="files" id="image-uploadify" type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf">
+                                        <!--<div *ngIf="imageSrc">
+                                            <img [src]="imageSrc" alt="Preview">
+                                        </div>
+                                        <div *ngIf="pdfSrc">
+                                            <iframe [src]="pdfSrc" width="100%" height="800px"></iframe>
+                                        </div> -->
+                                        <span>
+
+                                            <button class="btn btn-danger" type="button" (click)="onRemoveFile()">X</button>
+                                        </span>
+                                        <div *ngIf="imageSrc">
+                                            <img width="120px" height="120px" [src]="imageSrc" alt="Preview">
+                                        </div>
+
+                                        <!--<div *ngIf="fileContent">
+                                            <h3>Image Preview:</h3>
+                                            <img [src]="imageSrc" alt="Preview">
+                                        </div>
+                                    -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

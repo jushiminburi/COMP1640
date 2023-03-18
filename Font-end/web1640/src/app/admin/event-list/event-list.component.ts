@@ -1,14 +1,17 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from 'src/app/api.service';
 
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 import Swal from 'sweetalert2';
+import { ModalContainerComponent } from 'ngx-bootstrap/modal';
 
 
 interface Event {
@@ -38,19 +41,23 @@ export class EventListComponent implements OnInit {
   limit: number = 5;
   ststus: string = "";
 
+  
 
-
+  
+  @ViewChild('myModal', { static: true }) myModal!: ElementRef;
 
   pagedEvents: Event[] = []; // List of users for current page
   totalItems?: number; // Total number of users
 
   page?: number;
+  modalRef!: NgbModalRef;
+
 
   accounts?: any[];
 
   eventForm!: FormGroup;
 
-  constructor(private api: ApiService, private router: Router,
+  constructor(private api: ApiService, private router: Router, private modalService: NgbModal,
     private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toast: NgToastService) {
     this.eventForm = this.fb.group({
       id: ['', Validators.required],
@@ -100,8 +107,8 @@ export class EventListComponent implements OnInit {
     
     console.log(data);
     const datePipe = new DatePipe('en-US');
-    const formattedDateIdea = datePipe.transform(data.deadlineIdea, 'yyyy/MM/dd, HH:mm');
-    const formattedDateComment = datePipe.transform(data.deadlineComment, 'yyyy/MM/dd, HH:mm');
+    const formattedDateIdea = datePipe.transform(data.deadlineIdea, 'yyyy/MM/dd HH:mm');
+    const formattedDateComment = datePipe.transform(data.deadlineComment, 'yyyy/MM/dd HH:mm');
 
     data.deadlineIdea = formattedDateIdea;
     data.deadlineComment = formattedDateComment;
@@ -110,22 +117,50 @@ export class EventListComponent implements OnInit {
 
 
 
-    if (confirm("Are you sure to edit this event?")) {
-      this.api.editEvent(data).subscribe((response) => {
-        const data = JSON.parse(response);
-        if (data.status == 200) {
-          this.toast.success({ detail: "Edit event successfully!", summary: "Success", duration: 3000 });
-          this.router.navigate(['admin/eventlist']);
-        } else {
-          this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
-        }
-      }, (err: any) => {
-        this.toast.error({ detail: "Edit event failed!", summary: "Error", duration: 3000 });
-        console.log(err);
-      }
-      )
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this imaginary file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, edit it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.api.editEvent(data).subscribe(async (res: any) => {
+          
+          
+              this.loadEvents();
+              // this.myModal.nativeElement.hide();
+              // this.myModal.nativeElement.setAttribute('data-dismiss', 'modal');
+             
+              Swal.fire(
+                'Edited!',
+                'Your imaginary file has been edited.',
+                'success'
+              ).then((result) => {
+                if(result.isConfirmed){
+                  window.location.reload();
 
-    }
+                }
+                
+                  // this.myModal.nativeElement.hide();
+                  
+                
+              })
+        
+          
+        }, error => {
+          this.toast.error({ detail: 'Error editing event', position: 'top-right', duration: 3000 })
+        })
+      } 
+      // else if (result.dismiss === Swal.DismissReason.cancel) {
+      //   Swal.fire(
+      //     'Cancelled',
+      //     'Your imaginary file is safe :)',
+      //     'error'
+      //   ) 
+      // }
+    })
 
 
 
@@ -136,9 +171,11 @@ export class EventListComponent implements OnInit {
     //get event by id
     this.api.getEvents().subscribe(
       res => {
+       
 
         var events = JSON.parse(res).data.list
         let event = events.filter((event: any) => event.id == id)[0];
+        console.log(event)
 
         //convert date to dd/mm/yyyy - dùng moment cũng đc để chuyển giữa múi giờ.
         // let deadlineIdea: Date = new Date(event.deadlineIdea);
@@ -154,6 +191,15 @@ export class EventListComponent implements OnInit {
 
         // event.deadlineIdea = formattedDateIdea;
         // event.deadlineComment = formattedDateComment;
+        const datePipe = new DatePipe('en-US');
+       
+      const dateObj1 = new Date(event.deadlineIdea);
+      const dateObj2 = new Date(event.deadlineComment);
+      const formattedDate1 = datePipe.transform(dateObj1, 'yyyy-MM-ddTHH:mm:ss');
+      const formattedDate2 = datePipe.transform(dateObj2, 'yyyy-MM-ddTHH:mm:ss');
+      event.deadlineIdea = formattedDate1
+        event.deadlineComment = formattedDate2
+        console.log(event.deadlineIdea);
         this.eventForm.patchValue(event);
         console.log(event);
 

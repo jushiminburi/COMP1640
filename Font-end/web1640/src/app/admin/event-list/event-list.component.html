@@ -108,7 +108,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <button type="button" (click)="getAnEvent(event.id)" class="btn
-                                            btn-info radius-15 me-1 " data-toggle="modal" data-target="#exampleModal">Edit</button>
+                                            btn-info radius-15 me-1 " data-toggle="modal" data-target="#myModal">Edit</button>
                                     </div>
                                     <div class="col-lg-6 ">
                                         <button type="button" (click)="delete(event.id)" class="btn btn-danger radius-15">Delete</button>
@@ -122,7 +122,7 @@
             </div>
             <!--end row-->
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" #myModal id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
                 <div class="modal-dialog ">
                     <div class="modal-content ">

@@ -93,7 +93,7 @@ export class ApiService {
     };
 
     return this.http.get( api + 'department/list'
-      , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
+      , { headers: httpOptions.headers, responseType: 'json' } )//stringify de chuyen doi tu object sang json
 
 
   }
@@ -118,7 +118,7 @@ export class ApiService {
 
     const httpOptions = {
       headers: new HttpHeaders( {
-        'Authorization': 'Bearer ' + localStorage.getItem( 'accessToken' ),
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken' ),
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       } )
@@ -132,14 +132,30 @@ export class ApiService {
   addDepartment(name: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })
     };
     const department = {name: name}
 
-    return this.http.post(api + 'category/add', department, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    return this.http.post(api + 'department/add', department, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+  editDepartment(id: number, name: string){
+
+    const data = {name:name}
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+    });
+
+    return this.http.put(api + `department/update/${id}`, data, {headers:headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
 
   }
 
@@ -186,7 +202,7 @@ export class ApiService {
       })
     };
 
-      return this.http.delete(api + `event/delete/${id}`
+      return this.http.delete(api + `comment/delete/${id}`
       , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
 
@@ -196,7 +212,7 @@ export class ApiService {
 
 
 
-  getComment(page: number, limit: number) {
+  getComment(ideaId: number) {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -204,11 +220,21 @@ export class ApiService {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       }),
-      params: { page: page.toString(), limit: limit.toString() }
+     
+
+
     };
 
-      return this.http.get(api + 'category/list'
-      , {headers:httpOptions.headers, responseType: 'text', params: httpOptions.params})//stringify de chuyen doi tu object sang json
+    // if(page == undefined || limit == undefined){
+    //   return this.http.get(api + 'comment/list'
+    //   , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+    // }
+    // else {
+  
+      return this.http.get(api +  `comment/list/${ideaId}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+    
 
 
   }
@@ -217,11 +243,10 @@ export class ApiService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': '*',
       })
     };
-
 
     return this.http.post(api + 'comment/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
@@ -388,32 +413,48 @@ export class ApiService {
 
   }
 
-  getIdeas() {
+  getIdeas(page?: number, limit?: number) {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Authorization': 'Barer ' + localStorage.getItem('accessToken'),
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })
     };
 
-      return this.http.get(api + 'ideas/list'
+   
+    if(page == undefined || limit == undefined){
+      return this.http.get(api + 'idea/list'
       , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+    }
+    else {
+      console.log(page);
+      return this.http.get(api + `idea/list?page=${page}&limit=${limit}`
+      , {headers:httpOptions.headers, responseType: 'text',})//stringify de chuyen doi tu object sang json
 
+    }
 
   }
 
-  addIdeas(formData: FormData) {
+  addIdea(formData: FormData) {
+    console.log(formData.get('files'))
+    console.log(formData.get('title'))
+    console.log(formData.get('content'))
+    console.log(formData.get('categoryId'))
+    console.log(formData.get('eventId'))
+    console.log(formData.get('anonymous'))
+
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-        'Content-Type': 'application/json',
+        'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })
     };
 
-    return this.http.post(api + 'idea/add', formData, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+    return this.http.post(api + 'idea/create', formData, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
   }
 

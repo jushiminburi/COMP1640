@@ -39,16 +39,14 @@
                         <div class=" row form-group align-content-center m-auto">
                             <h4 class="mb-0 text-center">Department Name </h4>
                             <div class="row pt-2">
-                                <input type="text" class="form-control col-5 m-auto" placeholder="Enter Name Category"
-                                    formControlName="name" />
+                                <input type="text" class="form-control col-5 m-auto" placeholder="Enter Name Category" formControlName="name" />
                             </div>
-                            <div class="row">
-                                <div class="text-danger text-center invalid-feedback d-block m-auto pt-1"
-                                    *ngIf="!departmentForm.get('name')?.valid && (departmentForm.get('name')?.dirty || departmentForm.get('name')?.touched)">
-                                    <span [hidden]="!departmentForm!.get('name')?.errors?.['required']">
-                                        Name is required!
-                                    </span>
+                            <div class="text-danger text-center invalid-feedback d-block" *ngIf="!departmentForm.get('name')?.valid && (departmentForm.get('name')?.dirty || departmentForm.get('name')?.touched)">
+
+                                <div *ngIf="departmentForm.get('name')?.errors?.['required']">
+                                    <small class="text-danger text-center invalid-feedback d-block">Name is required</small>
                                 </div>
+
                             </div>
 
                             <div class="row pt-2">
@@ -75,7 +73,7 @@
 
                     <thead>
                         <tr>
-                            <th class="align-middle text-center">No.</th>
+                            <th class="align-middle text-center">Id</th>
                             <th class="align-middle text-center">Name</th>
                             <th class="align-middle text-center">Total Member</th>
                             <th class="align-middle text-center">Total Idea</th>
@@ -85,17 +83,16 @@
                     </thead>
                     <tbody>
 
-                        <tr *ngFor="let department of ngDepartment">
-                            <td class="align-middle text-center">1</td>
-                            <td class="align-middle text-center">{{department}}</td>
+                        <tr *ngFor="let department of departments">
+                            <td class="align-middle text-center">{{department.id}}</td>
+                            <td class="align-middle text-center">{{department.name}}</td>
                             <td class="align-middle text-center">6</td>
                             <td class="align-middle text-center">12</td>
                             <td class="align-middle text-center">
                                 <!-- <button type="button " class="btn btn-info radius-15 me-3 " data-bs-toggle="modal " data-bs-target="#exampleModal " >Edit</button> -->
-                                <button type="button" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"> Edit</button>
+                                <button type="button" (click)="getADepartment(department.id)" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal" data-bs-target="#exampleModal"> Edit</button>
 
-                                <button type="button " class="btn btn-danger radius-15 ">Delete</button>
+                                <button type="button " (click)="deleteDepartment(department.id)" class="btn btn-danger radius-15 ">Delete</button>
                             </td>
 
                         </tr>
@@ -119,8 +116,7 @@
                 </table>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
                 <div class="modal-dialog ">
                     <div class="modal-content ">
@@ -141,22 +137,17 @@
                                         <div class="row ">
                                             <div class="col-12 ">
 
-                                                <form class="form-horizontal " [formGroup]="editDepartmentForm "
-                                                    novalidate>
+                                                <form class="form-horizontal " [formGroup]="editDepartmentForm " novalidate>
                                                     <div class="form-row ">
                                                         <div class="form-group ">
                                                             <label>Name</label>
-                                                            <input type="text " formControlName="Department"
-                                                                placeholder="HR..." class="form-control " required>
-                                                            <div class="text-danger text-center invalid-feedback d-block "
-                                                                *ngIf="editDepartmentForm.controls.department?.valid && (editDepartmentForm!.controls.department?.dirty || editDepartmentForm.controls.department?.touched) ">
+                                                            <input type="text " formControlName="department" placeholder="HR..." class="form-control " required>
+                                                            <div class="text-danger text-center invalid-feedback d-block " *ngIf="!editDepartmentForm.controls.department?.valid && (editDepartmentForm!.controls.department?.dirty || editDepartmentForm.controls.department?.touched) ">
 
-                                                                <span
-                                                                    [hidden]="!editDepartmentForm.controls.department.errors?.[ 'required'] ">
+                                                                <span [hidden]="!editDepartmentForm.controls.department.errors?.['required'] ">
                                                                     Department is required!
                                                                 </span>
-                                                                <span
-                                                                    [hidden]="!editDepartmentForm.controls.department.errors?.[ 'minlength'] ">
+                                                                <span [hidden]="!editDepartmentForm.controls.department.errors?.['minlength'] ">
                                                                     Department must be at least 2 characters long!
                                                                 </span>
                                                             </div>
@@ -165,10 +156,8 @@
                                                     </div>
 
                                                     <div class="modal-footer ">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit " data-bs-dismiss="modal"
-                                                            class="btn btn-primary ">Save changes</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit " data-bs-dismiss="modal" class="btn btn-primary" (click)="editDepartment(department.id)">Save changes</button>
                                                     </div>
 
 

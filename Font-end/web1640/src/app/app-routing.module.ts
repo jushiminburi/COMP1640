@@ -63,7 +63,7 @@ const routes: Routes = [
  { path: 'staff', component: StaffComponent ,
  children: [
    {path: 'homepage', component: StaffHomePageComponent},
-   {path: 'eachevent', component: EachEventComponent}
+   {path: 'event/:id', component: EachEventComponent}
  ]},
 
 

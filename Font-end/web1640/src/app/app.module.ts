@@ -62,7 +62,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
 import { DepartmentManagerComponent } from './admin/department-manager/department-manager.component';
+import { ImageViewerModule } from 'ngx-image-viewer';
 
+import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +107,7 @@ import { DepartmentManagerComponent } from './admin/department-manager/departmen
     EachIdeaComponent,
     EachEventComponent,
     DepartmentManagerComponent,
+    DialogComponentComponent,
 
     
   ],
@@ -115,12 +118,13 @@ import { DepartmentManagerComponent } from './admin/department-manager/departmen
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }), NgToastModule, MatPaginatorModule, NgxPaginationModule, MatSnackBarModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, NgbModule, BrowserAnimationsModule
+    MatButtonModule, NgbModule, BrowserAnimationsModule, ImageViewerModule.forRoot()
   ],
   providers: [
     ApiService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponentComponent]
 })
 
 export class AppModule { }
