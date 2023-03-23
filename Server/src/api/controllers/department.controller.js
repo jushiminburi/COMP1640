@@ -70,5 +70,17 @@ module.exports = {
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }
+  },
+  async getEachDepartment(req, res) {
+    try {
+      const id = req.params.id
+    const department = await Department.findOne({ id },{ _id: 0, __v: 0 })
+      if (department == null) {
+        return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
+      }
+      return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, department)
+    } catch (error) {
+      return apiResponse.response_error_500(res, error.message)
+    }
   }
 }

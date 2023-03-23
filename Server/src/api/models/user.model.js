@@ -6,7 +6,7 @@ const User = mongoose.model('User', new mongoose.Schema({
   firstName: { type: String, required: true, minlength: 1, maxlength: 50 },
   lastName: { type: String, required: true, minlength: 1, maxlength: 50 },
   fullName: { type: String, minlength: 1, maxlength: 100 },
-  department: { type: Number },
+  department: { type: String, required: true },
   email: { type: String, required: true, minlength: 6, maxlength: 255, unique: true },
   password: { type: String, required: true, minlength: 6, maxlength: 255 },
   role: { type: Number, required: true },
@@ -20,7 +20,7 @@ function validateUser (user) {
     password: Joi.string().pattern(/^[a-zA-Z0-9]{8,30}$/).required(),
     firstName: Joi.string().min(1).max(50).required(),
     lastName: Joi.string().min(1).max(50).required(),
-    department: Joi.number(),
+    department: Joi.string().required(),
     role: Joi.number().required()
   })
   return schema.validate(user)

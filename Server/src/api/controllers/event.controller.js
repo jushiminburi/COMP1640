@@ -84,5 +84,17 @@ module.exports = {
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }
+  },
+  async getEachEvent(req, res) {
+    try {
+      const id = req.params.id
+    const event = await Event.findOne({ id },{ _id: 0, __v: 0 })
+      if (event == null) {
+        return apiResponse.response_status(res, Languages.EVENT_NOT_EXSITS, 400)
+      }
+      return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, event)
+    } catch (error) {
+      return apiResponse.response_error_500(res, error.message)
+    }
   }
 }

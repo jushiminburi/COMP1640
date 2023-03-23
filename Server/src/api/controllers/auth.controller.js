@@ -26,10 +26,20 @@ function unlinkFile (file) {
   })
 }
 function checkFile (list, res) {
+  if (list === undefined || list.length === 0) {
+    // do something when list is undefined or empty
+    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400);
+  }
+
   if (list.length > 1) {
     list.forEach(element => {
-      unlinkFile(directoryFile + element)
+      if (element !== undefined && element.endsWith && (element.endsWith('.pdf') || element.endsWith('.docs'))) {
+        unlinkFile(directoryFile + element)
+      }
     })
+    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400)
+  }
+  if (list[0] === undefined || list[0].endsWith === undefined) {
     return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400)
   }
   if (list[0].endsWith('.pdf') || list[0].endsWith('.docs')) {

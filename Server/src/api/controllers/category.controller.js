@@ -64,6 +64,18 @@ module.exports = {
       session.endSession()
     }
   },
+  async getEachCategory(req, res) {
+    try {
+      const id = req.params.id
+    const category = await Category.findOne({ id },{ _id: 0, __v: 0 })
+      if (category == null) {
+        return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
+      }
+      return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, category)
+    } catch (error) {
+      return apiResponse.response_error_500(res, error.message)
+    }
+  },
   async listIdeaCategory (req, res) {
     try {
       const id = parseInt(req.params.id) || 0

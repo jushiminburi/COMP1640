@@ -287,6 +287,10 @@ module.exports = {
                 }
               }
             },
+            'user.avatar': {
+              $concat: [BASEURL_FILE, '$user.avatar']
+            },
+            'user.department': 1,
             'category.id': 1,
             'category.name': 1,
             'event.id': 1,
