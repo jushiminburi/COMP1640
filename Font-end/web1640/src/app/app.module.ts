@@ -48,7 +48,7 @@ import { DashBoardComponent } from './qam/dash-board/dash-board.component';
 
 
 import { QacComponent } from './qac/qac.component';
-import { ProfileUserComponent } from './qac/profile-user/profile-user.component';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
@@ -113,6 +113,7 @@ import { ListCommentComponent } from './staff/list-comment/list-comment.componen
     InputCommentComponent,
     ListCommentComponent,
     ProfileUserComponent,
+
 
 
   ],
