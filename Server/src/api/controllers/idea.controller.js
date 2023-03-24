@@ -104,11 +104,19 @@ module.exports = {
   },
   async paginationListIdea (req, res) {
     try {
-      const { eventId, categoryId, departmentId } = req.query
+      const { eventId, categoryId, departmentId, sort } = req.query
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
       const userId = req.userId
+      let sortIdea = { totalViews: -1 }
+      if (sort === 'latest_idea') {
+        sortIdea = { createAt: -1 }
+      } else if (sort === 'latest_comments') {
+        sortIdea = { latestComments: -1 }
+      } else if (sort === 'popular_idea') {
+        sortIdea = { popular: -1 }
+      }
       let _categoryId
       let _eventId
       let _departmentId
@@ -149,8 +157,12 @@ module.exports = {
       }).populate({
         path: 'comment',
         select: 'id content file user isEdited likes totalLike',
-        options: { sort: { createAt: -1 }, limit: 1 }
-      }).skip(skip).limit(limit).lean()
+        options: { sort: { createAt: -1 }, limit: 1 },
+        populate: [
+          { path: 'user', select: 'id userId fullName email avatar -_id' }
+          // { path: 'file', select: 'file -_id' }
+        ]
+      }).skip(skip).limit(limit).sort(sortIdea).lean()
       const listIdea = ideas.map((idea) => {
         const isLikes = idea.likes.includes(userId)
         const files = idea.file.file.map((file) => `${BASEURL_FILE}${idea.file.file}`)
@@ -261,6 +273,48 @@ module.exports = {
       idea.totalViews += 1
       await idea.save()
       return apiResponse.response_status(res, Languages.DISLIKE_IDEA_SUCCESSFUL, 200)
+    } catch (error) {
+      return apiResponse.response_error_500(res, error.message)
+    }
+  },
+  async getIdeaById (req, res) {
+    try {
+      const userId = req.userId
+      const id = req.params.id
+      const idea = await Ideas.findOne({ id }, { _id: 0, __v: 0 }).populate({
+        path: 'user',
+        select: 'userId fullName department email avatar -_id',
+        populate: {
+          path: 'department',
+          select: 'id name _id'
+        }
+      }).populate({
+        path: 'file',
+        select: 'id file -_id'
+      }).populate({
+        path: 'event',
+        select: 'id name deadlineIdea deadlineComment -_id'
+      }).populate({
+        path: 'category',
+        select: 'id name -_id'
+      }).populate({
+        path: 'comment',
+        select: 'id content file user isEdited likes totalLike',
+        options: { sort: { createAt: -1 }, limit: 1 },
+        populate: [
+          { path: 'user', select: 'id userId fullName email avatar -_id' }
+          // { path: 'file', select: 'file -_id' }
+        ]
+      }).lean()
+      if (idea == null) {
+        return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
+      }
+      const data = {
+        ...idea,
+        isLikes: idea.likes.includes(userId),
+        isDislikes: idea.dislikes.includes(userId)
+      }
+      return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, data)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }

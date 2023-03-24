@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Joi = require('joi')
 
-const Ideas = mongoose.model('Ideas', new mongoose.Schema({
+const IdeasSchema = new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
   title: { type: String, required: true, minlength: 3, maxlength: 150 },
   content: { type: String, required: true },
@@ -18,7 +18,11 @@ const Ideas = mongoose.model('Ideas', new mongoose.Schema({
   totalDislike: { type: Number, default: 0 },
   totalComment: { type: Number, default: 0 },
   totalViews: { type: Number, default: 0 }
-}, { timestamps: true }))
+}, { timestamps: true })
+
+IdeasSchema.virtual('popular', function () {
+  return this.totalComment + this.totalViews
+})
 
 function validateIdeas (idea) {
   const schema = Joi.object({
@@ -30,6 +34,7 @@ function validateIdeas (idea) {
   })
   return schema.validate(idea)
 }
+const Ideas = mongoose.model('Ideas', IdeasSchema)
 
 exports.Ideas = Ideas
 exports.validate = validateIdeas

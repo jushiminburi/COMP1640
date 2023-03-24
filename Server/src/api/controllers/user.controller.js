@@ -4,6 +4,7 @@ const Languages = require('../utils/languages')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
 const { BASEURL_AVATAR } = require('../utils/global')
+const { BASEURL_FILE } = require('../utils/global')
 require('dotenv').config()
 
 function validateUser (user) {
@@ -90,6 +91,22 @@ module.exports = {
         totalUser
       })
       return response
+    } catch (error) {
+      return apiResponse.response_error_500(res, error.message)
+    }
+  },
+  async getUserById (req, res) {
+    try {
+      const id = req.params.id
+      const user = await User.findOne({ userId: id }, { _id: 0, __v: 0, idea: 0, password: 0 }).populate({
+        path: 'department',
+        select: 'id name -_id'
+      })
+      user.avatar = BASEURL_FILE + user.avatar
+      if (user == null) {
+        return apiResponse.response_status(res, Languages.USER_NOT_FOUND, 400)
+      }
+      return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, user)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }

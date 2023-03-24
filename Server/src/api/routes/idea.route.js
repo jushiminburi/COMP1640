@@ -10,5 +10,6 @@ router.put('/update/:id', isStaff, IdeaController.updateIdea)
 router.delete('/delete/:id', isStaff, IdeaController.deleteIdea)
 router.get('/like/:id', verifyToken, IdeaController.likeIdea)
 router.get('/dislike/:id', verifyToken, IdeaController.dislikeIdea)
+router.get('/:id', verifyToken, IdeaController.getIdeaById)
 
 module.exports = router

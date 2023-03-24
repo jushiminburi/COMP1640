@@ -7,6 +7,7 @@ module.exports = {
   LOGOUT_SUCCESSFUL: 'Logged out successfully!',
   ACCOUNT_NOT_EXISTS: 'Account is not exists',
   UPLOAD_AVATAR_FAIL: 'Upload avatar fail!',
+  USER_NOT_FOUND: 'User not found',
 
   // Register text
   REGISTER_SUCCESS: 'Register user successful!',
