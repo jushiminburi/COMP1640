@@ -129,7 +129,7 @@ export class LoginComponent {
 
       error => {
         
-        this.toast.error({detail: "Email or password is incorrect! Please try again!", summary: "Error", position: "top-right", duration:5000})
+        this.toast.error({detail: "Email or password is incorrect! Please try again!", position: "top-right", duration:5000})
         // alert("Email or password is incorrect! Please try again")
         
         this.router.navigate(['/login']);

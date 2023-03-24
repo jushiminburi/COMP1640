@@ -158,8 +158,7 @@ export class CategorymanagerComponent implements OnInit {
     private http: HttpClient,
     private api: ApiService,
     private router: Router,
-    private fb: FormBuilder,
-    private dialog: MatDialog, private toast: NgToastService) {
+    private fb: FormBuilder, private toast: NgToastService) {
 
     this.categoryForm = this.fb.group({
 
