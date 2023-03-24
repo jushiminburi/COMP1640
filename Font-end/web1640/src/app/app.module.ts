@@ -67,6 +67,7 @@ import { ImageViewerModule } from 'ngx-image-viewer';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { InputCommentComponent } from './staff/input-comment/input-comment.component';
 import { ListCommentComponent } from './staff/list-comment/list-comment.component';
+import { NewIdeaComponent } from './staff/each-event/new-idea/new-idea.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { ListCommentComponent } from './staff/list-comment/list-comment.componen
     InputCommentComponent,
     ListCommentComponent,
     ProfileUserComponent,
+    NewIdeaComponent,
 
 
 

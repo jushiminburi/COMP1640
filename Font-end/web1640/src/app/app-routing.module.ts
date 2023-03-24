@@ -26,6 +26,7 @@ import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
 import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
 import { EachEventComponent } from './staff/each-event/each-event.component';
 import { DepartmentManagerComponent } from './admin/department-manager/department-manager.component';
+import { NewIdeaComponent } from './staff/each-event/new-idea/new-idea.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -50,7 +51,7 @@ const routes: Routes = [
         { path: '', redirectTo: 'viewidea', pathMatch: 'full' },
         { path: 'viewidea', component: ViewIdeaComponent },
         { path: 'profileuser', component: ProfileUserComponent }
-        
+
       ]
   }
   ,
@@ -75,6 +76,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', component: StaffHomePageComponent },
       { path: 'event/:id', component: EachEventComponent },
+      { path: 'newidea', component: NewIdeaComponent },
       { path: 'profileuser', component: ProfileUserComponent }
     ]
   },
