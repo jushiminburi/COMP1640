@@ -10,6 +10,7 @@ const path = require('path')
 const fs = require('fs')
 const directoryFile = path.join(__dirname, '../../../upload/')
 const { transporter, mailCreatedAccountOptions } = require('../utils/sendEmail')
+const { Department } = require('../models/department.model')
 
 let refreshTokens = []
 const schemaLoginUser = Joi.object({
@@ -28,7 +29,7 @@ function unlinkFile (file) {
 function checkFile (list, res) {
   if (list === undefined || list.length === 0) {
     // do something when list is undefined or empty
-    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400);
+    return apiResponse.response_status(res, Languages.UPLOAD_AVATAR_FAIL, 400)
   }
 
   if (list.length > 1) {
@@ -54,6 +55,7 @@ exports.registerUser = async (req, res) => {
   checkFile(listFile, res)
   try {
     const { email, password, department, role, lastName, firstName } = req.body
+    const departments = await Department.findOne({ name: department }, '_id')
     const result = validate(req.body)
     if (result.error) {
       listFile.forEach(element => {
@@ -76,7 +78,7 @@ exports.registerUser = async (req, res) => {
         avatar: listFile.length > 0 ? listFile[0] : 'default-avatar.png',
         email,
         password: hashPassword,
-        department,
+        department: departments._doc._id,
         role,
         lastName,
         firstName,
@@ -107,7 +109,9 @@ exports.loginUser = async (req, res) => {
       if (resultPassword) {
         const accessToken = jwt.sign({
           id: user.userId,
-          role: user.role
+          role: user.role,
+          _id: user._id,
+          _departmentId: user.department
         },
         '10',
         { expiresIn: '60d' })

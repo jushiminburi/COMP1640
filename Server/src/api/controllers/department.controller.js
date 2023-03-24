@@ -71,10 +71,10 @@ module.exports = {
       return apiResponse.response_error_500(res, error.message)
     }
   },
-  async getEachDepartment(req, res) {
+  async getEachDepartment (req, res) {
     try {
       const id = req.params.id
-    const department = await Department.findOne({ id },{ _id: 0, __v: 0 })
+      const department = await Department.findOne({ id }, { _id: 1 })
       if (department == null) {
         return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
       }

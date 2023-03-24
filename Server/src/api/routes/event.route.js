@@ -8,6 +8,6 @@ router.get('/list', EventController.getListEvent)
 router.delete('/delete/:id', EventController.deleteEvent)
 router.put('/update', isAdmin, EventController.updateEvent)
 router.put('/update', isAdmin, EventController.updateEvent)
-router.get('/show/:id',1, EventController.getEachEvent)
+router.get('/show/:id', EventController.getEachEvent)
 
 module.exports = router

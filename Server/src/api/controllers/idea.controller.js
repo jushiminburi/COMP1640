@@ -10,6 +10,8 @@ const path = require('path')
 const { BASEURL_FILE } = require('../utils/global')
 const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEmail')
 const { User } = require('../models/user.model')
+const { Event } = require('../models/event.model')
+const { Department } = require('../models/department.model')
 
 function unlinkFile (file) {
   fs.unlink(file, function (err) {
@@ -43,10 +45,11 @@ function validateIdea (idea) {
 module.exports = {
   async createIdea (req, res) {
     const directoryFile = path.join(__dirname, '../../../upload/')
+    const _id = req._userId
+    const _departmentId = req._departmentId
     const listFile = req.listFile
     try {
       const { title, content, anonymous, categoryId, eventId, deadlineIdea } = req.body
-      const userId = req.userId
       const resultValidate = validate(req.body)
       if (resultValidate.error) {
         if (listFile.length !== 0) {
@@ -56,7 +59,7 @@ module.exports = {
         }
         return apiResponse.response_status(res, resultValidate.error.message, 400)
       }
-      const categoryValue = await Category.findOne({ id: categoryId })
+      const categoryValue = await Category.findOne({ id: categoryId }, '_id')
       if (!categoryValue) {
         if (listFile.length !== 0) {
           listFile.forEach(element => {
@@ -64,6 +67,10 @@ module.exports = {
           })
         }
         return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
+      }
+      const eventValue = await Event.findOne({ id: eventId }, '_id')
+      if (!eventValue) {
+        return apiResponse.response_status(res, Languages.EVENT_NOT_EXSITS, 400)
       }
       const valueDealineIdea = new Date(deadlineIdea).getTime()
       const now = new Date().getTime()
@@ -78,11 +85,11 @@ module.exports = {
       const id = await getNextSequenceValue('ideaId')
       if (listFile.length > 0) {
         const fileId = await getNextSequenceValue('fileId')
-        await Files.create({ id: fileId, file: listFile })
-        await new Ideas({ id, userId, title, content, anonymous, categoryId, file: fileId, eventId }).save()
+        const fileResult = await Files.create({ id: fileId, file: listFile })
+        await new Ideas({ department: _departmentId, id, user: _id, title, content, anonymous, category: categoryValue._doc._id, file: fileResult._doc._id, event: eventValue._doc._id }).save()
         sendIdeaQAC()
       } else {
-        await new Ideas({ id, userId, title, content, anonymous, categoryId, eventId }).save()
+        await new Ideas({ department: _departmentId, id, user: _id, title, content, anonymous, category: categoryValue._doc._id, event: eventValue._doc._id }).save()
         sendIdeaQAC()
       }
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
@@ -102,212 +109,71 @@ module.exports = {
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
       const userId = req.userId
-      const ideas = await Ideas.aggregate([
-        {
-          $lookup: {
-            from: 'categories',
-            localField: 'categoryId',
-            foreignField: 'id',
-            as: 'category'
-          }
-        },
-        {
-          $lookup: {
-            from: 'events',
-            localField: 'eventId',
-            foreignField: 'id',
-            as: 'event'
-          }
-        },
-        {
-          $lookup: {
-            from: 'departments',
-            localField: 'user.department',
-            foreignField: 'id',
-            as: 'user.department'
-          }
-        },
-        {
-          $unwind: { path: '$user.department', preserveNullAndEmptyArrays: true }
-        },
-        {
-          $match: {
-            $and: [
-              eventId ? { 'event.id': parseInt(eventId) } : {},
-              categoryId ? { 'category.id': parseInt(categoryId) } : {},
-              departmentId ? { 'department.id': parseInt(departmentId) } : {}
-            ]
-          }
-        },
-        {
-          $lookup: {
-            from: 'files',
-            localField: 'file',
-            foreignField: 'id',
-            as: 'files'
-          }
-        },
-        { $unwind: '$file' },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'userId',
-            foreignField: 'userId',
-            as: 'user'
-          }
-        },
-        { $unwind: '$user' },
-        {
-          $lookup: {
-            from: 'comments',
-            localField: 'id',
-            foreignField: 'ideaId',
-            as: 'comments'
-          }
-        },
-        {
-          $unwind: {
-            path: '$comments',
-            preserveNullAndEmptyArrays: true
-          }
-        },
-        {
-          $lookup: {
-            from: 'files',
-            localField: 'comments.file',
-            foreignField: 'id',
-            as: 'comments.files'
-          }
-        },
-        { $unwind: { path: '$comments.files', preserveNullAndEmptyArrays: true } },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'comments.userId',
-            foreignField: 'userId',
-            as: 'comments.user'
-          }
-        },
-        { $unwind: { path: '$comments.user', preserveNullAndEmptyArrays: true } },
-        {
-          $addFields: {
-            comment: {
-              $ifNull: [
-                {
-                  id: '$comments.id',
-                  content: '$comments.content',
-                  isEdited: '$comments.isEdited'
-                },
-                {}
-              ]
-            }
-          }
-        },
-        {
-          $sort: {
-            'comments.createAt': -1
-          }
-        },
-        {
-          $group: {
-            _id: '$_id',
-            idea: { $first: '$$ROOT' },
-            comment: { $first: '$comment' }
-
-          }
-        },
-        {
-          $replaceRoot: {
-            newRoot: {
-              $mergeObjects: ['$idea', { comment: '$comment' }]
-            }
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            id: 1,
-            title: 1,
-            content: 1,
-            anonymous: 1,
-            createdAt: 1,
-            totalLike: 1,
-            totalDislike: 1,
-            totalViews: 1,
-            totalComment: 1,
-            isLike: {
-              $in: [userId, '$likes']
-            },
-            isDislike: {
-              $in: [userId, '$dislikes']
-            },
-            comment: {
-              id: '$comment.id',
-              content: '$comment.content',
-              isEdited: '$comment.isEdited',
-              user: {
-                userId: '$comment.user.userId',
-                fullName: '$comment.user.fullName',
-                email: '$comment.user.email'
-              },
-              files: {
-                $map: {
-                  input: '$comment.files',
-                  as: 'file',
-                  in: {
-                    fileId: '$$file.id',
-                    urls: {
-                      $map: {
-                        input: '$$file.file',
-                        as: 'filename',
-                        in: {
-                          $concat: [BASEURL_FILE, '$$filename']
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            files: {
-              $map: {
-                input: '$files',
-                as: 'file',
-                in: {
-                  fileId: '$$file.id',
-                  urls: {
-                    $map: {
-                      input: '$$file.file',
-                      as: 'filename',
-                      in: {
-                        $concat: [BASEURL_FILE, '$$filename']
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            'user.avatar': {
-              $concat: [BASEURL_FILE, '$user.avatar']
-            },
-            'user.department': 1,
-            'category.id': 1,
-            'category.name': 1,
-            'event.id': 1,
-            'event.name': 1,
-            'event.deadlineIdea': 1,
-            'event.deadlineComment': 1,
-            'user.username': 1,
-            'user.userId': 1,
-            'user.email': 1,
-            'user.fullName': 1
-          }
-        }, { $skip: skip }, { $limit: limit }
-      ]
-      )
+      let _categoryId
+      let _eventId
+      let _departmentId
+      if (categoryId) {
+        _categoryId = await Category.findOne({ id: categoryId })
+      }
+      if (eventId) {
+        _eventId = await Event.findOne({ id: eventId })
+      }
+      if (departmentId) {
+        _departmentId = await Department.findOne({ id: departmentId })
+      }
+      const _category = _categoryId && _categoryId._doc._id ? _categoryId._doc._id : null
+      const _event = _eventId && _eventId._doc._id ? _eventId._doc._id : null
+      const _department = _departmentId && _departmentId._doc._id ? _departmentId._doc._id : null
+      const ideas = await Ideas.find({
+        $and: [
+          _category ? { category: _category } : {},
+          _event ? { event: _event } : {},
+          _department ? { department: _department } : {}
+        ]
+      }, { _id: 0, __v: 0 }).populate({
+        path: 'user',
+        select: 'userId fullName department email avatar -_id',
+        populate: {
+          path: 'department',
+          select: 'id name _id'
+        }
+      }).populate({
+        path: 'file',
+        select: 'id file -_id'
+      }).populate({
+        path: 'event',
+        select: 'id name deadlineIdea deadlineComment -_id'
+      }).populate({
+        path: 'category',
+        select: 'id name -_id'
+      }).populate({
+        path: 'comment',
+        select: 'id content file user isEdited likes totalLike',
+        options: { sort: { createAt: -1 }, limit: 1 }
+      }).skip(skip).limit(limit).lean()
+      const listIdea = ideas.map((idea) => {
+        const isLikes = idea.likes.includes(userId)
+        const files = idea.file.file.map((file) => `${BASEURL_FILE}${idea.file.file}`)
+        const isDislikes = idea.dislikes.includes(userId)
+        const users = {
+          userId: idea.user.userId,
+          fullName: idea.user.fullName,
+          email: idea.user.email,
+          department: idea.user.department,
+          avatar: `${BASEURL_FILE}${idea.user.avatar}`
+        }
+        const { likes, user, dislikes, ...ideaWithoutLikesAndDislikes } = idea
+        return {
+          ...ideaWithoutLikesAndDislikes,
+          user: users,
+          isLikes,
+          isDislikes,
+          file: files
+        }
+      })
       const totalIdea = await Ideas.find().countDocuments()
       return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
-        ideas,
+        listIdea,
         totalIdea
       })
     } catch (error) {

@@ -64,10 +64,10 @@ module.exports = {
       session.endSession()
     }
   },
-  async getEachCategory(req, res) {
+  async getEachCategory (req, res) {
     try {
       const id = req.params.id
-    const category = await Category.findOne({ id },{ _id: 0, __v: 0 })
+      const category = await Category.findOne({ id }, { _id: 0, __v: 0, user: 0 })
       if (category == null) {
         return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
       }

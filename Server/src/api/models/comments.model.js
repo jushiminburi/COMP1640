@@ -3,12 +3,12 @@ const Joi = require('joi')
 
 const Comment = mongoose.model('Comment', new mongoose.Schema({
   id: { type: Number, required: true },
-  ideaId: { type: Number, required: true },
+  idea: { type: String, ref: 'Ideas' },
   content: { type: String, maxlength: 10000, required: true },
-  file: { type: Number, default: 0, required: true },
-  userId: { type: Number, required: true },
+  file: { type: String, ref: 'File' },
+  user: { type: String, ref: 'User' },
   isEdited: { type: Boolean, default: false },
-  likes: [{ type: mongoose.Schema.Types.Number, ref: 'User' }],
+  likes: [{ type: String, ref: 'User' }],
   totalLike: { type: Number, default: 0 }
 }, {
   timestamps: true

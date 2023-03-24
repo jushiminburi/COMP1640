@@ -10,6 +10,8 @@ module.exports = {
       const accessToken = token.split(' ')[1]
       const result = jwt.verify(accessToken, '10')
       req.userId = result.id
+      req._userId = result._id
+      req._departmentId = result._departmentId
       if (result) {
         next()
       } else { return apiResponse.response_status(res, Languages.TOKEN_NOT_VALID, 403) }
@@ -23,6 +25,7 @@ module.exports = {
       const accessToken = token.split(' ')[1]
       const result = jwt.verify(accessToken, '10')
       req.userId = result.id
+      req._userId = result._id
       if (result.role === 1) {
         next()
       } else { return apiResponse.response_status(res, Languages.TOKEN_NOT_VALID, 403) }
@@ -36,6 +39,8 @@ module.exports = {
       const accessToken = token.split(' ')[1]
       const result = jwt.verify(accessToken, '10')
       req.userId = result.id
+      req._userId = result._id
+      req._departmentId = result._departmentId
       if (result.role === 4) {
         next()
       } else { return apiResponse.response_status(res, Languages.TOKEN_NOT_VALID, 403) }
@@ -48,6 +53,8 @@ module.exports = {
     if (token) {
       const accessToken = token.split(' ')[1]
       const result = jwt.verify(accessToken, '10')
+      req.userId = result.id
+      req._userId = result._id
       if (result.role === 2) {
         next()
       } else { return apiResponse.response_status(res, Languages.TOKEN_NOT_VALID, 403) }
@@ -60,6 +67,9 @@ module.exports = {
     if (token) {
       const accessToken = token.split(' ')[1]
       const result = jwt.verify(accessToken, '10')
+      req.userId = result.id
+      req._userId = result._id
+      req._departmentId = result._departmentId
       if (result.role === 3) {
         next()
       } else { return apiResponse.response_status(res, Languages.TOKEN_NOT_VALID, 403) }

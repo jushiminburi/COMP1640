@@ -8,7 +8,6 @@ const path = require('path')
 const directoryFile = path.join(__dirname, '../../../upload/')
 const { BASEURL_FILE } = require('../utils/global')
 const moment = require('moment')
-const { CommentReply } = require('../models/commentReply.model')
 const { Ideas } = require('../models/idea.model')
 
 function unlinkFile (file) {
@@ -52,7 +51,7 @@ module.exports = {
   async createComment (req, res) {
     const listFile = req.listFile
     try {
-      const userId = req.userId
+      const _userId = req._userId
       const { ideaId, content, deadlineComment } = req.body
       const resultValidate = validate(req.body)
       if (resultValidate.error) {
@@ -73,20 +72,25 @@ module.exports = {
         }
         return apiResponse.response_status(res, Languages.EVENT_EXPIRED, 400)
       }
+      const idea = await Ideas.findOne({ id: ideaId })
+      console.log(idea)
+      if (!idea) {
+        return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
+      }
       if (listFile.length > 0) {
         const fileId = await getNextSequenceValue('fileId')
-        await Files.create({ id: fileId, file: listFile })
+        const fileResult = await Files.create({ id: fileId, file: listFile })
         const id = await getNextSequenceValue('commentId')
-        await new Comment({ ideaId, id, userId, content, file: fileId }).save()
-        await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
+        const comment = await new Comment({ idea: idea._doc._id, id, user: _userId, content, file: fileResult._doc._id }).save()
+        await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 }, $push: { comment: comment._id } },
           { new: true })
       } else {
         const id = await getNextSequenceValue('commentId')
-        await new Comment({ ideaId, id, userId, content }).save()
-        await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 } },
+        const comment = await new Comment({ idea: idea._doc._id, id, user: _userId, content }).save()
+        await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 }, $push: { comment: comment._id } },
           { new: true })
       }
-      return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
+      return apiResponse.response_status(res, Languages.CREATE_COMMENT_SUCCESS, 200)
     } catch (error) {
       if (listFile.length !== 0) {
         listFile.forEach(element => {
@@ -204,25 +208,16 @@ module.exports = {
   },
   async updateComment (req, res) {
     try {
-      const { commentId, content } = req.body
+      const { content } = req.body
       const id = req.params.id
       const userId = req.userId
 
-      if (commentId === undefined) {
-        const commentIsMyself = await Comment.findOne({ id, userId })
-        if (commentIsMyself == null) {
-          return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
-        }
-        await Comment.findOneAndUpdate(id, { content })
-        return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
-      } else {
-        const commentIsMyself = await CommentReply.findOne({ id, userId, commentId })
-        if (commentIsMyself == null) {
-          return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
-        }
-        await CommentReply.findOneAndUpdate(id, { content })
-        return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
+      const commentIsMyself = await Comment.findOne({ id, userId })
+      if (commentIsMyself == null) {
+        return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
       }
+      await Comment.findOneAndUpdate(id, { content })
+      return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }
@@ -238,20 +233,6 @@ module.exports = {
       await Comment.findOneAndDelete({ id: commentId, userId })
       await Ideas.findOneAndUpdate({ id: commentId }, { $inc: { totalComment: -1 } },
         { new: true })
-      return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
-    } catch (error) {
-      return apiResponse.response_error_500(res, error.message)
-    }
-  },
-  async deleteCommentReply (req, res) {
-    try {
-      const userId = req.userId
-      const commentId = req.params.id
-      const commentIsMyself = await CommentReply.findOne({ id: commentId, userId })
-      if (commentIsMyself == null) {
-        return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
-      }
-      await CommentReply.findOneAndDelete({ id: commentId, userId })
       return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
