@@ -16,7 +16,7 @@
 
     </div>
     <!--end breadcrumb-->
- <div class="user-profile-page">
+    <div class="user-profile-page">
         <div class="row">
 
 
@@ -30,11 +30,14 @@
                             <ul class="list-group mb-2 " *ngFor="let category of categories">
                                 <div class="row">
 
-                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip" title="List Idea">
+                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip"
+                                        title="List Idea">
                                         <p class="mb-0"><i class='bx bx-globe'></i> {{category.name}}
                                         </p>
                                     </li>
-                                    <button (click)="deleteCategory(category.id)" class="col-md-2 btn btn-danger" data-toggle="tooltip" title="Delete Category"><i class="fadeIn animated bx bx-trash-alt"></i></button>
+                                    <button (click)="deleteCategory(category.id)" class="col-md-2 btn btn-danger"
+                                        data-toggle="tooltip" title="Delete Category"><i
+                                            class="fadeIn animated bx bx-trash-alt"></i></button>
                                 </div>
 
                             </ul>
@@ -86,11 +89,13 @@
                                             <div class="form-group">
                                                 <h4>Name Category </h4>
 
-                                                <input type="text" class="form-control" placeholder="Enter Name Category" formControlName="name" />
-                                                <div class="text-danger text-center invalid-feedback d-block" *ngIf="!categoryForm.get('name')?.valid && (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Enter Name Category" formControlName="name" />
+                                                <div class="text-danger text-center invalid-feedback d-block"
+                                                    *ngIf="!categoryForm.get('name')?.valid && (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)">
                                                     <span [hidden]="!categoryForm!.get('name')?.errors?.['required']">
-                                                   Name is required!
-                                                </span>
+                                                        Name is required!
+                                                    </span>
                                                 </div>
 
                                                 <!--<div class="text-danger text-center invalid-feedback d-block" *ngIf="!addcategoryForm.controls.Newcategory?.valid && (addcategoryForm.controls.Newcategory?.dirty || addcategoryForm.controls.Newcategory?.touched)">
@@ -125,12 +130,18 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Name</th>
+                                                    <th>Name Staff</th>
+                                                    <th>Description</th>
                                                     <th>Created Date</th>
-                                                    <th>Updated Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Nguyễn Linh Đan</td>
+                                                    <td>hdvnfdjvnfj</td>
+                                                    <td>12/03/2022</td>
+                                                </tr>
                                                 <tr *ngFor="let category of categories">
                                                     <td>{{category.id}}</td>
                                                     <td>{{category.name}}</td>
@@ -148,7 +159,8 @@
                                         <ul class="pagination round-pagination ">
                                             <li class="page-item"><a class="page-link" href="javascript:;">Previous</a>
                                             </li>
-                                            <li class="page-item-action"><a class="page-link" href="javascript:;javascript:;">1</a>
+                                            <li class="page-item-action"><a class="page-link"
+                                                    href="javascript:;javascript:;">1</a>
                                             </li>
                                             <li class="page-item active"><a class="page-link" href="javascript:;">2</a>
                                             </li>
@@ -159,10 +171,7 @@
                                         </ul>
                                     </nav>
                                 </div>
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -170,3 +179,5 @@
             </div>
         </div>
     </div>
+
+</div>

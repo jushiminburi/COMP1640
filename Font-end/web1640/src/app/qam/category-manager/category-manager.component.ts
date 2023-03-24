@@ -149,11 +149,6 @@ export class CategorymanagerComponent implements OnInit {
   }
 
 
-
-
-
-
-
   constructor(
     private http: HttpClient,
     private api: ApiService,
