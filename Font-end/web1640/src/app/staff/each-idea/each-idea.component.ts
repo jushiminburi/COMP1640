@@ -35,7 +35,10 @@ export class EachIdeaComponent implements OnInit {
 
   constructor(private api: ApiService, private router: Router,
     private route: ActivatedRoute, private http: HttpClient,
-    private fb: FormBuilder, private toast: NgToastService) { }
+    private fb: FormBuilder, private toast: NgToastService) {
+     
+   
+     }
 
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
   ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
@@ -61,7 +64,11 @@ export class EachIdeaComponent implements OnInit {
 
   getIdea() {
     this.api.getIdeas(this.postId).subscribe((d: any) => {
-      console.log(d);
+    const data = JSON.parse(d);
+
+    this.idea = data.data.ideas.find((i: any) => i.id == this.postId)
+    console.log("fdgfdgvdsz");
+    console.log("fgfd" + this.idea);
 
   })
 }
@@ -235,6 +242,7 @@ export class EachIdeaComponent implements OnInit {
 
   ngOnInit() {
     // this.getAnUser();
+  
     this.getIdea();
     this.getListIdea();
     this.createAccountForm = this.fb.group({
