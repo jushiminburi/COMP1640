@@ -18,7 +18,7 @@ import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-
 import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-idea.component';
 import { DashBoardComponent } from './qam/dash-board/dash-board.component';
 import { QacComponent } from './qac/qac.component';
-import { ProfileUserComponent } from './qac/profile-user/profile-user.component';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
@@ -38,7 +38,8 @@ const routes: Routes = [
       { path: 'dashboard', component: DashBoardComponent },
       { path: 'idea', component: MostPopularIdeaComponent },
       { path: 'events/:id', component: EventDetailComponent },
-      { path: 'documentdownload', component: DocumentDownloadComponent }]
+      { path: 'documentdownload', component: DocumentDownloadComponent },
+      { path: 'profileuser', component: ProfileUserComponent }]
 
   },
 
@@ -48,8 +49,8 @@ const routes: Routes = [
       [
         { path: '', redirectTo: 'viewidea', pathMatch: 'full' },
         { path: 'viewidea', component: ViewIdeaComponent },
-        { path: 'profileuser', component: ProfileUserComponent },
-        { path: 'email', component: EmailComponent }
+        { path: 'profileuser', component: ProfileUserComponent }
+        
       ]
   }
   ,
@@ -62,7 +63,8 @@ const routes: Routes = [
       { path: 'accountmanager', component: AccountManagerComponent },
       { path: 'eventlist', component: EventListComponent },
       { path: 'eventanddeadline', component: EventAndDeadLineComponent },
-      { path: 'department', component: DepartmentManagerComponent }
+      { path: 'department', component: DepartmentManagerComponent },
+      { path: 'profileuser', component: ProfileUserComponent }
 
 
     ],
@@ -72,12 +74,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', component: StaffHomePageComponent },
-      { path: 'event/:id', component: EachEventComponent }
+      { path: 'event/:id', component: EachEventComponent },
+      { path: 'profileuser', component: ProfileUserComponent }
     ]
   },
-
-
-
 ]
 
 @NgModule({

@@ -48,7 +48,7 @@ import { DashBoardComponent } from './qam/dash-board/dash-board.component';
 
 
 import { QacComponent } from './qac/qac.component';
-import { ProfileUserComponent } from './qac/profile-user/profile-user.component';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
@@ -67,6 +67,7 @@ import { ImageViewerModule } from 'ngx-image-viewer';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { InputCommentComponent } from './staff/input-comment/input-comment.component';
 import { ListCommentComponent } from './staff/list-comment/list-comment.component';
+import { StaffProfileComponent } from './staff/staff-profile/staff-profile.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,8 @@ import { ListCommentComponent } from './staff/list-comment/list-comment.componen
     InputCommentComponent,
     ListCommentComponent,
     ProfileUserComponent,
+
+    StaffProfileComponent,
 
 
   ],
