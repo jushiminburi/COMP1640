@@ -21,45 +21,45 @@
         <div class="card-body p-0">
             <div class="table-responsive p-1">
                 <div class="row col-12 card radius-15 m-auto">
-                <table class="table mb-0">
+                    <table class="table mb-0">
 
-                    <thead>
-                        <tr>
-                            <th class="align-middle text-center">No.</th>
-                            <th class="align-middle text-center">Image</th>
-                            <th class="align-middle text-center">Name</th>
-                            <th class="align-middle text-center">Email</th>
-                            <th class="align-middle text-center">Role</th>
-                            <th class="align-middle text-center">Department</th>
-                            <th class="align-middle text-center">Action</th>
+                        <thead>
+                            <tr>
+                                <th class="align-middle text-center">ID</th>
+                                <th class="align-middle text-center">Image</th>
+                                <th class="align-middle text-center">Name</th>
+                                <th class="align-middle text-center">Email</th>
+                                <th class="align-middle text-center">Role</th>
+                                <th class="align-middle text-center">Department</th>
+                                <th class="align-middle text-center">Action</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let account of users">
-                            <td class=" align-middle text-center ">{{account.userId}}</td>
-                            <td class="align-middle text-center ">
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let account of users">
+                                <td class=" align-middle text-center ">{{account.userId}}</td>
+                                <td class="align-middle text-center ">
 
-                                <img class="bg-transparent border " [src]="account.avatar " width="35 " alt=" ">
+                                    <img class="bg-transparent border " [src]="account.avatar " width="35 " alt=" ">
 
-                            </td>
-                            <td class="align-middle text-center ">{{account.firstName}} {{account.lastName}}</td>
-                            <td class="align-middle text-center ">{{account.email}}</td>
-                            <td class="align-middle text-center ">{{account.role}}</td>
-                            <td class="align-middle text-center ">{{account.department}}</td>
-                            <td class="align-middle text-center ">
-                                <!-- <button type="button " class="btn btn-info radius-15 me-3 " data-bs-toggle="modal " data-bs-target="#exampleModal " >Edit</button> -->
-                                <button type="button" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getAnUser(account.userId)"> Edit</button>
+                                </td>
+                                <td class="align-middle text-center ">{{account.firstName}} {{account.lastName}}</td>
+                                <td class="align-middle text-center ">{{account.email}}</td>
+                                <td class="align-middle text-center">{{checkRole(account.role)}}</td>
+                                <td class="align-middle text-center ">{{checkDepartment(account.department)}}</td>
+                                <td class="align-middle text-center ">
+                                    <!-- <button type="button " class="btn btn-info radius-15 me-3 " data-bs-toggle="modal " data-bs-target="#exampleModal " >Edit</button> -->
+                                    <button type="button" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getAnUser(account.userId)"> Edit</button>
 
-                                <button type="button " (click)="delete(account.userId) " class="btn btn-danger radius-15 ">Delete</button>
-                            </td>
+                                    <button type="button " (click)="delete(account.userId) " class="btn btn-danger radius-15 ">Delete</button>
+                                </td>
 
-                        </tr>
+                            </tr>
 
 
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
 
 
                 <!-- Modal -->
@@ -171,8 +171,8 @@
                                                                 <select class="form-select text-center " formControlName="department" required>
 
                                                                     <option *ngFor="let opt of ngDepartment "
-                                                                        [value]="opt ">
-                                                                        {{opt}}
+                                                                        [value]="opt.id">
+                                                                        {{opt.name}}
                                                                     </option>
                                                                     <div class="text-danger text-center invalid-feedback d-block "
                                                                         *ngIf="!editAccountForm.controls.department?.valid && (editAccountForm.controls.department?.dirty || editAccountForm.controls.department?.touched) ">
@@ -231,7 +231,7 @@
                     <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
             </div> -->
 
-                
+
 
 
 

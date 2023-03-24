@@ -56,13 +56,13 @@ export class CreateAccountComponent implements OnInit {
   //   avatar: new FormControl(File)
   //  })
 
-  categories?: any[] = []
+  departments?: any[] = []
 
 
-  getCategories() {
-    this.api.getCategory().subscribe((data: any) => {
+  getDepartments() {
+    this.api.getDepartment().subscribe((data: any) => {
       console.log(data);
-      this.categories = data.data.list
+      this.departments = data.data.list
       
     }, error => {
       console.log(error);
@@ -74,9 +74,9 @@ export class CreateAccountComponent implements OnInit {
 
   
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // this.newAccount();
-    this.getCategories();
+    await this.getDepartments();
 
     this.createAccountForm = this.fb.group({
       firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),

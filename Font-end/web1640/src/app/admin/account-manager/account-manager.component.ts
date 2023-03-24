@@ -58,7 +58,7 @@ export class AccountManagerComponent implements OnInit {
     private route: ActivatedRoute, private http: HttpClient,
     private dialog: MatDialog, private fb: FormBuilder, private toast: NgToastService, private modalService: NgbModal) { }
 
-  ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
+  ngDepartment: any[] = []
   ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
   public aElement?: boolean = true;
 
@@ -179,10 +179,12 @@ export class AccountManagerComponent implements OnInit {
 
   }
 
-  loadStudents(): void {
+  async loadStudents(): Promise<void> {
+    await this.loadListDepartment();
     this.api.getUsers(this.currentPage, this.limit).subscribe(
       res => {
         console.log(res);
+        console.log(this.ngDepartment);
         var users = JSON.parse(res);
         
         this.users = users.data.listUser;
@@ -221,9 +223,45 @@ export class AccountManagerComponent implements OnInit {
     this.loadStudents();
   }
 
+  checkRole(id: any): any {
+    if (id == 1) {
+      return "Admin";
+    } else if (id == 2) {
+      return "QAM";
+    } else if (id == 3) {
+      return "QAC";
+    } else if (id == 4) {
+      return "Staff";
+    }
+  }
+
+  checkDepartment(id: any): any {
+    
+    //return name department or ""
+    this.ngDepartment.forEach((department: any) => {
+      if (department.id == id) {
+        return department.name;
+      }
+      else {
+        return "";
+      }
+    })
+   
+  }
+
+  loadListDepartment(): any {
+    this.api.getDepartment().subscribe((res: any) => {
+      console.log(res);
+      this.ngDepartment = res.data.list;
+    }, error => {
+      console.log(error);
+    })
+  }
 
 
-  ngOnInit() {
+
+
+  async ngOnInit() {
     this.createAccountForm = this.fb.group({
       firstName: null,
       lastName: null,
@@ -233,8 +271,13 @@ export class AccountManagerComponent implements OnInit {
       department: null,
       avatar: null
     })
+    await this.loadListDepartment()
+    await this.loadStudents()
 
-    this.loadStudents();
+    console.log(this.ngDepartment);
+    
+
+    
 
     // this.route.queryParams.subscribe(params => {
     //   this.page = +params['page'] || 1;
