@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,13 +17,13 @@ import Swal from 'sweetalert2';
 })
 export class EachIdeaComponent implements OnInit {
 
-  
+  @Input() postId!: number;
+
+  comments!: any[]
   currentPage: number = 1;
   totalPages: number = 0;
   pageArray: number[] = [];
   limit: number = 5;
-
-
  
   totalItems?: number; // Total number of users
 
@@ -35,7 +35,10 @@ export class EachIdeaComponent implements OnInit {
 
   constructor(private api: ApiService, private router: Router,
     private route: ActivatedRoute, private http: HttpClient,
-    private fb: FormBuilder, private toast: NgToastService) { }
+    private fb: FormBuilder, private toast: NgToastService) {
+     
+   
+     }
 
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
   ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
@@ -55,38 +58,51 @@ export class EachIdeaComponent implements OnInit {
     this.createAccountForm.get('avatar')?.setValue(this.currentFile);
 
 
-
-
   }
+
+  idea: any
+
+  getIdea() {
+    this.api.getIdeas(this.postId).subscribe((d: any) => {
+    const data = JSON.parse(d);
+
+    this.idea = data.data.ideas.find((i: any) => i.id == this.postId)
+    console.log("fdgfdgvdsz");
+    console.log("fgfd" + this.idea);
+
+  })
+}
 
  
-  getAnUser() {
-    
-    const helper = new JwtHelperService();
-    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
-    console.log(data);
-    
-    this.api.getUsers().subscribe((d: any) => {
-      var data = JSON.parse(d);
-      console.log(data);
-      if (data.status == 200) {
-        //filter user by id
 
-        let user = data.data.listUser.filter((user: any) => user.userId == data.id)[0];
-        console.log(user.avatar);
-        //set value for formcontrol
+ 
+  // getAnUser() {
+    
+  //   const helper = new JwtHelperService();
+  //   const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+  //   console.log(data);
+    
+  //   this.api.getUsers().subscribe((d: any) => {
+  //     var data = JSON.parse(d);
+  //     console.log(data);
+  //     if (data.status == 200) {
+  //       //filter user by id
+
+  //       let user = data.data.listUser.filter((user: any) => user.userId == data.id)[0];
+  //       console.log(user.avatar);
+  //       //set value for formcontrol
         
 
-      }
+  //     }
 
-    }, error => {
-      this.toast.error({ detail: "Get user failed!" });
-      console.log(error);
-      return
-    }
-    )
+  //   }, error => {
+  //     this.toast.error({ detail: "Get user failed!" });
+  //     console.log(error);
+  //     return
+  //   }
+  //   )
 
-  }
+  // }
 
 
   getListIdea() {
@@ -225,7 +241,9 @@ export class EachIdeaComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getAnUser();
+    // this.getAnUser();
+  
+    this.getIdea();
     this.getListIdea();
     this.createAccountForm = this.fb.group({
       firstName: null,

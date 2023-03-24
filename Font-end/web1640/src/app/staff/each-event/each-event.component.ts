@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgToastService } from 'ng-angular-popup';
 import { SuccessDialogComponentComponent } from 'src/app/admin/create-account/success-dialog-component/success-dialog-component.component';
@@ -19,6 +20,8 @@ import Swal from 'sweetalert2';
 export class EachEventComponent {
   ngListCategory = [ "Category 1", "Category 2","Category3"];
   categories: any[] = [];
+
+  event: any
 
   imageSrc?: SafeUrl;
   pdfSrc?: SafeUrl;
@@ -44,7 +47,7 @@ export class EachEventComponent {
     private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toast: NgToastService) { }
 
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
-  ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
+  ngOptionrole = ["Admin", "QAM", "QAC", "Staff"];
   public aElement?: boolean = true;
 
   // openDialog() {
@@ -75,6 +78,7 @@ export class EachEventComponent {
   }
 
   onFileSelected(event: any): void {
+    this.imageSrc = undefined;
 
     
     // this.createIdeaForm.get('files')!.setValue(this.file);
@@ -120,10 +124,24 @@ export class EachEventComponent {
   getlistCategory() {
     this.api.getCategory().subscribe((res: any) => {
       
-     console.log(res.data.list);
+     console.log(res)
      this.categories = res.data.list
     })
 
+
+  }
+
+  getEvent() {
+    this.api.getEvents().subscribe((res: any) => {
+      const data = JSON.parse(res);
+      // console.log(res.data.list[0].id);
+
+      
+      this.event = data.data.list.find((event: any) => event.id == this.route.snapshot.params['id'])
+      // console.log(this.event)
+    
+     
+    })
 
   }
 
@@ -141,6 +159,8 @@ export class EachEventComponent {
 
         var formData: any = new FormData();
         console.log(this.createIdeaForm.value)
+        const helper = new JwtHelperService();
+    const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
 
         formData.append('content', this.createIdeaForm.get('content')!.value?.toString());
         formData.append('files', this.createIdeaForm.get('files')!.value);
@@ -149,6 +169,7 @@ export class EachEventComponent {
         formData.append('categoryId', this.createIdeaForm.get('categoryId')!.value);
         console.log(this.route.snapshot.params['id'])
         formData.append('eventId', this.route.snapshot.params['id']);
+        
 
         console.log(formData.get('eventId'))
         
@@ -156,13 +177,17 @@ export class EachEventComponent {
         this.api.addIdea(formData
         ).subscribe(res => {
           console.log(res)
-          this.router.navigateByUrl('/staff', { skipLocationChange: true }).then(() => {
-            // get 
-            this.router.navigate([this.router.url]).then(() => {
+          location.reload();
+         
               this.createIdeaForm.reset();
+              Swal.fire(
+                'Added!',
+                'Your idea has been added.',
+                'success'
+              )
+
               this.toast.success({ detail: "Add idea successful!", duration: 3000, position: "top-right" })
-            })
-          })
+           
     
           
            
@@ -327,6 +352,8 @@ export class EachEventComponent {
 
 
   ngOnInit() {
+    this.getEvent();
+    
     
     this.createIdeaForm = this.fb.group({
       files: new FormControl(null),
@@ -336,6 +363,7 @@ export class EachEventComponent {
       categoryId: new FormControl('', [Validators.required]),
       tags: new FormControl('', [Validators.required, Validators.minLength(3)]),
       eventId: new FormControl('', [Validators.required]),
+      department: new FormControl('', [Validators.required]),
       // files: new FormControl(null, [Validators.required]),
 
     })

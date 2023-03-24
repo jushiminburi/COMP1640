@@ -1,46 +1,21 @@
-<!-- <a href="javascript:;" > -->
-<div class="media col-7 pt-3">
+<div class="media col-7 pt-3 m-auto" *ngFor="let comment of comments | slice:0:2">
     <div class="chat-user-online">
         <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
     </div>
     <div class="media-body ml-2">
         <div class="row">
-            <h5 class="mb-0 chat-title col-8">Jonathan Sidwell</h5>
+            <h5 class="mb-0 chat-title col-8">{{comment.user.fullName}}</h5>
             <p class="col-4 text-right">12/03/2023 08:20</p>
         </div>
-        <p class="pt-0 form-control align-content-center ">Verry good!!!</p>
-        <div class="row ms-2">
-            <div class="col-2" type="button">
-                <i class="fadeIn animated bx bx-like"></i> 12
+        <p class="pt-0 form-control">{{comment.content}}/p>
+            <div class="row">
+                <div class="col-2" type="button">
+                    <i class="fadeIn animated bx bx-like"></i> 12
+                </div>
+                <div class="col-2" type="button">
+                    <i class="fadeIn animated bx bx-dislike"></i> 2
+                </div>
             </div>
-            <div class="col-2" type="button">
-                <i class="fadeIn animated bx bx-dislike"></i> 2
-            </div>
-        </div>
-
-    </div>
-
-</div>
-<!-- </a> -->
-
-<div class="media col-7 pt-3 m-auto"  *ngFor="let comment of comments" >
-    <div class="chat-user-online">
-        <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
-    </div>
-    <div class="media-body ml-2">
-        <div class="row">
-            <h5 class="mb-0 chat-title col-8">Jonathan Sidwell</h5>
-            <p class="col-4 text-right">12/03/2023 08:20</p>
-        </div>
-        <p class="pt-0 form-control">Verry good!!!</p>
-        <div class="row">
-            <div class="col-2" type="button">
-                <i class="fadeIn animated bx bx-like"></i> 12
-            </div>
-            <div class="col-2" type="button">
-                <i class="fadeIn animated bx bx-dislike"></i> 2
-            </div>
-        </div>
 
     </div>
 
@@ -54,7 +29,7 @@
             <span>
                 <h6 class="mt-0">Staff Name</h6>
             </span>
-            <span>
+        <span>
                 <form class="form-control">
                     <p>Verry good!!!</p>
                 </form>
@@ -68,8 +43,8 @@
                 </div>
 
             </span>
-        </div>
     </div>
-    <hr>
+</div>
+<hr>
 
 </div> -->

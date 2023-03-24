@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'input-comment',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./input-comment.component.css']
 })
 export class InputCommentComponent {
+  @Input() postId!: number;
 
 }

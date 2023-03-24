@@ -19,6 +19,12 @@ export class ListIdeaOfEventComponent {
   pageArray: number[] = [];
   limit: number = 5;
 
+  postId!: number;
+
+  onClick(id:any) {
+    this.postId = id
+  }
+
 
  
   totalItems?: number; // Total number of users
