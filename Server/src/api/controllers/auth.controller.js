@@ -55,13 +55,16 @@ exports.registerUser = async (req, res) => {
   checkFile(listFile, res)
   try {
     const { email, password, department, role, lastName, firstName } = req.body
-    const departments = await Department.findOne({ name: department }, '_id')
     const result = validate(req.body)
     if (result.error) {
       listFile.forEach(element => {
         unlinkFile(directoryFile + element)
       })
       return apiResponse.response_status(res, result.error.message, 400)
+    }
+    const departments = await Department.findOne({ name: department }, '_id')
+    if(departments == null) {
+      return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
     }
     const user = await User.findOne({ email })
     if (user) {
