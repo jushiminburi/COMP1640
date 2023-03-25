@@ -8,8 +8,12 @@
 
                 <h5 class="mb-0 chat-title col-8">{{idea.userName}}</h5>
             </div>
+            <div class="media-body ml-2">
 
+                <h5 class="mb-0 chat-title col-8">Staff Name</h5>
+            </div>
         </div>
+
     </div>
     <div class="card-body">
         <div class="row text-center m-auto">
@@ -28,52 +32,55 @@
             </div>
         </div>
 
-        <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" data-toggle="modal" data-target="#detailIdea">
-            <div>
-                <h5 class="text-center">{{idea.content}}</h5>
+        <<<<<<< HEAD <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" data-toggle="modal" data-target="#detailIdea">
+            =======
+            <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" data-toggle="modal" data-target="#detailIdea">
+                >>>>>>> 08680559d452ecd58e80cbe53dc80d4d9561d491
+                <div>
+                    <h5 class="text-center">{{idea.content}}</h5>
+                </div>
+
+            </div>
+            <br>
+            <div class="row ">
+                <div class="col-10 d-flex">
+                    <div class="col-1">
+                        <i class="fadeIn animated bx bx-like"></i> 14
+                    </div>
+                    <div class="col-1">
+                        <i class="fadeIn animated bx bx-dislike"></i> 2
+                    </div>
+                    <div class="col-1">
+                        <i class="lni lni-eye"></i> 23
+                    </div>
+                </div>
+                <div class="col-2 justify-content-end">
+                    <i class="fadeIn animated bx bx-comment"></i> {{totalComments}}
+                </div>
+
             </div>
 
-        </div>
-        <br>
-        <div class="row ">
-            <div class="col-10 d-flex">
-                <div class="col-1">
-                    <i class="fadeIn animated bx bx-like"></i> 14
+            <hr color="black" size="10px" />
+            <div class="row mb-auto">
+                <div class="col-10 d-flex">
+                    <div class="col-2" type="button">
+                        <i class="fadeIn animated bx bx-like"></i> Like
+                    </div>
+                    <div class="col-2" type="button">
+                        <i class="fadeIn animated bx bx-dislike"></i> Dislike
+                    </div>
                 </div>
-                <div class="col-1">
-                    <i class="fadeIn animated bx bx-dislike"></i> 2
-                </div>
-                <div class="col-1">
-                    <i class="lni lni-eye"></i> 23
-                </div>
-            </div>
-            <div class="col-2 justify-content-end">
-                <i class="fadeIn animated bx bx-comment"></i> {{totalComments}}
-            </div>
-
-        </div>
-
-        <hr color="black" size="10px" />
-        <div class="row mb-auto">
-            <div class="col-10 d-flex">
-                <div class="col-2" type="button">
-                    <i class="fadeIn animated bx bx-like"></i> Like
-                </div>
-                <div class="col-2" type="button">
-                    <i class="fadeIn animated bx bx-dislike"></i> Dislike
+                <div class="col-2 justify-content-end" type="button">
+                    <i class="fadeIn animated bx bx-comment"></i> Comment
                 </div>
             </div>
-            <div class="col-2 justify-content-end" type="button">
-                <i class="fadeIn animated bx bx-comment"></i> Comment
-            </div>
-        </div>
-        <hr color="black" size="10px" />
+            <hr color="black" size="10px" />
 
-        <input-comment></input-comment>
+            <input-comment></input-comment>
 
-        <list-comment></list-comment>
+            <list-comment></list-comment>
 
-        <a href="#" class="link-info" data-toggle="modal" data-target="#detailIdea">See more comment...</a>
+            <a href="#" class="link-info" data-toggle="modal" data-target="#detailIdea">See more comment...</a>
 
     </div>
 </div>
