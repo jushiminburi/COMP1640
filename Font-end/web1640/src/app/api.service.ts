@@ -239,18 +239,7 @@ export class ApiService {
 
   }
 
-  addComment(formData: FormData) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-        'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
-      })
-    };
-
-    return this.http.post(api + 'comment/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
-
-  }
+  
 
   editComment(id: number, formData: FormData){
 
@@ -414,14 +403,19 @@ export class ApiService {
   }
 
   getIdeas(page?: number, limit?: number) {
+    console.log(localStorage.getItem('refreshToken'));
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Barer ' + localStorage.getItem('accessToken'),
+        
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })
     };
+
+    // return this.http.get(api + 'idea/list'
+    // , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
    
     if(page == undefined || limit == undefined){
@@ -457,6 +451,269 @@ export class ApiService {
     return this.http.post(api + 'idea/create', formData, {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
   }
+
+
+  deleteIdea(id: any) {
+    
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.delete(api + `idea/delete/${id}`, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+  updateIdea(formData: FormData) {
+    console.log(formData.get('files'))
+    console.log(formData.get('title'))
+    console.log(formData.get('content'))
+    console.log(formData.get('categoryId'))
+    console.log(formData.get('eventId'))
+    console.log(formData.get('anonymous'))
+    
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.put(api + 'idea/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+  getIdeaById(id: any) {
+    
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.get(api + `idea/${id}`, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+  getListIdeaByCategory(id: any, page?: number, limit?: number) {
+    
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+    if(page == undefined || limit == undefined){
+      return this.http.get(api + `category/list-idea/${id}`, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    }
+    else {
+      console.log(page);
+      return this.http.get(api + `category/list-idea/${id}?page=${page}&limit=${limit}`
+      , {headers:httpOptions.headers, responseType: 'json',})
+
+    }
+
+  }
+
+
+  getEventById(id: any) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+       
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+      return this.http.get(api + `event/show/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+
+  }
+
+
+
+
+
+  
+  getListComment(ideaId:any, page?: number, limit?: number) {
+    console.log(localStorage.getItem('refreshToken'));
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+    if(page == undefined || limit == undefined){
+      return this.http.get(api + `comment/list?ideaId=${ideaId}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    }
+    else {
+      console.log(page);
+      return this.http.get(api + `comment/list?ideaId=${ideaId}?page=${page}&limit=${limit}`
+      , {headers:httpOptions.headers, responseType: 'json',})//stringify de chuyen doi tu object sang json
+
+    }
+
+  }
+
+  addComment(formData: FormData) {
+    console.log(formData.get('files'))
+   
+    console.log(formData.get('content'))
+   
+    console.log(formData.get('ideaId'))
+   
+    
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+       
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.post(api + 'comment/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+  updateComment(id:any,formData: FormData) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.put(api + `comment/update/${id}`, formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+
+  dowloadFileZip() {
+    
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+        
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+    
+      return this.http.get(api + 'qam/download-files'
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+   
+    
+
+  }
+
+
+  likeIdea(id:any) {
+   
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+    
+      return this.http.get(api + `idea/like/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    
+
+  }
+
+
+  dislikeIdea(id:any) {
+   
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+    
+      return this.http.get(api + `idea/dislike/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    
+
+  }
+
+  likeComment(id:any) {
+   
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+    
+      return this.http.get(api + `comment/like/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    
+
+  }
+
+
+  getUserById(id:any) {
+   
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Barer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+   
+    
+      return this.http.get(api + `user/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

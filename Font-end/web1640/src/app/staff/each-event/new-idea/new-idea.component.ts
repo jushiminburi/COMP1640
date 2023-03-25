@@ -139,16 +139,21 @@ export class NewIdeaComponent {
     this.api.addIdea(formData
         ).subscribe(res => {
           console.log(res)
-          location.reload();
+          const id = this.route.snapshot.params['id'];
+          this.router.navigateByUrl('/staff', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/staff/newidea', id]).then(() => {
+              this.toast.success({ detail: "Add idea successful!", duration: 3000, position: "top-right" })
+            })
+          })
          
               this.createIdeaForm.reset();
-              Swal.fire(
-                'Added!',
-                'Your idea has been added.',
-                'success'
-              )
+              // Swal.fire(
+              //   'Added!',
+              //   'Your idea has been added.',
+              //   'success'
+              // )
 
-              this.toast.success({ detail: "Add idea successful!", duration: 3000, position: "top-right" })
+             
      
         }, error => {
 
@@ -167,6 +172,9 @@ export class NewIdeaComponent {
 
 
   ngOnInit() {
+
+    this.getlistCategory();
+
     this.getEvent();
     
     

@@ -112,14 +112,31 @@ export class ListIdeaOfEventComponent {
       })
     })
   }
+
+  // getEventById(id: any) {
+  //   this.api.getEventById(id).subscribe((res: any) => {
+  //     console.log(res.data.name);
+
+  //     return res.data.name
+      
+  //   }, error => {
+     
+  //     console.log(error);
+  //     return ""})
+  // }
   
 
 
   getListIdea() {
     
+    
     const helper = new JwtHelperService();
     const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    console.log(localStorage.getItem('accessToken'));
+    
     console.log(data);
+
+    
     
     this.api.getIdeas(this.currentPage, this.limit).subscribe((d: any) => {
       var data = JSON.parse(d);
@@ -127,9 +144,33 @@ export class ListIdeaOfEventComponent {
       var category = ""
      
       if (data.status == 200) {
-        this.ideas = data.data.ideas;
+        this.ideas = data.data.listIdea;
         
         this.ideas?.forEach((idea: any) => {
+
+          //get user name
+          this.api.getUserById(idea.user.userId).subscribe((d: any) => {
+            idea.userName = d.data.firstName + " " + d.data.lastName
+            idea.avatarUser = d.data.avatar
+            console.log(d);
+            return
+          }, err => {
+            console.log(err);
+            idea.userName = ""
+            return
+          })
+          
+          // get event name
+          this.api.getEventById(idea.event.id).subscribe((res: any) => {
+            idea.eventName = res.data.name
+            console.log(idea.eventName);
+            return
+          },
+          error => {
+            console.log(error);
+            idea.eventName = ""
+            return
+          })
           this.getComment(idea.id)
           //add category name
           this.api.getCategory().subscribe((res: any) => {
@@ -272,6 +313,7 @@ export class ListIdeaOfEventComponent {
 
 
   ngOnInit() {
+    
     // this.getAnUser();
     this.getListIdea();
     this.createAccountForm = this.fb.group({

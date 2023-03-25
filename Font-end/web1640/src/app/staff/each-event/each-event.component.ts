@@ -132,13 +132,16 @@ export class EachEventComponent {
   }
 
   getEvent() {
-    this.api.getEvents().subscribe((res: any) => {
-      const data = JSON.parse(res);
-      // console.log(res.data.list[0].id);
+    const id = this.route.snapshot.params['id'];
+    this.api.getEventById(id).subscribe((res: any) => {
+      this.event = res.data;
+    // this.api.getEvents().subscribe((res: any) => {
+    //   const data = JSON.parse(res);
+    //   // console.log(res.data.list[0].id);
 
       
-      this.event = data.data.list.find((event: any) => event.id == this.route.snapshot.params['id'])
-      // console.log(this.event)
+    //   this.event = data.data.list.find((event: any) => event.id == this.route.snapshot.params['id'])
+    //   // console.log(this.event)
     
      
     })

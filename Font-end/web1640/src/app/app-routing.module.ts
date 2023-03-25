@@ -76,7 +76,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', component: StaffHomePageComponent },
       { path: 'event/:id', component: EachEventComponent },
-      { path: 'newidea', component: NewIdeaComponent },
+      { path: 'newidea/:id', component: NewIdeaComponent },
       { path: 'profileuser', component: ProfileUserComponent }
     ]
   },
