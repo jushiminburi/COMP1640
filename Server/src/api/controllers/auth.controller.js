@@ -52,7 +52,9 @@ function checkFile (list, res) {
 exports.registerUser = async (req, res) => {
   const directoryFile = path.join(__dirname, '../../../upload/')
   const listFile = req.listFile
-  checkFile(listFile, res)
+  if (listFile.length > 0){
+    checkFile(listFile, res)
+  }
   try {
     const { email, password, department, role, lastName, firstName } = req.body
     const result = validate(req.body)

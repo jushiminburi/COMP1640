@@ -102,10 +102,10 @@ module.exports = {
         path: 'department',
         select: 'id name -_id'
       })
-      user.avatar = BASEURL_FILE + user.avatar
       if (user == null) {
         return apiResponse.response_status(res, Languages.USER_NOT_FOUND, 400)
       }
+      user.avatar = BASEURL_FILE + user.avatar
       return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, user)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
