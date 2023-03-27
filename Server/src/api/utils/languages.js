@@ -13,6 +13,7 @@ module.exports = {
   REGISTER_SUCCESS: 'Register user successful!',
   EMAIL_EXSITS: 'Email is already exsits!',
   USERNAME_EXSITS: 'Username is already exsits!',
+  USER_NOT_YOURSELF: 'This user is not yourself',
 
   // Middleware
   TOKEN_NOT_VALID: 'Token is not valid',
@@ -64,6 +65,7 @@ module.exports = {
   // Department
   DEPARTMENT_EXSITS: 'Department is exsits!',
   DEPARTMENT_NOT_EXSITS: 'Department is not exsits!',
+  DEPARTMENT_NOT_SUITABLE: 'Department is not suitable this role',
   DEPARTMENT_UPDATED_SUCCESS: 'Department updated successful',
   DEPARTMENT_DELETE_SUCCESS: 'Department deleted successful',
   DEPARTMENT_CREATE_SUCCESS: 'Department created successful',
