@@ -15,5 +15,6 @@ router.put('/change-password', isAdmin, UserController.changePassword)
 router.get('/list-user', isAdmin, UserController.getListUser)
 router.get('/:id', verifyToken, UserController.getUserById)
 router.put('/update-profile/:id', [verifyToken, uploadFiles], UserController.updateProfileUser)
+router.put('/change-password-user/:id', verifyToken, UserController.changePasswordUser)
 
 module.exports = router

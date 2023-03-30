@@ -25,6 +25,8 @@ module.exports = {
   DELETE_USER_FAIL: 'Delete user fail!',
   CHANGE_PASSWORD_SUCCESS: 'Change password successful!',
   CHANGE_PASSWORD_FAIL: 'Change password Fail!',
+  OLD_PASSWORD_NOT_CORRECT: 'old password not correct',
+  COMFIRM_PASSWORD_NOT_MISMATCHED: 'Comfirm password is not mismatched',
 
   // Event
   EVENT_EXSITS: 'EVENT is already exsits!',

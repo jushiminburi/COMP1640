@@ -23,7 +23,7 @@ module.exports = {
       from: 'greenwich.systems@gmail.com',
       to: email,
       subject: 'Staff created new idea',
-      text: 'Your user account has been created! /n You can login account with account is your email and password is ""'
+      text: "Dear Quality Assurance Coordinator. There's a staff member who just uploaded an idea"
     }
   }
 }

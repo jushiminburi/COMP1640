@@ -22,8 +22,8 @@ function unlinkFile (file) {
     }
   })
 }
-async function sendIdeaQAC () {
-  const qac = await User.find({ role: 3 })
+async function sendIdeaQAC (department) {
+  const qac = await User.find({ role: 3, department })
   const email = qac.map(user => user.email)
   transporter.sendMail(mailNewIdeaNotificationOptions(email))
 }
@@ -83,15 +83,17 @@ module.exports = {
         return apiResponse.response_status(res, Languages.EVENT_EXPIRED, 400)
       }
       const id = await getNextSequenceValue('ideaId')
+      let newIdea
       if (listFile.length > 0) {
         const fileId = await getNextSequenceValue('fileId')
         const fileResult = await Files.create({ id: fileId, file: listFile })
-        await new Ideas({ department: _departmentId, id, user: _id, title, content, anonymous, category: categoryValue._doc._id, file: fileResult._doc._id, event: eventValue._doc._id }).save()
-        sendIdeaQAC()
+        newIdea = Ideas({ department: _departmentId, id, user: _id, title, content, anonymous, category: categoryValue._doc._id, file: fileResult._doc._id, event: eventValue._doc._id })
       } else {
-        await new Ideas({ department: _departmentId, id, user: _id, title, content, anonymous, category: categoryValue._doc._id, event: eventValue._doc._id }).save()
-        sendIdeaQAC()
+        newIdea = Ideas({ department: _departmentId, id, user: _id, title, content, anonymous, category: categoryValue._doc._id, event: eventValue._doc._id })
       }
+      await newIdea.save()
+      await Event.findOneAndUpdate({ id: eventId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
+      // sendIdeaQAC(_departmentId)
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
       if (listFile.length !== 0) {
