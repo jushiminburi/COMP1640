@@ -10,7 +10,7 @@
             </div>
             <div class="media-body ml-2">
 
-                <h5 class="mb-0 chat-title col-8">Staff Name</h5>
+                <!--<h5 class="mb-0 chat-title col-8">Staff Name</h5>-->
             </div>
         </div>
 
@@ -18,16 +18,16 @@
     <div class="card-body">
         <div class="row text-center m-auto">
             <div class="col-3">
-                <h6>{{idea.title}}</h6>
+                <h6>Title: {{idea.title}}</h6>
             </div>
             <div class="col-3">
-                <h6>{{idea.categoryName}}</h6>
+                <h6>Category: {{idea.category.name}}</h6>
             </div>
             <div class="col-3">
-                <h6>{{idea.eventName}}</h6>
+                <h6>Event: {{idea.eventName}}</h6>
             </div>
             <div class="col-3">
-                <h6>{{idea.createdAt | date}}</h6>
+                <h6>Created at: {{idea.createdAt | date}}</h6>
 
             </div>
         </div>
@@ -73,9 +73,11 @@
         </div>
         <hr color="black" size="10px" />
 
+        <list-comment [comments]></list-comment>
+
         <input-comment></input-comment>
 
-        <list-comment></list-comment>
+
 
         <a href="#" class="link-info" data-toggle="modal" data-target="#detailIdea">See more comment...</a>
 

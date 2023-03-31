@@ -227,7 +227,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CalendarModule,
     CarouselModule,
     CascadeSelectModule,
-    ChartModule,
+    // ChartModule,
     CheckboxModule,
     ChipsModule,
     ChipModule,

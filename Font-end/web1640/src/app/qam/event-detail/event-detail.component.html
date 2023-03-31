@@ -87,15 +87,18 @@
 
                                                 </tr> -->
                                 <!-- <tr *ngFor="let event of events"> -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>Staff 1</td>
-                                    <td>Information Technology</td>
-                                    <td>01/01</td>
-                                    <td>86</td>
-                                    <td>86</td>
-                                    <td><i class="text-primary" data-feather="download">abc.docx</i></td>
-
+                                <tr *ngFor="let event of document.idea; let i = index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{event.staff.name}}</td>
+                                    <td>{{event.idea.name}}</td>
+                                    <td>{{event.idea.createdAt}}</td>
+                                    <td>{{event.idea.totalLike}}</td>
+                                    <td>{{event.idea.totalComment}}</td>
+                                    <td><i class="text-primary" data-feather="download">{{event.idea.files}}</i></td>
+                                    <p-overlayPanel #op>
+                                        <img [src]="imageURL" alt="image" />
+                                    </p-overlayPanel>
+                                    <p-button (click)="op.toggle($event)" icon="pi pi-image" label="Show"></p-button>
                                 </tr>
 
 

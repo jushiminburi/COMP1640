@@ -11,6 +11,82 @@ export class ApiService {
   getCategoryById: any;
 
   constructor(private http: HttpClient) { }
+
+
+  downloadFile(fileName: any): Observable<any> {
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //   })
+    // };
+
+   
+    
+      return this.http.get(`http://139.162.47.239/download/${fileName}}`
+      , {responseType: 'blob'})
+  }
+
+
+  getImage(imageUrl: string): Observable<Blob> {
+    return this.http.get(imageUrl, { responseType: 'blob' });
+  }
+
+
+  downloadCSV(id: any): Observable<any> {
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //   })
+    // };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+        'Content-Type': 'application/csv',
+        'Accept': 'application/csv',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+      return this.http.get(api +  `qam/download-csv/${id}`
+      , {headers:httpOptions.headers, responseType: 'blob'})
+  }
+
+
+
+  getDocumentById(id: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+      return this.http.get(api +  `qam/detail-document/${id}`
+      , {headers:httpOptions.headers, responseType: 'json'})
+   
+  }
+
+
+
+  getListDocument(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+      return this.http.get(api +  'qam/get-event-document'
+      , {headers:httpOptions.headers, responseType: 'json'})
+   
+  }
   login(email:string='', password:string=''): Observable<any>{
     var userInfo = { email:email, password:password }
     var dataJson = JSON.stringify(userInfo);
@@ -442,6 +518,7 @@ export class ApiService {
 
     const httpOptions = {
       headers: new HttpHeaders({
+        
         'Authorization': 'Baee ' + localStorage.getItem('accessToken'),
        
         'Access-Control-Allow-Origin': '*',

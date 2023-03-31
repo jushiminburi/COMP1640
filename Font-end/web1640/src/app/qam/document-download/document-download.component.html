@@ -42,7 +42,9 @@
                     <br>
 
                     <div class="col-1">
-                        <button (click)="dowloadZIP()" type="button" class="btn btn-outline-danger m-1 px-5;">Download File Zip</button>
+
+                        <button (click)="dowloadZIP()" type="button" class="btn btn-danger m-1 px-5;"><i
+                            class="lni lni-zip"></i>Download File Zip</button>
                     </div>
                 </div>
                 <ul>
@@ -53,7 +55,7 @@
                                     <th>No</th>
                                     <th>Time Idea</th>
                                     <th>Event</th>
-                                    <th>Quantity </th>
+                                    <th>Quantity Idea</th>
                                     <th>Information</th>
                                     <th><span><i class="text-primary" data-feather="download">Download</i></span></th>
                                 </tr>
@@ -71,19 +73,21 @@
                                                     <td><i class="text-primary" data-feather="download">Documents</i></td>
 
                                                 </tr> -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>01/01 - 03/03</td>
-                                    <td>Event 1</td>
-                                    <td>40</td>
+                                <tr *ngFor="let document of litsDocument; let i = index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{document.createdAt | date: 'dd/MM/yyyy hh:mm'}} - {{document.deadlineIdea | date: 'dd/MM/yyyy hh:mm'}}</td>
+                                    <td>{{document.name}}</td>
+                                    <td>{{document.totalIdea}}</td>
                                     <td>
-                                        <a [routerLink]="['/qam/events/:id']" href="#">Details
+                                        <a [routerLink]="['/qam/events/', document.id]" href="#">Details
                                         <!-- <span (click)="getEvent(events.id)"></span> -->
                                     </a>
                                     </td>
                                     <!-- <td><a routerLink="/qam/detail/{{events.id}}"> -->
                                     <!-- <span class="badge">Details{{events.id}}</span></a></td> -->
-                                    <td><u style="color:blue">CSV</u></td>
+                                    <td><button type="button" class="btn btn-success" (click)="dowloadCSV(document.id)"><u>CSV</u></button>
+
+                                    </td>
                                 </tr>
                             </tbody>
 

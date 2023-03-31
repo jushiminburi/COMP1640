@@ -25,108 +25,112 @@
             <form [formGroup]="createIdeaForm" (ngSubmit)="addAnIdea(createIdeaForm.value)" validate>
 
                 <h2 class="text-center  ">Create Idea</h2>
-                    <div class="custom-control custom-switch">
+                <!-- <div class="custom-control custom-switch">
                         <input formControlName="anonymous" type="checkbox" class="custom-control-input"
                             id="customSwitch1">
                         <label class="custom-control-label" for="customSwitch1">Hide Identity</label>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group">
-                        <h5 class="text-center">Title</h5>
-                        <input type="text" class="form-control" placeholder="Title..." formControlName="title">
-                    </div>
-                    <div class="form-group">
-                        <h5 class="text-center">Category</h5>
-                        <select formControlName="categoryId" class="form-select"
-                            aria-label="Button group with nested dropdown">
+                <div class="form-group">
+                    <h5 class="text-center">Title</h5>
+                    <input type="text" class="form-control" placeholder="Title..." formControlName="title">
+                </div>
+                <div class="form-group">
+                    <h5 class="text-center">Category</h5>
+                    <select formControlName="categoryId" class="form-select" aria-label="Button group with nested dropdown">
                             <option *ngFor="let category of categories" [value]="category.id" class="text-center">
                                 {{category.name}}</option>
 
                         </select>
-                    </div>
+                </div>
 
-                    <div class="form-group">
-                        <h5 class="text-center">Content</h5>
-                        <textarea formControlName="content" class="form-control" placeholder="Content..." rows="3"
-                            cols="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <h5 class="text-center">Document</h5>
-                        <div class="card radius-15">
-                            <div class="card-body">
+                <div class="form-group">
+                    <h5 class="text-center">Content</h5>
+                    <textarea formControlName="content" class="form-control" placeholder="Content..." rows="3" cols="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <h5 class="text-center">Document</h5>
+                    <div class="card radius-15">
+                        <div class="card-body">
 
-                                <input (change)="onFileSelected($event)" formControlName="files" id="image-uploadify"
-                                    type="file"
-                                    accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf">
+                            <!--<input (change)="onFileSelected($event)" formControlName="files" id="image-uploadify" type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf">
 
-                                <span>
+                            <span>
 
                                     <button class="btn btn-sm btn-danger" type="button"
                                         (click)="onRemoveFile()">X</button>
                                 </span>
 
 
-                                <div *ngIf="imageSrc">
-                                    <img width="120px" height="120px" [src]="imageSrc" alt="Preview">
+                            <div *ngIf="imageSrc">
+                                <img width="120px" height="120px" [src]="imageSrc" alt="Preview">
 
 
-                                </div>
+                            </div> -->
 
-                                <div class="row mt-2">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="customCheck" id="customCheck1"
-                                            required>
-                                        <label class="form-check-label link-info" for="customCheck1" type="button" (click)="onClick()" data-toggle="modal"
-                                        data-target="#termsModal">Terms
+
+                            <p-fileUpload name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                                <ng-template pTemplate="content">
+                                    <ul *ngIf="uploadedFiles.length">
+
+                                    </ul>
+                                </ng-template>
+                            </p-fileUpload>
+
+                            <div class="row mt-2">
+                                <div class="form-check">
+                                    <input formControlName="isCheckedTerms" type="checkbox" class="form-check-input" name="customCheck" id="customCheck1" required>
+
+                                    <label class="form-check-label link-info" type="button" data-toggle="modal" data-target="#termsModal">Terms
                                         and Conditions before submit document</label>
-                                    </div>
-                                    
                                 </div>
-                                <!-- Modal -->
-                                <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollbar">
-                                        <div class="modal-content ">
-                                            <form>
 
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title ">Terms
-                                                        and Coditions before submit document</h5>
-
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close"> <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <label>nfvjkemcskdcnkjsnvofldmvlsf</label>
-
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Disagree</button>
-                                                    <button type="submit" class="btn btn-primary">Agree</button>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                    </div>
-
-                                </div>
                             </div>
-                            <!-- checkbox -->
+                            <!-- Modal -->
+                            <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollbar">
+                                    <div class="modal-content ">
+                                        <form>
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title ">Terms and Coditions before submit document</h5>
+
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae reprehenderit aperiam ea unde quidem libero nihil qui sed, numquam tempora. Atque asperiores esse voluptatibus? Ad hic a eum aperiam nihil.</label>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- checkbox -->
+
+
+                        <small *ngIf="createIdeaForm.get('isCheckedTerms')?.errors?.['incorrect']" class="text-danger text-center invalid-feedback d-block">Please check Terms and Conditions before submit idea</small>
 
 
 
-                        </div>
-                        <div class="form-check m-3">
-                            <input type="checkbox" class="form-check-input" name="customCheck" id="customCheck1"
-                                required>
-                            <label class="form-check-label" for="customCheck1">Incognito</label>
-                        </div>
-                        <div class="row col-3 text-center justify-content-center m-auto">
-                            <button type="submit" class="btn btn-primary">Create Idea</button>
-                        </div>
+
                     </div>
+                    <div class="form-check m-3">
+                        <input formControlName="anonymous" type="checkbox" class="form-check-input" required>
+                        <label class="form-check-label" for="customCheck1">Incognito</label>
+                    </div>
+                    <div class="row col-3 text-center justify-content-center m-auto">
+                        <button type="submit" class="btn btn-primary">Create Idea</button>
+                    </div>
+                </div>
             </form>
         </div>
 

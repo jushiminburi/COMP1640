@@ -18,6 +18,24 @@ import { saveAs } from 'file-saver';
 export class DocumentDownloadComponent implements OnInit
 {
   durationInSeconds = 5;
+  
+
+  litsDocument: any[] = [];
+
+
+  dowloadCSV(id: any): void {
+    
+console.log(id);
+  
+    this.api.downloadCSV(id).subscribe((res: any) => {
+      console.log(res);
+      saveAs(res, 'document.csv');
+      this.toast.success({ detail: "Download Successful!", position: "top-right", duration: 3000 })
+    }, error => {
+      console.log(error);
+      this.toast.error({ detail: "Download Failed!", position: "top-right", duration: 3000 })
+    })
+  }
 
   
 
@@ -26,7 +44,9 @@ export class DocumentDownloadComponent implements OnInit
     private http: HttpClient,
     private api: ApiService,
     private router: Router, private toast: NgToastService) { } //dependency injection
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.listDocument()
+   }
 
   // showSuccess() { // in ra thàh công
   //   this.toastr.success('Thành công', 'Thông báo', {
@@ -42,6 +62,16 @@ export class DocumentDownloadComponent implements OnInit
     email: new FormControl('', [Validators.required, Validators.minLength(9), Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   })
+
+  listDocument(): void {
+    this.api.getListDocument().subscribe((res: any) => {
+      console.log(res.data.list);
+
+      this.litsDocument = res.data;
+    }
+    )
+
+  }
 
   
   

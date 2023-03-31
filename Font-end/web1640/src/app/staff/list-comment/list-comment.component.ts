@@ -13,22 +13,22 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list-comment.component.css']
 })
 export class ListCommentComponent {
-  comments?: any[] = [];
+  @Input() comments?: any[] = [];
   @Input() postId!: number;
 
   ngOnInit(): void {
-    this.getCommentsByPostId();
+    // this.getCommentsByPostId();
     console.log(this.postId);
   }
 
-  getCommentsByPostId() {
-    this.api.getComment(this.postId).subscribe((res: any) => {
-      console.log(res.data.listComment);
-      this.comments = res.data.listComment;
-      console.log(this.comments)
-    })
+  // getCommentsByPostId() {
+  //   this.api.getComment(this.postId).subscribe((res: any) => {
+  //     console.log(res.data.listComment);
+  //     this.comments = res.data.listComment;
+  //     console.log(this.comments)
+  //   })
 
-  }
+  // }
 
   status: any;
   categoryForm!: FormGroup;

@@ -18,6 +18,9 @@ import Swal from 'sweetalert2';
 export class NewIdeaComponent {
   ngListCategory = [ "Category 1", "Category 2","Category3"];
   categories: any[] = [];
+  isCheckedTerms: boolean = false;
+
+  isCheckedIncognito: boolean = false;
 
   event: any
 
@@ -111,6 +114,14 @@ export class NewIdeaComponent {
   }
 
   addAnIdea(data: any) {
+    console.log(this.createIdeaForm.value.isCheckedTerms)
+    console.log(this.createIdeaForm.value.isCheckedIncognito)
+    if (this.uploadedFiles && this.createIdeaForm.value.isCheckedTerms == false) {
+      
+    this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
+  } else{
+    this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
+  }
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this imaginary file!',
@@ -123,19 +134,17 @@ export class NewIdeaComponent {
       if (result.isConfirmed) {
 
         var formData: any = new FormData();
-        console.log(this.createIdeaForm.value)
-        const helper = new JwtHelperService();
-    const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
 
         formData.append('content', this.createIdeaForm.get('content')!.value?.toString());
-        formData.append('files', this.createIdeaForm.get('files')!.value);
+        console.log(this.uploadedFiles)
+        formData.append('files', this.uploadedFiles[0]);
         formData.append('title', this.createIdeaForm.get('title')!.value);
         formData.append('anonymous', this.createIdeaForm.get('anonymous')!.value);
         formData.append('categoryId', this.createIdeaForm.get('categoryId')!.value);
-        console.log(this.route.snapshot.params['id'])
+       
         formData.append('eventId', this.route.snapshot.params['id']);
    
-        console.log(formData.get('eventId'))
+        console.log(formData)
     this.api.addIdea(formData
         ).subscribe(res => {
           console.log(res)
@@ -169,8 +178,43 @@ export class NewIdeaComponent {
   }
 
 
+  uploadedFiles: File[] = [];
+
+  onSelect(event: any) {
+        for(let file of event.files) {
+            //check error
+            if(file.size <= 5000000) {
+                this.uploadedFiles.push(file);
+            }
+
+        }
+
+        console.log(this.uploadedFiles)
+
+        
+    }
+
+    onClear(event: any) {
+        this.uploadedFiles = [];
+      console.log(this.uploadedFiles)
+      
+  }
+
+  onRemove(event: any) {
+    // // Truy cập đối tượng FileList của phần tử <p-fileUpload>
+    // const fileList: FileList = event.fileInput.files;
+
+    // // Lấy index của tệp tin bị xóa
+    // const index = Array.prototype.indexOf.call(fileList, event.file);
+
+    // // Loại bỏ tệp tin khỏi danh sách tệp tin đã chọn
+    // this.uploadedFiles.splice(index, 1);
+    this.uploadedFiles.splice(this.uploadedFiles.indexOf(event), 1);
+    console.log(this.uploadedFiles)
 
 
+  
+}
   ngOnInit() {
 
     this.getlistCategory();
@@ -182,14 +226,26 @@ export class NewIdeaComponent {
       files: new FormControl(null),
       title: new FormControl('', [Validators.required, Validators.minLength(3)]),
       content: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      anonymous: new FormControl(null, [Validators.required]),
+      
       categoryId: new FormControl('', [Validators.required]),
       tags: new FormControl('', [Validators.required, Validators.minLength(3)]),
       eventId: new FormControl('', [Validators.required]),
       department: new FormControl('', [Validators.required]),
+      isCheckedTerms: new FormControl(false),
+
+      anonymous: new FormControl(false)
       // files: new FormControl(null, [Validators.required]),
 
     })
+
+    if (this.uploadedFiles && this.createIdeaForm.value.isCheckedTerms == false) {
+      
+    this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
+  } else{
+    this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
+  }
+
+   
 
 }
 }
