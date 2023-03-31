@@ -25,5 +25,13 @@ module.exports = {
       subject: 'Staff created new idea',
       text: "Dear Quality Assurance Coordinator. There's a staff member who just uploaded an idea"
     }
+  },
+  mailNewIdeaCommentOptions: (email) => {
+    return {
+      from: 'greenwich.systems@gmail.com',
+      to: email,
+      subject: 'Staff created new idea',
+      text: "Dear Quality Assurance Coordinator. There's a staff member who just uploaded an idea"
+    }
   }
 }

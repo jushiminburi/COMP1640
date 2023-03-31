@@ -106,81 +106,9 @@ module.exports = {
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
-      const comments = await Comment.aggregate([
-        {
-          $match: { ideaId }
-
-        },
-        {
-          $lookup: {
-            from: 'commentreplies',
-            localField: 'id',
-            foreignField: 'commentId',
-            as: 'commentReply'
-          }
-        },
-        {
-          $lookup: {
-            from: 'files',
-            localField: 'file',
-            foreignField: 'id',
-            as: 'files'
-          }
-        },
-        { $unwind: '$file' },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'userId',
-            foreignField: 'userId',
-            as: 'user'
-          }
-        },
-        { $unwind: '$user' },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'userReplyId',
-            foreignField: 'userId',
-            as: 'userReply'
-          }
-        },
-        {
-          $unwind: { path: '$userReply', preserveNullAndEmptyArrays: true }
-        },
-        {
-          $project: {
-            _id: 0,
-            id: 1,
-            content: 1,
-            totalReply: 1,
-            isEdited: 1,
-            createdAt: 1,
-            updatedAt: 1,
-            files: {
-              $map: {
-                input: '$files',
-                as: 'file',
-                in: {
-                  fileId: '$$file.id',
-                  urls: {
-                    $map: {
-                      input: '$$file.file',
-                      as: 'filename',
-                      in: {
-                        $concat: [BASEURL_FILE, '$$filename']
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            'user.userId': 1,
-            'user.email': 1,
-            'user.fullName': 1
-          }
-        }, { $skip: skip }, { $limit: limit }, { $sort: { createdAt: -1 } }
-      ])
+      const idea = await Ideas.findOne({ id: ideaId })
+      const comments = await Comment.find({ idea: idea._doc._id }).populate({ path: 'user', select: 'id userId fullName email avatar -_id' })
+        .populate({ path: 'file', select: 'file -_id' }).skip(skip).limit(limit).lean()
       const listComment = comments.map(comment => {
         const commentTime = new Date(comment.createdAt)
         const diffMinutes = moment().diff(commentTime, 'minutes')
@@ -192,7 +120,7 @@ module.exports = {
           totalReply: comment.totalReply,
           isEdited: comment.isEdited,
           user: comment.user,
-          files: comment.files,
+          files: comment.file,
           timeAgo: time
 
         }

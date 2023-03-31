@@ -2,6 +2,7 @@ const { Event, validate } = require('../models/event.model')
 const apiResponse = require('../helpers/api.response.helper')
 const Languages = require('../utils/languages')
 const getNextSequenceValue = require('../utils/icrement.db')
+const { Ideas } = require('../models/idea.model')
 
 module.exports = {
   async createEvent (req, res) {
@@ -96,5 +97,18 @@ module.exports = {
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }
+  },
+  async getIdeaByEvent (req, res) {
+    const id = req.params.id
+    const event = await Event.findOne({ id }, { _id: 0, __v: 0 })
+    if (event == null) {
+      return apiResponse.response_status(res, Languages.EVENT_NOT_EXSITS, 400)
+    }
+    const listIdea = await Ideas.find({ event: event._doc._id })
+    const totalIdea = await Ideas.find({ event: event._doc._id }).countDocuments()
+    return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
+      listIdea,
+      totalIdea
+    })
   }
 }
