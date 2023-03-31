@@ -9,6 +9,7 @@ module.exports = {
     if (token) {
       const accessToken = token.split(' ')[1]
       const result = jwt.verify(accessToken, '10')
+      req.fullName = result.fullName
       req.userId = result.id
       req._userId = result._id
       req._departmentId = result._departmentId

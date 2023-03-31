@@ -23,6 +23,11 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true)
   next()
 })
+
+app.get('/download/:file', (req, res) => {
+  const file = path.join(__dirname, `upload/${req.params.file}`);
+  res.download(file);
+});
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(cors())
 app.use(bodyParser.json())

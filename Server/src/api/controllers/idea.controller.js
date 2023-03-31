@@ -161,20 +161,20 @@ module.exports = {
         select: 'id content file user isEdited likes totalLike',
         options: { sort: { createAt: -1 }, limit: 1 },
         populate: [
-          { path: 'user', select: 'id userId fullName email avatar -_id' }
-          // { path: 'file', select: 'file -_id' }
+          { path: 'user', select: 'id userId fullName email avatar -_id' },
+          { path: 'file', select: 'file -_id' }
         ]
       }).skip(skip).limit(limit).sort(sortIdea).lean()
       const listIdea = ideas.map((idea) => {
         const isLikes = idea.likes.includes(userId)
-        const files = idea.file ? idea.file.file.map((file) => `${BASEURL_FILE}${idea.file.file}`) : []
+        const files = idea.file
         const isDislikes = idea.dislikes.includes(userId)
         const users = {
           userId: idea.user.userId,
           fullName: idea.user.fullName,
           email: idea.user.email,
           department: idea.user.department,
-          avatar: `${BASEURL_FILE}${idea.user.avatar}`
+          avatar: idea.user.avatar
         }
         const { likes, user, dislikes, ...ideaWithoutLikesAndDislikes } = idea
         return {
@@ -304,8 +304,8 @@ module.exports = {
         select: 'id content file user isEdited likes totalLike',
         options: { sort: { createAt: -1 }, limit: 1 },
         populate: [
-          { path: 'user', select: 'id userId fullName email avatar -_id' }
-          // { path: 'file', select: 'file -_id' }
+          { path: 'user', select: 'id userId fullName email avatar -_id' },
+          { path: 'file', select: 'file -_id' }
         ]
       }).lean()
       if (idea == null) {

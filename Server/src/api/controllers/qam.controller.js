@@ -59,6 +59,15 @@ module.exports = {
       return apiResponse.response_error_500(res, error.message)
     }
   },
+  async dowloadFile (req,res) {
+    try{
+        const file = path.join(__dirname, `../../../upload/${req.params.file}`);
+        res.download(file);
+      
+    } catch (error) {
+      return apiResponse.response_error_500(res, error.message)
+    }
+  },
   async downloadFilecsv (req, res) {
     try {
       const id = req.params.id

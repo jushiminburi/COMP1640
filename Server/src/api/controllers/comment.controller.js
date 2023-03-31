@@ -154,8 +154,11 @@ module.exports = {
     try {
       const userId = req.userId
       const commentId = req.params.id
-      const commentIsMyself = await Comment.findOne({ id: commentId, userId })
+      const commentIsMyself = await Comment.findOne({ id: commentId }).populate({path: 'user', select: 'userId'})
       if (commentIsMyself == null) {
+        return apiResponse.response_status(res, commentIsMyself, 400)
+      }
+      if (commentIsMyself._doc.user.userId !== userId) {
         return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
       }
       await Comment.findOneAndDelete({ id: commentId, userId })
