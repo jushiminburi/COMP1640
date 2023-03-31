@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from 'src/app/api.service';
+//import file saver
+import { saveAs } from 'file-saver';
 
 @Component( {
 
@@ -137,7 +139,7 @@ export class DocumentDownloadComponent implements OnInit
 
   dowloadZIP() {
     this.api.dowloadFileZip().subscribe(res => {
-      
+      saveAs(res, 'example.zip');
 
       this.toast.success({ detail: "Download Successful!", position: "top-right", duration: 3000 })
     }, error => {

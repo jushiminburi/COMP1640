@@ -40,9 +40,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - clone về
 Chạy trong terminal của project: 
-        npm update 
+        
         npm install ngx-bootstrap --save
         npm install --force
+        npm i file-saver --force
+        npm i --save-dev @types/file-saver --force
 
 - start server bằng câu lệnh: 
       vào Font-end -> web1640 -> src -> app -> mở terminal của app -> chạy câu lệnh: ng serve -o

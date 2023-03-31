@@ -618,14 +618,15 @@ export class ApiService {
     const httpOptions = {
       headers: new HttpHeaders({
        
-        
+        'Content-Type': 'application/zip',
+        'Accept': 'application/zip',
         'Access-Control-Allow-Origin': '*',
       })
     };
    
     
       return this.http.get(api + 'qam/download-files'
-      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+      , {headers:httpOptions.headers, responseType: 'blob'})//stringify de chuyen doi tu object sang json
    
     
 
