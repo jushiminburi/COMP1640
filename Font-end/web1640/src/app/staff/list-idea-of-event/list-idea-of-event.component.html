@@ -73,9 +73,9 @@
         </div>
         <hr color="black" size="10px" />
 
-        <list-comment [comments]></list-comment>
+        <list-comment [comments]="idea.comments"></list-comment>
 
-        <input-comment></input-comment>
+        <input-comment [postId]="idea.id"></input-comment>
 
 
 

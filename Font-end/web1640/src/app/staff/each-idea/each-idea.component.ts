@@ -238,6 +238,11 @@ export class EachIdeaComponent implements OnInit {
     this.loadStudents();
   }
 
+  onLoadData() {
+    this.getIdea();
+    this.getListIdea();
+  }
+
 
 
   ngOnInit() {

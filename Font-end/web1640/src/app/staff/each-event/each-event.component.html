@@ -35,8 +35,8 @@
         <br>
         <!-- </div> -->
         <div class="col-md-12 radius-15 align-content-center text-center m-auto pt-4">
-            <a [routerLink]="['/staff/newidea', event.id]" href="#"><button class="btn btn-primary"> Create
-                New Idea</button></a>
+            <button [routerLink]="['/staff/newidea', event.id]" [ngClass]="{'disabled': allowCreateIdea == false}" class="btn btn-primary"> Create
+                New Idea</button>
         </div>
         <!-- Modal -->
 

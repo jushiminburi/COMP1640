@@ -58,12 +58,7 @@
                     <hr color="black" size="10px" />
                     <div class="row mb-auto">
                         <div class="col-10 d-flex">
-                            <div class="col-2">
-                                <i class="fadeIn animated bx bx-like"></i> Like
-                            </div>
-                            <div class="col-2">
-                                <i class="fadeIn animated bx bx-dislike"></i> Dislike
-                            </div>
+                            <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
                         </div>
                         <div class="col-2 justify-content-end">
                             <i class="fadeIn animated bx bx-comment"></i> Comment

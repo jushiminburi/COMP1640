@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
@@ -13,13 +14,27 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list-comment.component.css']
 })
 export class ListCommentComponent {
-  @Input() comments?: any[] = [];
+  @Input() comments!: any[];
   @Input() postId!: number;
+
 
   ngOnInit(): void {
     // this.getCommentsByPostId();
     console.log(this.postId);
+
+    const helper = new JwtHelperService();
+    const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+   for (let i = 0; i < this.comments.length; i++) {
+     if (this.comments[i].user.id == user.id) {
+        this.comments[i].action = true;
+     }
+   }
+
   }
+
+
+
+
 
   // getCommentsByPostId() {
   //   this.api.getComment(this.postId).subscribe((res: any) => {
@@ -50,78 +65,10 @@ export class ListCommentComponent {
 
   }
 
-  deleteCategory(id: number) {
-    
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this imaginary file!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.api.deleteCategory(id).subscribe(async (res: any) => {
-
-          if (res.status == 200) {
-            // await this.getlistCategory();
-            this.router.navigateByUrl('/qam', { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/qam/categorymanager']).then(() => {
-    
-                this.toast.success({ detail: "Delete Category Success!", duration: 3000, position: "top-right" })
-              })
-            })
-    
-          }
-    
-        }, (err: any) => {
-          this.toast.error({ detail: "Delete category failed!", duration: 3000, position: "top-right" })
-          console.log(err);
-          // location.reload();
-    
-    
-        }
-        )
-        
-      } 
-      // else if (result.dismiss === Swal.DismissReason.cancel) {
-      //   Swal.fire(
-      //     'Cancelled',
-      //     'Your imaginary file is safe :)',
-      //     'error'
-      //   )
-      // }
-    })
-    // if (confirm("Are you sure to delete this category?")) {
-    //   this.api.deleteCategory(id).subscribe(async (res: any) => {
-
-    //     if (res.status == 200) {
-    //       // await this.getlistCategory();
-    //       this.router.navigateByUrl('/qam', { skipLocationChange: true }).then(() => {
-    //         this.router.navigate(['/qam/categorymanager']).then(() => {
-
-    //           this.toast.success({ detail: "Delete Category Success!", duration: 3000, position: "top-right" })
-    //         })
-    //       })
-
-    //     }
-
-    //   }, (err: any) => {
-    //     alert("Delete category failed!");
-    //     console.log(err);
-    //     // location.reload();
+  
 
 
-    //   }
-    //   )
-
-
-    // }
-
-  }
-
-
-  addCategory() {
+  deleteComment() {
     
 
 
@@ -134,16 +81,16 @@ export class ListCommentComponent {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.api.addCategory(this.categoryForm.value.name).subscribe(async (res: any) => {
+        this.api.deleteComment(this.categoryForm.value.name).subscribe(async (res: any) => {
           if (res.status == 200) {
-            this.router.navigateByUrl('/qam', { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/qam/categorymanager']).then(() => {
-                this.toast.success({ detail: "Add Category Success!", duration: 3000, position: "top-right" })
+            this.router.navigateByUrl('/staff', { skipLocationChange: true }).then(() => {
+              this.router.navigateByUrl(this.router.url).then(() => {
+                this.toast.success({ detail: "Delete Comment Success!", duration: 3000, position: "top-right" })
               })
             })
           }
         }, (err: any) => {
-          this.toast.error({ detail: "Add category failed!", duration: 3000, position: "top-right" })
+          this.toast.error({ detail: "Delete comment failed!", duration: 3000, position: "top-right" })
           console.log(err);
           // location.reload();
         }

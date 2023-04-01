@@ -13,6 +13,40 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
 
+  likeDislike(id: any, like: boolean, dislike: boolean): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.post(api + `idea/like/${id}`, {like: like, dislike: dislike}, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+
+ 
+
+
+  createComment(formData: FormData): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.post(api + 'comment/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+
+
   downloadFile(fileName: any): Observable<any> {
     // const httpOptions = {
     //   headers: new HttpHeaders({
