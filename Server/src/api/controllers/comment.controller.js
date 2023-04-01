@@ -154,7 +154,7 @@ module.exports = {
     try {
       const userId = req.userId
       const commentId = req.params.id
-      const commentIsMyself = await Comment.findOne({ id: commentId }).populate({path: 'user', select: 'userId'})
+      const commentIsMyself = await Comment.findOne({ id: commentId }).populate({ path: 'user', select: 'userId' })
       if (commentIsMyself == null) {
         return apiResponse.response_status(res, commentIsMyself, 400)
       }

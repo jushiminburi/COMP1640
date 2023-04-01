@@ -166,9 +166,9 @@ module.exports = {
         ]
       }).skip(skip).limit(limit).sort(sortIdea).lean()
       const listIdea = ideas.map((idea) => {
-        const isLikes = idea.likes.includes(userId)
+        const isLikes = idea.likes && idea.likes.includes(userId)
         const files = idea.file
-        const isDislikes = idea.dislikes.includes(userId)
+        const isDislikes = idea.dislikes && idea.dislikes.includes(userId)
         const users = {
           userId: idea.user.userId,
           fullName: idea.user.fullName,
