@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -31,7 +31,7 @@ export class ListIdeaOfEventComponent {
 
   page?: number;
 
-  ideas?: any[] = [];
+  @Input() ideas: any[] = [];
   comments?: any[] = [];
   totalComments?: number;
 
