@@ -7,5 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class InputCommentComponent {
   @Input() postId!: number;
+  
 
 }
+
