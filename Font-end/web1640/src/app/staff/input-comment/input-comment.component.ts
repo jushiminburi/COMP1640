@@ -52,6 +52,19 @@ export class InputCommentComponent {
   
 }
 
+ commentText!: string;
+  selectedImage: any;
+
+  onImageSelect(event: any) {
+    if (event.files && event.files.length) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(event.files[0]);
+      fileReader.onload = () => {
+        this.selectedImage = fileReader.result;
+      };
+    }
+  }
+
 createComment() {
 
 

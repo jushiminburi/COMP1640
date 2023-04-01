@@ -9,13 +9,14 @@
                 <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
                 <div class="input-group">
                     <textarea [(ngModel)]="comment" class="form-control" rows="1" cols="3" placeholder="Write comment..."></textarea>
-                    <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                    <!--<p-fileUpload class="input-group-append" [chooseStyleClass] = "'btn-font-size-sm'" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)"
+                        [maxFileSize]="5000000">
                         <ng-template pTemplate="content">
                             <ul *ngIf="uploadedFiles.length">
 
                             </ul>
                         </ng-template>
-                    </p-fileUpload>
+                    </p-fileUpload> -->
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
                                 class="bx bx-send"></i></button>
