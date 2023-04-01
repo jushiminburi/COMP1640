@@ -13,6 +13,40 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
 
+  likeDislike(id: any, like: boolean, dislike: boolean): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.post(api + `idea/like/${id}`, {like: like, dislike: dislike}, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+
+ 
+
+
+  createComment(formData: FormData): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.post(api + 'comment/create', formData, {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+
+  }
+
+
+
+
   downloadFile(fileName: any): Observable<any> {
     // const httpOptions = {
     //   headers: new HttpHeaders({
@@ -478,8 +512,29 @@ export class ApiService {
 
   }
 
-  getIdeas(page?: number, limit?: number) {
-    console.log(localStorage.getItem('refreshToken'));
+  getIdeas(page?: number, limit?: number, params?: any) {
+
+    // let params= {
+    //   eventId: this.eventSelected,
+    //   categoryId: this.categorySelected,
+    //   departmentId: this.departmentSelected,
+    //   sort: this.ngFilterSelected
+
+    // }
+
+    if(params.eventId == undefined || params.eventId == null || params.eventId == 0){
+      delete params.eventId;
+    }
+    if(params.categoryId == undefined || params.categoryId == null || params.categoryId == 0){
+      delete params.categoryId;
+    }
+    if(params.departmentId == undefined || params.departmentId == null || params.departmentId == 0){
+      delete params.departmentId;
+    }
+    if(params.sort == undefined || params.sort == null || params.sort == "0"){
+      delete params.sort;
+    }
+    
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -487,7 +542,8 @@ export class ApiService {
         
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-      })
+      }),
+      params: params
     };
 
     // return this.http.get(api + 'idea/list'
@@ -501,7 +557,7 @@ export class ApiService {
     else {
       console.log(page);
       return this.http.get(api + `idea/list?page=${page}&limit=${limit}`
-      , {headers:httpOptions.headers, responseType: 'text',})//stringify de chuyen doi tu object sang json
+      , {headers:httpOptions.headers, params: httpOptions.params, responseType: 'text'})//stringify de chuyen doi tu object sang json
 
     }
 

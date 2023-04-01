@@ -131,10 +131,15 @@ export class EachEventComponent {
 
   }
 
+  allowCreateIdea: boolean = true;
+
   getEvent() {
     const id = this.route.snapshot.params['id'];
     this.api.getEventById(id).subscribe((res: any) => {
       this.event = res.data;
+      if (this.event.deadlineIda < new Date()) {
+        this.allowCreateIdea = false;
+      }
     // this.api.getEvents().subscribe((res: any) => {
     //   const data = JSON.parse(res);
     //   // console.log(res.data.list[0].id);

@@ -159,6 +159,7 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LikeDislikeComponent } from './staff/each-idea/like-dislike/like-dislike.component';
 
 
 @NgModule({
@@ -207,6 +208,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ListCommentComponent,
     ProfileUserComponent,
     NewIdeaComponent,
+    LikeDislikeComponent,
 
 
 

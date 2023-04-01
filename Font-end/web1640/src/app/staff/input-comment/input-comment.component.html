@@ -15,6 +15,13 @@
                         <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
                     </div>
                     
+                    <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                        <ng-template pTemplate="content">
+                            <ul *ngIf="uploadedFiles.length">
+
+                            </ul>
+                        </ng-template>
+                    </p-fileUpload>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
                                 class="bx bx-send"></i></button>
