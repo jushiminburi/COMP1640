@@ -9,5 +9,6 @@ router.delete('/delete/:id', EventController.deleteEvent)
 router.put('/update', isAdmin, EventController.updateEvent)
 router.put('/update', isAdmin, EventController.updateEvent)
 router.get('/show/:id', EventController.getEachEvent)
+router.get('/list-idea/:id', EventController.getIdeaByEvent)
 
 module.exports = router

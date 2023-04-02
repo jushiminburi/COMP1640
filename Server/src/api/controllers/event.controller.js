@@ -99,12 +99,39 @@ module.exports = {
     }
   },
   async getIdeaByEvent (req, res) {
-    const id = req.params.id
-    const event = await Event.findOne({ id }, { _id: 0, __v: 0 })
+    const id = parseInt(req.params.id) || 0
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 10
+    const skip = (limit * page) - limit
+    const event = await Event.findOne({ id }, { __v: 0 })
     if (event == null) {
       return apiResponse.response_status(res, Languages.EVENT_NOT_EXSITS, 400)
     }
-    const listIdea = await Ideas.find({ event: event._doc._id })
+    const listIdea = await Ideas.find({ event: event._doc._id }).populate({
+      path: 'user',
+      select: 'userId fullName department email avatar -_id',
+      populate: {
+        path: 'department',
+        select: 'id name _id'
+      }
+    }).populate({
+      path: 'file',
+      select: 'id file -_id'
+    }).populate({
+      path: 'event',
+      select: 'id name deadlineIdea deadlineComment -_id'
+    }).populate({
+      path: 'category',
+      select: 'id name -_id'
+    }).populate({
+      path: 'comment',
+      select: 'id content file user isEdited likes totalLike',
+      options: { sort: { createAt: -1 }, limit: 1 },
+      populate: [
+        { path: 'user', select: 'id userId fullName email avatar -_id' },
+        { path: 'file', select: 'file -_id' }
+      ]
+    }).skip(skip).limit(limit)
     const totalIdea = await Ideas.find({ event: event._doc._id }).countDocuments()
     return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
       listIdea,

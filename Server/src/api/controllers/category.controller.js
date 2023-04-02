@@ -82,37 +82,36 @@ module.exports = {
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 10
       const skip = (limit * page) - limit
-      const ideas = await Ideas.aggregate([
-        {
-          $match: { categoryId: id }
-        },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'userId',
-            foreignField: 'userId',
-            as: 'user'
-          }
-        },
-        { $unwind: '$user' },
-        {
-          $project: {
-            _id: 0,
-            id: 1,
-            title: 1,
-            content: 1,
-            anonymous: 1,
-            categoryId: 1,
-            createdAt: 1,
-            updatedAt: 1,
-            'user.username': 1,
-            'user.userId': 1,
-            'user.email': 1,
-            'user.fullName': 1
-          }
-        }, { $skip: skip }, { $limit: limit }]
-      )
-      const totalIdea = await Ideas.find({ categoryId: id }).countDocuments()
+      const category = await Category.findOne({ id })
+      if (category == null) {
+        return apiResponse.response_status(res, Languages.CATEGORY_NOT_EXSITS, 400)
+      }
+      const ideas = await Ideas.find({ category: category._doc._id }).populate({
+        path: 'user',
+        select: 'userId fullName department email avatar -_id',
+        populate: {
+          path: 'department',
+          select: 'id name _id'
+        }
+      }).populate({
+        path: 'file',
+        select: 'id file -_id'
+      }).populate({
+        path: 'event',
+        select: 'id name deadlineIdea deadlineComment -_id'
+      }).populate({
+        path: 'category',
+        select: 'id name -_id'
+      }).populate({
+        path: 'comment',
+        select: 'id content file user isEdited likes totalLike',
+        options: { sort: { createAt: -1 }, limit: 1 },
+        populate: [
+          { path: 'user', select: 'id userId fullName email avatar -_id' },
+          { path: 'file', select: 'file -_id' }
+        ]
+      }).skip(skip).limit(limit)
+      const totalIdea = await Ideas.find({ category: category._doc._id }).countDocuments()
       return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
         ideas,
         totalIdea
