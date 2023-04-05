@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./new-idea.component.css']
 })
 export class NewIdeaComponent {
-  ngListCategory = [ "Category 1", "Category 2","Category3"];
+  ngListCategory = ["Category 1", "Category 2", "Category3"];
   categories: any[] = [];
   isCheckedTerms: boolean = false;
 
@@ -34,7 +34,7 @@ export class NewIdeaComponent {
   limit: number = 5;
 
 
- 
+
   totalItems?: number; // Total number of users
 
   page?: number;
@@ -59,16 +59,16 @@ export class NewIdeaComponent {
   currentFile?: File;
   // file?: File;
   onRemoveFile(): void {
-    
+
     this.createIdeaForm.get('files')!.setValue(undefined);
     this.imageSrc = undefined;
-  
+
   }
 
   onFileSelected(event: any): void {
     this.imageSrc = undefined;
 
-    
+
     // this.createIdeaForm.get('files')!.setValue(this.file);
 
     const file = event.target.files[0];
@@ -91,9 +91,9 @@ export class NewIdeaComponent {
 
   getlistCategory() {
     this.api.getCategory().subscribe((res: any) => {
-      
-     console.log(res)
-     this.categories = res.data.list
+
+      console.log(res)
+      this.categories = res.data.list
     })
 
 
@@ -104,11 +104,11 @@ export class NewIdeaComponent {
       const data = JSON.parse(res);
       // console.log(res.data.list[0].id);
 
-      
+
       this.event = data.data.list.find((event: any) => event.id == this.route.snapshot.params['id'])
       // console.log(this.event)
-    
-     
+
+
     })
 
   }
@@ -117,11 +117,11 @@ export class NewIdeaComponent {
     console.log(this.createIdeaForm.value.isCheckedTerms)
     console.log(this.createIdeaForm.value.isCheckedIncognito)
     if (this.uploadedFiles && this.createIdeaForm.value.isCheckedTerms == false) {
-      
-    this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
-  } else{
-    this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
-  }
+
+      this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
+    } else {
+      this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
+    }
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this imaginary file!',
@@ -141,11 +141,11 @@ export class NewIdeaComponent {
         formData.append('title', this.createIdeaForm.get('title')!.value);
         formData.append('anonymous', this.createIdeaForm.get('anonymous')!.value);
         formData.append('categoryId', this.createIdeaForm.get('categoryId')!.value);
-       
+
         formData.append('eventId', this.route.snapshot.params['id']);
-   
+
         console.log(formData)
-    this.api.addIdea(formData
+        this.api.addIdea(formData
         ).subscribe(res => {
           console.log(res)
           const id = this.route.snapshot.params['id'];
@@ -154,25 +154,25 @@ export class NewIdeaComponent {
               this.toast.success({ detail: "Add idea successful!", duration: 3000, position: "top-right" })
             })
           })
-         
-              this.createIdeaForm.reset();
-              // Swal.fire(
-              //   'Added!',
-              //   'Your idea has been added.',
-              //   'success'
-              // )
 
-             
-     
+          this.createIdeaForm.reset();
+          // Swal.fire(
+          //   'Added!',
+          //   'Your idea has been added.',
+          //   'success'
+          // )
+
+
+
         }, error => {
 
           this.toast.error({ detail: "Add idea failed!", duration: 3000, position: "top-right" })
-            console.log(error)
-            // this.router.navigate(['/login']);
-          }
-    
+          console.log(error)
+          // this.router.navigate(['/login']);
+        }
+
         );
-       
+
       }
     })
   }
@@ -181,23 +181,23 @@ export class NewIdeaComponent {
   uploadedFiles: File[] = [];
 
   onSelect(event: any) {
-        for(let file of event.files) {
-            //check error
-            if(file.size <= 5000000) {
-                this.uploadedFiles.push(file);
-            }
+    for (let file of event.files) {
+      //check error
+      if (file.size <= 5000000) {
+        this.uploadedFiles.push(file);
+      }
 
-        }
-
-        console.log(this.uploadedFiles)
-
-        
     }
 
-    onClear(event: any) {
-        this.uploadedFiles = [];
-      console.log(this.uploadedFiles)
-      
+    console.log(this.uploadedFiles)
+
+
+  }
+
+  onClear(event: any) {
+    this.uploadedFiles = [];
+    console.log(this.uploadedFiles)
+
   }
 
   onRemove(event: any) {
@@ -213,20 +213,20 @@ export class NewIdeaComponent {
     console.log(this.uploadedFiles)
 
 
-  
-}
+
+  }
   ngOnInit() {
 
     this.getlistCategory();
 
     this.getEvent();
-    
-    
+
+
     this.createIdeaForm = this.fb.group({
       files: new FormControl(null),
       title: new FormControl('', [Validators.required, Validators.minLength(3)]),
       content: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      
+
       categoryId: new FormControl('', [Validators.required]),
       tags: new FormControl('', [Validators.required, Validators.minLength(3)]),
       eventId: new FormControl('', [Validators.required]),
@@ -239,14 +239,14 @@ export class NewIdeaComponent {
     })
 
     if (this.uploadedFiles && this.createIdeaForm.value.isCheckedTerms == false) {
-      
-    this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
-  } else{
-    this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
+
+      this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
+    } else {
+      this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
+    }
+
+
+
   }
-
-   
-
-}
 }
 

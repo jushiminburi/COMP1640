@@ -13,6 +13,7 @@ import { ApiService } from 'src/app/api.service';
 export class InputCommentComponent {
   comment: string = '';
   @Input() postId!: number;
+  
 
   uploadedFiles: File[] = [];
 
@@ -98,3 +99,4 @@ constructor(private api: ApiService, private router: Router,
 
 
 }
+

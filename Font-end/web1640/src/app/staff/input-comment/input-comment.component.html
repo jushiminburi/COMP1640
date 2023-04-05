@@ -7,10 +7,15 @@
             </div>
             <div class="media-body ml-2 col-7">
                 <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
-                <div class="input-group">
-                    <textarea [(ngModel)]="comment" class="form-control" rows="1" cols="3" placeholder="Write comment..."></textarea>
-                    <!--<p-fileUpload class="input-group-append" [chooseStyleClass] = "'btn-font-size-sm'" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)"
-                        [maxFileSize]="5000000">
+                <div class="input-group-append">
+                    <textarea class="form-control" rows="1" cols="3" placeholder="Write comment..."></textarea>
+
+                    <!-- button input file -->
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
+                    </div>
+
+                    <!-- <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
                         <ng-template pTemplate="content">
                             <ul *ngIf="uploadedFiles.length">
 
@@ -22,6 +27,13 @@
                                 class="bx bx-send"></i></button>
                     </div>
                 </div>
+                <!--<p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                    <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+
+                        </ul>
+                    </ng-template>
+                </p-fileUpload> -->
             </div>
 
         </div>
