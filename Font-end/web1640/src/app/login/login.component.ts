@@ -30,7 +30,9 @@ export class LoginComponent {
     private http: HttpClient,
     private api: ApiService,
     private router: Router, private toastr: ToastrService, private toast: NgToastService, private _snackBar: MatSnackBar) { } //dependency injection
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    
+   }
 
   // showSuccess() { // in ra thàh công
   //   this.toastr.success('Thành công', 'Thông báo', {

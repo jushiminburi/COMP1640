@@ -2,7 +2,7 @@
     <div class="mt-2">
         <div class="media col-7 pt-3">
             <div class="chat-user-online">
-                <img [src]="idea.avatarUser" width="42" height="42" class="rounded-circle" alt="" />
+                <img src="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
             </div>
             <div class="media-body ml-2">
 
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" data-toggle="modal" data-target="#detailIdea">
+        <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" (click)="show(idea.id)">
             <div>
                 <h5 class="text-center">{{idea.content}}</h5>
             </div>
@@ -42,17 +42,17 @@
         <div class="row ">
             <div class="col-10 d-flex">
                 <div class="col-1">
-                    <i class="fadeIn animated bx bx-like"></i> 14
+                    <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
                 </div>
                 <div class="col-1">
-                    <i class="fadeIn animated bx bx-dislike"></i> 2
+                    <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
                 </div>
                 <div class="col-1">
-                    <i class="lni lni-eye"></i> 23
+                    <i class="lni lni-eye"></i> {{idea.totalViews}}
                 </div>
             </div>
             <div class="col-2 justify-content-end">
-                <i class="fadeIn animated bx bx-comment"></i> {{totalComments}}
+                <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
             </div>
 
         </div>
@@ -79,28 +79,14 @@
 
 
 
-        <a href="#" class="link-info" data-toggle="modal" data-target="#detailIdea">See more comment...</a>
+        <a (click)="show(idea.id)" class="link-info">See more comment...</a>
 
     </div>
 </div>
 
-<div class="modal fade" id="detailIdea" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
 
-                <each-idea></each-idea>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="pagination justify-content-end pt-2">
+<div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
     <nav aria-label="Page navigation example ">
         <ul class="pagination round-pagination ">
             <li class="page-item">

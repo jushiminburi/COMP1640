@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgToastService } from 'ng-angular-popup';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SuccessDialogComponentComponent } from 'src/app/admin/create-account/success-dialog-component/success-dialog-component.component';
 import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
@@ -16,6 +17,40 @@ import Swal from 'sweetalert2';
   styleUrls: ['./each-idea.component.css']
 })
 export class EachIdeaComponent implements OnInit {
+  id!: any;
+
+  constructor(
+    public config: DynamicDialogConfig,
+    private ref: DynamicDialogRef,
+    private api: ApiService, private router: Router,
+    private route: ActivatedRoute, private http: HttpClient,
+    private fb: FormBuilder, private toast: NgToastService) {
+      this.getIdea();
+
+     
+
+
+      
+     
+   
+     }
+
+  // products!: any[];
+
+  //   selectProduct() {
+        
+  //   }
+
+    // getSeverity(status: string) {
+    //     switch (status) {
+    //         case 'INSTOCK':
+    //             return 'success';
+    //         case 'LOWSTOCK':
+    //             return 'warning';
+    //         case 'OUTOFSTOCK':
+    //             return 'danger';
+    //     }
+    // }
 
   @Input() postId!: number;
 
@@ -33,12 +68,7 @@ export class EachIdeaComponent implements OnInit {
 
   createAccountForm!: FormGroup;
 
-  constructor(private api: ApiService, private router: Router,
-    private route: ActivatedRoute, private http: HttpClient,
-    private fb: FormBuilder, private toast: NgToastService) {
-     
-   
-     }
+  
 
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
   ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
@@ -63,12 +93,11 @@ export class EachIdeaComponent implements OnInit {
   idea: any
 
   getIdea() {
-    this.api.getIdeas(this.postId).subscribe((d: any) => {
-    const data = JSON.parse(d);
+    this.api.getIdeaById(this.id).subscribe((d: any) => {
+   
 
-    this.idea = data.data.ideas.find((i: any) => i.id == this.postId)
-    console.log("fdgfdgvdsz");
-    console.log("fgfd" + this.idea);
+    this.idea = d.data;
+    console.log(this.idea);
 
   })
 }
@@ -244,10 +273,10 @@ export class EachIdeaComponent implements OnInit {
   }
 
 
-
-  ngOnInit() {
-    // this.getAnUser();
   
+  ngOnInit() {
+    this.id = this.config.data.id;
+   
     this.getIdea();
     this.getListIdea();
     this.createAccountForm = this.fb.group({
@@ -409,4 +438,22 @@ export class EachIdeaComponent implements OnInit {
 
 
     }
+
+    // products: any
+
+
+    // selectProduct(product: any) {
+    //     this.ref.close(product);
+    // }
+
+    // getSeverity(status: string) {
+    //     switch (status) {
+    //         case 'INSTOCK':
+    //             return 'success';
+    //         case 'LOWSTOCK':
+    //             return 'warning';
+    //         case 'OUTOFSTOCK':
+    //             return 'danger';
+    //     }
+    // }
   }

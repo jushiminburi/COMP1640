@@ -1,18 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgToastService } from 'ng-angular-popup';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
+import { EachIdeaComponent } from '../each-idea/each-idea.component';
 
 @Component({
   selector: 'list-idea-of-event',
   templateUrl: './list-idea-of-event.component.html',
   styleUrls: ['./list-idea-of-event.component.css']
 })
-export class ListIdeaOfEventComponent {
+export class ListIdeaOfEventComponent implements OnDestroy  {
 
   currentPage: number = 1;
   totalPages: number = 0;
@@ -37,7 +39,9 @@ export class ListIdeaOfEventComponent {
 
   createAccountForm!: FormGroup;
 
-  constructor(private api: ApiService, private router: Router,
+  constructor(
+    public dialogService: DialogService,
+    private api: ApiService, private router: Router,
     private route: ActivatedRoute, private http: HttpClient,
     private fb: FormBuilder, private toast: NgToastService) { }
 
@@ -474,6 +478,38 @@ export class ListIdeaOfEventComponent {
     );
 
 
+    }
+
+
+    ref!: DynamicDialogRef;
+
+    show(id: any) {
+        this.ref = this.dialogService.open(EachIdeaComponent, {
+            header: 'Select a Product',
+            width: '70%',
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            maximizable: true,
+            data: {
+              id: id
+          },
+        });
+
+        this.ref.onClose.subscribe((product: any) => {
+            // if (product) {
+            //     this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: product.name });
+            // }
+        });
+
+        this.ref.onMaximize.subscribe((value: any) => {
+            // this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.ref) {
+            this.ref.close();
+        }
     }
 
 }

@@ -6,30 +6,30 @@
             </div>
             <div class="media-body ml-2">
 
-                <h5 class="mb-0 chat-title col-8">Staff Name</h5>
+                <h5 class="mb-0 chat-title col-8">{{idea.userName}}</h5>
             </div>
 
         </div>
         <div class="card-body">
             <div class="row text-center m-auto">
                 <div class="col-3">
-                    <h6>Title</h6>
+                    <h6>Title: {{idea.title}}</h6>
                 </div>
                 <div class="col-3">
-                    <h6>Category Type</h6>
+                    <h6>Category: {{idea.category.name}}</h6>
                 </div>
                 <div class="col-3">
-                    <h6>Event Type</h6>
+                    <h6>Event: {{idea.eventName}}</h6>
                 </div>
                 <div class="col-3">
-                    <h6>12/12/2023</h6>
+                    <h6>Created at: {{idea.createdAt | date}}</h6>
 
                 </div>
             </div>
 
             <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15">
                 <div>
-                    <h5 class="text-center">Content Idea</h5>
+                    <h5 class="text-center">{{idea.content}}</h5>
                 </div>
 
             </div>
@@ -37,17 +37,17 @@
             <div class="row ">
                 <div class="col-10 d-flex">
                     <div class="col-1">
-                        <i class="fadeIn animated bx bx-like"></i> 14
+                        <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
                     </div>
                     <div class="col-1">
-                        <i class="fadeIn animated bx bx-dislike"></i> 2
+                        <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
                     </div>
                     <div class="col-1">
-                        <i class="lni lni-eye"></i> 23
+                        <i class="lni lni-eye"></i> {{idea.totalViews}}
                     </div>
                 </div>
                 <div class="col-2 justify-content-end">
-                    <i class="fadeIn animated bx bx-comment"></i> 12 Comment
+                    <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
                 </div>
 
                 <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15">
