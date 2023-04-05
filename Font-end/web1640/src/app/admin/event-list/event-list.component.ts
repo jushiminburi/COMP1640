@@ -170,10 +170,10 @@ export class EventListComponent implements OnInit {
 
     //get event by id
     this.api.getEvents().subscribe(
-      res => {
+      (res:any) => {
        
 
-        var events = JSON.parse(res).data.list
+        var events =res.data.list
         let event = events.filter((event: any) => event.id == id)[0];
         console.log(event)
 
@@ -214,9 +214,9 @@ export class EventListComponent implements OnInit {
 
   loadEvents(): void {
     this.api.getEvents().subscribe(
-      res => {
+      (res:any) => {
         console.log(res);
-        var events = JSON.parse(res).data.list;
+        var events = res.data.list;
         console.log(events);
 
 

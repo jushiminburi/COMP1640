@@ -218,8 +218,8 @@ export class ApiService {
       } )
     };
 
-    return this.http.get( api + 'categories/list'
-      , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
+    return this.http.get( api + 'category/list'
+      , { headers: httpOptions.headers, responseType: 'json' } )//stringify de chuyen doi tu object sang json
 
 
   }
@@ -234,8 +234,8 @@ export class ApiService {
       } )
     };
 
-    return this.http.get( api + 'departments/list'
-      , { headers: httpOptions.headers, responseType: 'text' } )//stringify de chuyen doi tu object sang json
+    return this.http.get( api + 'department/list'
+      , { headers: httpOptions.headers, responseType: 'json' } )//stringify de chuyen doi tu object sang json
 
 
   }
@@ -475,7 +475,7 @@ export class ApiService {
     };
 
       return this.http.get(api + 'event/list'
-      , {headers:httpOptions.headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
+      , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
 
   }

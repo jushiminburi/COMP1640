@@ -55,7 +55,11 @@ export class StaffHomePageComponent implements OnInit {
 
   constructor(private api: ApiService, private router: Router,
     private route: ActivatedRoute, private http: HttpClient,
-    private fb: FormBuilder, private toast: NgToastService) { }
+    private fb: FormBuilder, private toast: NgToastService) {
+      this.getListDepartment();
+    this.getListCategory();
+    this.getListEvent();
+    }
 
     categorySelected!: any;
     eventSelected!: any;
@@ -87,25 +91,45 @@ export class StaffHomePageComponent implements OnInit {
 
     getListDepartment() {
     this.api.getListDepartment().subscribe((res: any) => {
-      this.ngListDepartment = res.data.list
       this.ngListDepartment.push({id: 0, name: "All Department"})
+      res.data.list.forEach((department: any) => {
+        this.ngListDepartment.push({id: department.id, name: department.name})
+      })
+      
+     
+      
+      
     })
+   
+    
   }
 
 
   getListCategory() {
     this.api.getListCategory().subscribe((res: any) => {
-      this.ngListCategory = res.data.list
       this.ngListCategory.push({id: 0, name: "All Category"})
+      res.data.list.forEach((category: any) => {
+        this.ngListCategory.push({id: category.id, name: category.name})
+      })
+
+      
+     
     })
+   
   }
 
 
   getListEvent() {
     this.api.getEvents().subscribe((res: any) => {
-      this.ngListEvent = res.data.list
       this.ngListEvent.push({id: 0, name: "All Event"})
+      res.data.list.forEach((event: any) => {
+        this.ngListEvent.push({id: event.id, name: event.name})
+      })
+
+      
+     
     })
+    
   }
   
 
@@ -261,9 +285,7 @@ export class StaffHomePageComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getListDepartment();
-    this.getListCategory();
-    this.getListEvent();
+    
     
     // this.getAnUser();
     this.getListIdea();

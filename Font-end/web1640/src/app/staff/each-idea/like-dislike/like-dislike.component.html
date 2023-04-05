@@ -1,6 +1,10 @@
-<div class="col-2">
-    <i (click)="like()" [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like
+<hr color="black" size="10px" />
+<div class="row mb-auto m-auto">
+    <div class="col-2">
+        <i (click)="like()" [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like
+    </div>
+    <div class="col-2">
+        <i (click)="dislike()" [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
+    </div>
 </div>
-<div class="col-2">
-    <i (click)="dislike()" [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
-</div>
+<hr color="black" size="10px" />

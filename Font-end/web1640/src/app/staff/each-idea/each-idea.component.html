@@ -1,4 +1,4 @@
-<div class="col-md-12  card radius-15 align-content-center border mb-0 mt-4 ">
+<div class="col-md-12 card radius-15 align-content-center border mb-0 mt-4 ">
     <div class="mt-2">
         <div class="media col-7 pt-3">
             <div class="chat-user-online">
@@ -27,7 +27,8 @@
                 </div>
             </div>
 
-            <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15">
+            <div class="row card-body Regular shadow col-11 m-auto
+                align-content-center radius-15">
                 <div>
                     <h5 class="text-center">{{idea.content}}</h5>
                 </div>
@@ -49,28 +50,14 @@
                 <div class="col-2 justify-content-end">
                     <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
                 </div>
-
-                <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15">
-                    <div>
-                        <h6 class="text-center">Content Idea</h6>
-                    </div>
-
-                    <hr color="black" size="10px" />
-                    <div class="row mb-auto">
-                        <div class="col-10 d-flex">
-                            <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
-                        </div>
-                        <div class="col-2 justify-content-end">
-                            <i class="fadeIn animated bx bx-comment"></i> Comment
-                        </div>
-                    </div>
-                    <hr color="black" size="10px" />
-                    <!-- comment -->
-                    <input-comment></input-comment>
-                    <list-comment></list-comment>
-
+                <div class="row mb-auto">
+                    <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
                 </div>
 
+
+                <!-- comment -->
+                <input-comment></input-comment>
+                <list-comment></list-comment>
             </div>
         </div>
     </div>

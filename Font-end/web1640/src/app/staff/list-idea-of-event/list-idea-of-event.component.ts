@@ -69,6 +69,64 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
       this.comments = res.data.listComment;
     })
   }
+
+
+  likeIdeas(ideaId: number) {
+    this.api.likeIdea(ideaId).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == 200) {
+        
+        this.getListIdea();
+      }
+    }, error => {
+      this.toast.error({ detail: "Like idea failed!" });
+      console.log(error);
+      return
+    }
+    )
+  }
+
+  isLiked = false;
+  isDisliked = false;
+
+
+  like() {
+    this.isLiked = !this.isLiked;
+
+    // if (this.isLiked) {
+    //   this.isDisliked = false;
+    // }
+    this.isDisliked = false;
+    this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+      console.log(res);
+      // this.loadData.emit();
+     
+    } , (err: any) => {
+      console.log(err);
+      
+    } )
+
+
+  }
+
+  dislike() {
+    this.isDisliked = !this.isDisliked;
+
+    // if (this.isDisliked) {
+    //   this.isLiked = false;
+    // }
+    this.isLiked = false;
+
+    this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+      console.log(res);
+      // this.loadData.emit();
+     
+    } , (err: any) => {
+      console.log(err);
+      
+    } )
+  }
+
   
 
   

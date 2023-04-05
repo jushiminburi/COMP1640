@@ -40,10 +40,10 @@ export class StaffComponent implements OnInit{
   
   loadEvents(): void {
     this.api.getEvents().subscribe(
-      res => {
-        console.log(res);
-        var events = JSON.parse(res).data.list;
-        console.log(events);
+      (res:any) => {
+        
+        var events = res.data.list;
+        
 
 
         // for (let event of events) {

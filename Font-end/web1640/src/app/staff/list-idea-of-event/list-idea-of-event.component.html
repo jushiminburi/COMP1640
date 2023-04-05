@@ -57,21 +57,19 @@
 
         </div>
 
-        <hr color="black" size="10px" />
         <div class="row mb-auto">
-            <div class="col-10 d-flex">
-                <div class="col-2" type="button">
-                    <i class="fadeIn animated bx bx-like"></i> Like
+            <hr color="black" size="10px" />
+            <div class="row mb-auto m-auto">
+                <div class="col-2">
+                    <i (click)="like()" [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like
                 </div>
-                <div class="col-2" type="button">
-                    <i class="fadeIn animated bx bx-dislike"></i> Dislike
+                <div class="col-2">
+                    <i (click)="dislike()" [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
                 </div>
             </div>
-            <div class="col-2 justify-content-end" type="button">
-                <i class="fadeIn animated bx bx-comment"></i> Comment
-            </div>
+            <hr color="black" size="10px" />
         </div>
-        <hr color="black" size="10px" />
+
 
         <list-comment [comments]="idea.comments"></list-comment>
 
@@ -79,7 +77,7 @@
 
 
 
-        <a (click)="show(idea.id)" class="link-info">See more comment...</a>
+        <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
 
     </div>
 </div>
