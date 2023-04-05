@@ -2,7 +2,8 @@
     <div class="mt-2">
         <div class="media col-7 pt-3">
             <div class="chat-user-online">
-                <img src="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
+                <img src="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42"
+                    class="rounded-circle" alt="" />
             </div>
             <div class="media-body ml-2">
 
@@ -32,7 +33,8 @@
             </div>
         </div>
 
-        <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" (click)="show(idea.id)">
+        <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button"
+            (click)="show(idea.id)">
             <div>
                 <h5 class="text-center">{{idea.content}}</h5>
             </div>
@@ -56,20 +58,29 @@
             </div>
 
         </div>
-
-        <div class="row mb-auto">
-            <hr color="black" size="10px" />
-            <div class="row mb-auto m-auto">
-                <div class="col-2">
-                    <i (click)="like()" [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like
-                </div>
-                <div class="col-2">
-                    <i (click)="dislike()" [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
-                </div>
+        <hr color="black" size="10px" />
+        <div class="row m-auto">
+            <div class="col-1">
+                <button type="button" class=" btn text-info font-14 "><i (click)="like()"
+                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</button>
             </div>
-            <hr color="black" size="10px" />
+            <div class="col-1">
+                <button type="button" class=" btn text-info font-14 "><i (click)="like()"
+                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
+                </button>
+            </div>
+            <div class="col-1">
+                <button type="button" class=" btn text-info font-14 "><i (click)="dislike()"
+                        [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
+                </button>
+            </div>
+            <div class="col-1">
+                <button type="button" class=" btn text-info font-14 "><i (click)="dislike()"
+                    [ngClass]="{ 'disliked': isDisliked }"class="fadeIn animated bx bxs-dislike"></i> Disliked
+                </button>
+            </div>
         </div>
-
+        <hr color="black" size="10px" />
 
         <list-comment [comments]="idea.comments"></list-comment>
 
@@ -132,11 +143,12 @@
             <li class="page-item">
                 <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
             </li>
-            <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
+            <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator"
+                (click)="changePage(i)"><a class="page-link">{{i}}</a>
 
-                <li class="page-item">
-                    <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-                </li>
+            <li class="page-item">
+                <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+            </li>
         </ul>
     </nav>
 </div>
