@@ -3,7 +3,9 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiService } from 'src/app/api.service';
+import { EachIdeaComponent } from '../each-idea/each-idea.component';
 
 @Component({
   selector: 'input-comment',
@@ -91,12 +93,43 @@ createComment() {
     );
   }
 
-constructor(private api: ApiService, private router: Router,
+constructor(
+  public dialogService: DialogService,
+  private api: ApiService, private router: Router, 
   private route: ActivatedRoute, private http: HttpClient,
   private fb: FormBuilder, private toast: NgToastService) { }
 
 
+  ref!: DynamicDialogRef;
 
+  show(id: any) {
+      this.ref = this.dialogService.open(EachIdeaComponent, {
+          header: 'Select a Product',
+          width: '70%',
+          contentStyle: { overflow: 'auto' },
+          baseZIndex: 10000,
+          maximizable: true,
+          data: {
+            id: id
+        },
+      });
+
+      this.ref.onClose.subscribe((product: any) => {
+          // if (product) {
+          //     this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: product.name });
+          // }
+      });
+
+      this.ref.onMaximize.subscribe((value: any) => {
+          // this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
+      });
+  }
+
+  ngOnDestroy() {
+      if (this.ref) {
+          this.ref.close();
+      }
+  }
 
 }
 
