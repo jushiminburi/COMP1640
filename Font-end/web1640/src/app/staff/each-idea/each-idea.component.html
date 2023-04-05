@@ -1,64 +1,89 @@
-<!-- <div class="col-md-12 card radius-15 align-content-center border mb-0 mt-4 "> -->
-    <div class="mt-2">
-        <div class="media col-7 pt-3">
-            <div class="chat-user-online">
-                <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
-            </div>
-            <div class="media-body ml-2">
-
-                <h5 class="mb-0 chat-title col-8">{{idea.userName}}</h5>
-            </div>
-
+<div class="col-md-12 card radius-15 align-content-center border mb-0 mt-4 ">
+<div class="mt-2 ">
+    <div class="media col-7 pt-3">
+        <div class="chat-user-online">
+            <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
         </div>
-        <div class="card-body">
-            <div class="row text-center m-auto">
-                <div class="col-3">
-                    <h6>Title: {{idea.title}}</h6>
-                </div>
-                <div class="col-3">
-                    <h6>Category: {{idea.category.name}}</h6>
-                </div>
-                <div class="col-3">
-                    <h6>Event: {{idea.eventName}}</h6>
-                </div>
-                <div class="col-3">
-                    <h6>Created at: {{idea.createdAt | date}}</h6>
+        <div class="media-body ml-2">
 
-                </div>
+            <h5 class="mb-0 chat-title col-8">{{idea.userName}}</h5>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="row col 12 text-center m-auto">
+            <div class="col-3">
+                <h6>Title: {{idea.title}}</h6>
             </div>
+            <div class="col-3">
+                <h6>Category: {{idea.category.name}}</h6>
+            </div>
+            <div class="col-3">
+                <h6>Event: {{idea.eventName}}</h6>
+            </div>
+            <div class="col-3">
+                <h6>Created at: {{idea.createdAt | date}}</h6>
 
-            <div class="row card-body Regular shadow col-11 m-auto
+            </div>
+        </div>
+
+        <div class="row card-body Regular shadow col-11 m-auto
                 align-content-center radius-15">
-                <div>
-                    <h5 class="text-center">{{idea.content}}</h5>
-                </div>
+            <div class="row">
+                <p class="card-text text-justify text-center font-20">{{idea.content}}</p>
 
             </div>
             <br>
-            <div class="row ">
-                <div class="col-10 d-flex">
-                    <div class="col-1">
-                        <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
-                    </div>
-                    <div class="col-1">
-                        <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
-                    </div>
-                    <div class="col-1">
-                        <i class="lni lni-eye"></i> {{idea.totalViews}}
-                    </div>
+            <div class="row col-12 text-center align-content-center m-auto ">
+
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                 </div>
-                <div class="col-2 justify-content-end">
-                    <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                 </div>
-                <div class="row mb-auto">
-                    <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                </div>
+
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                </div>
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                </div>
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                 </div>
 
 
-                <!-- comment -->
-                <input-comment></input-comment>
-                <list-comment></list-comment>
+            </div>
+
+        </div>
+        <br>
+        <div class="row ">
+            <div class="col-11 d-flex">
+                <div class="col-1">
+                    <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
+                </div>
+                <div class="col-1">
+                    <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
+                </div>
+                <div class="col-2">
+                    <i class="lni lni-eye"></i> {{idea.totalViews}}
+                </div>
+            </div>
+            <div class="col-1 ">
+                <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
             </div>
         </div>
+        
+            <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
+      
+        <!-- comment -->
+        <input-comment></input-comment>
+        <list-comment></list-comment>
     </div>
-<!-- </div> -->
+</div>
+
+</div>

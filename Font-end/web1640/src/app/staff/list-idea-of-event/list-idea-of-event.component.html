@@ -35,126 +35,163 @@
 
         <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button"
             (click)="show(idea.id)">
-            <div>
-                <h5 class="text-center">{{idea.content}}</h5>
+            <div class="row">
+                <p class="card-text text-justify text-center font-20">{{idea.content}}</p>
             </div>
+            <br>
+            <div class="row col-12 text-center align-content-center m-auto ">
 
-        </div>
-        <br>
-        <div class="row ">
-            <div class="col-10 d-flex">
-                <div class="col-1">
-                    <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                 </div>
-                <div class="col-1">
-                    <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                 </div>
-                <div class="col-1">
-                    <i class="lni lni-eye"></i> {{idea.totalViews}}
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                 </div>
-            </div>
-            <div class="col-2 justify-content-end">
-                <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
-            </div>
 
-        </div>
-        <hr color="black" size="10px" />
-        <div class="row m-auto">
-            <div class="col-1">
-                <p type="button" class=" btn text-info font-14 "><i (click)="like()"
-                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</p>
-            </div>
-            <div class="col-1">
-                <p type="button" class=" btn text-info font-14 "><i (click)="like()"
-                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
-                </p>
-            </div>
-            <div class="col-1">
-                <p type="button" class=" btn text-info font-14 "><i (click)="dislike()"
-                        [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
-                </p>
-            </div>
-            <div class="col-1">
-                <p type="button" class=" btn text-info font-14 "><i (click)="dislike()"
-                    [ngClass]="{ 'disliked': isDisliked }"class="fadeIn animated bx bxs-dislike"></i> Disliked
-                </p>
-            </div>
-        </div>
-        <hr color="black" size="10px" />
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                </div>
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                </div>
+                <div class="col-2">
+                    <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                </div>
 
-        
 
-        <!--<input-comment [postId]="idea.id"></input-comment> -->
-        <div class="row m-auto ">
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <p type="button" class=" btn text-info font-14 "><i class="bx bxl-twitter"></i> Like</p>
+                </div>
 
-            <a (click)="show(idea.id)" type="button">
-                <div class="media ">
-                    <div class="chat-user-online">
-                        <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
+            </div>
+            <br>
+            <div class="row mt-1">
+                <div class="col-10 d-flex">
+                    <div class="col-1">
+                        <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
                     </div>
-                    <div class="media-body ml-2 col-7">
-                        <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
-                        <div class="input-group-append">
-                            <textarea class="form-control col-7" rows="1" cols="3" placeholder="Write comment..."></textarea>
+                    <div class="col-1">
+                        <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
+                    </div>
+                    <div class="col-1">
+                        <i class="lni lni-eye"></i> {{idea.totalViews}}
+                    </div>
+                </div>
+                <div class="col-2 justify-content-end">
+                    <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
+                </div>
 
-                            <!-- button input file -->
-                            <!-- <div class="input-group-append">
+            </div>
+
+            <div class="row m-auto">
+                <hr color="black" size="10px" />
+                <div class="col-1">
+                    <p type="button" class=" btn text-info font-14 "><i (click)="like()"
+                            [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</p>
+                </div>
+                <div class="col-1">
+                    <p type="button" class=" btn text-info font-14 "><i (click)="like()"
+                            [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
+                    </p>
+                </div>
+                <div class="col-1">
+                    <p type="button" class=" btn text-info font-14 "><i (click)="dislike()"
+                            [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
+                    </p>
+                </div>
+                <div class="col-1">
+                    <p type="button" class=" btn text-info font-14 "><i (click)="dislike()"
+                            [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bxs-dislike"></i> Disliked
+                    </p>
+                </div>
+                <hr color="black" size="10px" />
+            </div>
+
+
+
+            <!--<input-comment [postId]="idea.id"></input-comment> -->
+            <div class="row m-auto ">
+
+                <a (click)="show(idea.id)" type="button">
+                    <div class="media ">
+                        <div class="chat-user-online">
+                            <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle"
+                                alt="" />
+                        </div>
+                        <div class="media-body ml-2 col-7">
+                            <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
+                            <div class="input-group-append">
+                                <textarea class="form-control col-7" rows="1" cols="3"
+                                    placeholder="Write comment..."></textarea>
+
+                                <!-- button input file -->
+                                <!-- <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
                             </div> -->
-                            <div class="input-group-append custom-control custom-switch col-4 align-content-center text-center m-auto">
-                                <input formControlName="anonymous" type="checkbox" class="custom-control-input"
-                                    id="customSwitch1">
-                                <label class="custom-control-label font-14" for="customSwitch1">Hide Identity</label>
-                            </div>
+                                <div
+                                    class="input-group-append custom-control custom-switch col-4 align-content-center text-center m-auto">
+                                    <input formControlName="anonymous" type="checkbox" class="custom-control-input"
+                                        id="customSwitch1">
+                                    <label class="custom-control-label font-14" for="customSwitch1">Hide
+                                        Identity</label>
+                                </div>
 
-                            <!-- <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                                <!-- <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
                                 <ng-template pTemplate="content">
                                     <ul *ngIf="uploadedFiles.length">
         
                                     </ul>
                                 </ng-template>
                             </p-fileUpload> -->
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
-                                        class="bx bx-send"></i></button>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+                                            class="bx bx-send"></i></button>
+                                </div>
                             </div>
-                        </div>
-                        <!--<p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                            <!--<p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
                             <ng-template pTemplate="content">
                                 <ul *ngIf="uploadedFiles.length">
         
                                 </ul>
                             </ng-template>
                         </p-fileUpload> -->
-                    </div>
+                        </div>
 
-                </div>
-            </a>
+                    </div>
+                </a>
+
+            </div>
+            <list-comment [comments]="idea.comments"></list-comment>
+
+
+
+            <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
 
         </div>
-        <list-comment [comments]="idea.comments"></list-comment>
-
-
-
-        <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
-
     </div>
-</div>
+    </div>
+    
 
 
 
-<div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
-    <nav aria-label="Page navigation example ">
-        <ul class="pagination round-pagination ">
-            <li class="page-item">
-                <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-            </li>
-            <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator"
-                (click)="changePage(i)"><a class="page-link">{{i}}</a>
+    <div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
+        <nav aria-label="Page navigation example ">
+            <ul class="pagination round-pagination ">
+                <li class="page-item">
+                    <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
+                </li>
+                <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item"
+                    id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
 
-            <li class="page-item">
-                <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-            </li>
-        </ul>
-    </nav>
-</div>
+                <li class="page-item">
+                    <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
