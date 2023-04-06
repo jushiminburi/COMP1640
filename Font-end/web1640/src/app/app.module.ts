@@ -63,8 +63,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
 import { DepartmentManagerComponent } from './admin/department-manager/department-manager.component';
 import { ImageViewerModule } from 'ngx-image-viewer';
-
-import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { InputCommentComponent } from './staff/input-comment/input-comment.component';
 import { ListCommentComponent } from './staff/list-comment/list-comment.component';
 import { NewIdeaComponent } from './staff/each-event/new-idea/new-idea.component';
@@ -160,6 +158,7 @@ import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LikeDislikeComponent } from './staff/each-idea/like-dislike/like-dislike.component';
+import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 
 
 @NgModule({
