@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button"
+        <div class="card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button"
             (click)="show(idea.id)">
             <div class="row">
                 <p class="card-text text-justify text-center font-20">{{idea.content}}</p>
@@ -60,15 +60,32 @@
                 <div class="col-2">
                     <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                 </div>
-
-
+                
             </div>
-            <div class="row">
-                <div class="col-1">
-                    <p type="button" class=" btn text-info font-14 "><i class="bx bxl-twitter"></i> Like</p>
+            
+                <br>
+            <div class="d-flex align-items-center">
+                <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
                 </div>
-
+                <div>Tên file.pdf</div>
             </div>
+            <div class="d-flex align-items-center">
+                <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
+                </div>
+                <div>Tên file.ppt</div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
+                </div>
+                <div>Tên file.doc hoặc .docx</div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
+                </div>
+                <div>Tên file.csv</div>
+            </div>
+            
+            <!-- </div> -->
             <br>
             <div class="row mt-1">
                 <div class="col-10 d-flex">
@@ -78,7 +95,7 @@
                     <div class="col-1">
                         <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
                     </div>
-                    <div class="col-1">
+                    <div class="col-2">
                         <i class="lni lni-eye"></i> {{idea.totalViews}}
                     </div>
                 </div>
@@ -174,24 +191,23 @@
 
         </div>
     </div>
-    </div>
-    
+</div>
 
 
 
-    <div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
-        <nav aria-label="Page navigation example ">
-            <ul class="pagination round-pagination ">
-                <li class="page-item">
-                    <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-                </li>
-                <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item"
-                    id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
 
-                <li class="page-item">
-                    <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-                </li>
-            </ul>
-        </nav>
-    </div>
+<div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination round-pagination ">
+            <li class="page-item">
+                <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
+            </li>
+            <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator"
+                (click)="changePage(i)"><a class="page-link">{{i}}</a>
 
+            <li class="page-item">
+                <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+            </li>
+        </ul>
+    </nav>
+</div>
