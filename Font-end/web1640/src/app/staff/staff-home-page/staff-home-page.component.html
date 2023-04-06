@@ -95,7 +95,7 @@
 
         </div>
 
-        <list-idea-of-event [ideas]="ideas"></list-idea-of-event>
+        <list-idea-of-event [ideas]="ideas" (ideaEvent)="receiveIdea($event)"></list-idea-of-event>
 
     </div>
 </div>

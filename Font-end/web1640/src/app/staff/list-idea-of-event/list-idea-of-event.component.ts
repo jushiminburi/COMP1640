@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -34,12 +34,14 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
   page?: number;
 
   @Input() ideas: any[] = [];
+  @Output() ideaEvent = new EventEmitter<string>();
   comments?: any[] = [];
   totalComments?: number;
 
   createAccountForm!: FormGroup;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     public dialogService: DialogService,
     private api: ApiService, private router: Router,
     private route: ActivatedRoute, private http: HttpClient,
@@ -90,41 +92,54 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
   isDisliked = false;
 
 
-  like() {
-    this.isLiked = !this.isLiked;
-
-    // if (this.isLiked) {
-    //   this.isDisliked = false;
-    // }
-    this.isDisliked = false;
-    this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+  like(id: any) {
+    this.api.likeIdea(id).subscribe(async (res: any) => {
       console.log(res);
-      // this.loadData.emit();
      
-    } , (err: any) => {
-      console.log(err);
+        
+        this.ideaEvent.emit("abc")
+        this.cdr.detectChanges(); // Thêm dòng này
+        // this.cdr.markForCheck(); // Thêm dòng này
       
-    } )
+    }, error => {
+      this.toast.error({ detail: "Like idea failed!" });
+      console.log(error);
+      return
+    }
+    )
+    
+    // this.isLiked = !this.isLiked;
+
+    // // if (this.isLiked) {
+    // //   this.isDisliked = false;
+    // // }
+    // this.isDisliked = false;
+    // this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+    //   console.log(res);
+    //   // this.loadData.emit();
+     
+    // } , (err: any) => {
+    //   console.log(err);
+      
+    // } )
 
 
   }
 
-  dislike() {
-    this.isDisliked = !this.isDisliked;
-
-    // if (this.isDisliked) {
-    //   this.isLiked = false;
-    // }
-    this.isLiked = false;
-
-    this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+  dislike(id: any) {
+    this.api.dislikeIdea(id).subscribe(async (res: any) => {
       console.log(res);
-      // this.loadData.emit();
-     
-    } , (err: any) => {
-      console.log(err);
-      
-    } )
+      if (res.status == 200) {
+        
+        this.ideaEvent.emit("abc")
+        this.cdr.detectChanges(); // Thêm dòng này
+      }
+    }, error => {
+      this.toast.error({ detail: "Like idea failed!" });
+      console.log(error);
+      return
+    }
+    )
   }
 
   
@@ -207,49 +222,50 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
      
       if (data.status == 200) {
         this.ideas = data.data.listIdea;
+        this.cdr.detectChanges();
         
-        this.ideas?.forEach((idea: any) => {
+        // this.ideas?.forEach((idea: any) => {
 
-          //get user name
-          this.api.getUserById(idea.user.userId).subscribe((d: any) => {
-            idea.userName = d.data.firstName + " " + d.data.lastName
-            idea.avatarUser = d.data.avatar
-            console.log(d);
-            return
-          }, err => {
-            console.log(err);
-            idea.userName = ""
-            return
-          })
+        //   //get user name
+        //   this.api.getUserById(idea.user.userId).subscribe((d: any) => {
+        //     idea.userName = d.data.firstName + " " + d.data.lastName
+        //     idea.avatarUser = d.data.avatar
+        //     console.log(d);
+        //     return
+        //   }, err => {
+        //     console.log(err);
+        //     idea.userName = ""
+        //     return
+        //   })
           
-          // get event name
-          this.api.getEventById(idea.event.id).subscribe((res: any) => {
-            idea.eventName = res.data.name
-            console.log(idea.eventName);
-            return
-          },
-          error => {
-            console.log(error);
-            idea.eventName = ""
-            return
-          })
-          this.getComment(idea.id)
-          //add category name
-          this.api.getCategory().subscribe((res: any) => {
-            //get name category
-            var d = res.data.list
-            console.log(d);
-            d.forEach((c: any) => {
+        //   // get event name
+        //   this.api.getEventById(idea.event.id).subscribe((res: any) => {
+        //     idea.eventName = res.data.name
+        //     console.log(idea.eventName);
+        //     return
+        //   },
+        //   error => {
+        //     console.log(error);
+        //     idea.eventName = ""
+        //     return
+        //   })
+        //   this.getComment(idea.id)
+        //   //add category name
+        //   this.api.getCategory().subscribe((res: any) => {
+        //     //get name category
+        //     var d = res.data.list
+        //     console.log(d);
+        //     d.forEach((c: any) => {
               
-              if (c.id == idea.categoryId) {
-                //add category name to ideas
-                idea.categoryName = c.name
-                console.log(idea.categoryName);
-              }
-            })
-          })
+        //       if (c.id == idea.categoryId) {
+        //         //add category name to ideas
+        //         idea.categoryName = c.name
+        //         console.log(idea.categoryName);
+        //       }
+        //     })
+        //   })
           
-        })
+        // })
         
         this.totalPages = Math.ceil(data.data.totalIdea / this.limit);
         this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i+1)
@@ -377,7 +393,7 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
   ngOnInit() {
     
     // this.getAnUser();
-    this.getListIdea();
+    // this.getListIdea();
     this.createAccountForm = this.fb.group({
       firstName: null,
       lastName: null,

@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgToastService } from 'ng-angular-popup';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SuccessDialogComponentComponent } from 'src/app/admin/create-account/success-dialog-component/success-dialog-component.component';
 import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
@@ -20,6 +20,8 @@ export class EachIdeaComponent implements OnInit {
   id!: any;
 
   constructor(
+    private cdr: ChangeDetectorRef,
+    public dialogService: DialogService,
     public config: DynamicDialogConfig,
     private ref: DynamicDialogRef,
     private api: ApiService, private router: Router,
@@ -34,6 +36,44 @@ export class EachIdeaComponent implements OnInit {
      
    
      }
+
+     isLiked = false;
+     isDisliked = false;
+
+     like(id: any) {
+      this.api.likeIdea(id).subscribe(async (res: any) => {
+        console.log(res);
+       
+          
+          this.getIdea();
+          this.cdr.detectChanges(); // Thêm dòng này
+          // this.cdr.markForCheck(); // Thêm dòng này
+        
+      }, error => {
+        this.toast.error({ detail: "Like idea failed!" });
+        console.log(error);
+        return
+      }
+      )
+  
+  
+    }
+  
+    dislike(id: any) {
+      this.api.dislikeIdea(id).subscribe(async (res: any) => {
+        console.log(res);
+        if (res.status == 200) {
+          
+          this.getIdea();
+          this.cdr.detectChanges(); // Thêm dòng này
+        }
+      }, error => {
+        this.toast.error({ detail: "Like idea failed!" });
+        console.log(error);
+        return
+      }
+      )
+    }
 
   // products!: any[];
 

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -54,6 +54,7 @@ export class StaffHomePageComponent implements OnInit {
   createAccountForm!: FormGroup;
 
   constructor(private api: ApiService, private router: Router,
+    private cdr: ChangeDetectorRef,
     private route: ActivatedRoute, private http: HttpClient,
     private fb: FormBuilder, private toast: NgToastService) {
       this.getListDepartment();
@@ -66,6 +67,12 @@ export class StaffHomePageComponent implements OnInit {
     departmentSelected!: any;
 
     ngFilterSelected!: any;
+
+    receiveIdea($event:any) {
+      console.log($event);
+      this.getListIdea();
+      this.cdr.detectChanges();
+    }
 
     onDropdownEvent(selectedValue: any) {
       this.eventSelected = selectedValue.target.value;
@@ -195,44 +202,44 @@ export class StaffHomePageComponent implements OnInit {
         
         this.ideas?.forEach((idea: any) => {
 
-          //get user name
-          this.api.getUserById(idea.user.userId).subscribe((d: any) => {
-            idea.userName = d.data.firstName + " " + d.data.lastName
-            idea.avatarUser = d.data.avatar
-            console.log(d);
-            return
-          }, err => {
-            console.log(err);
-            idea.userName = ""
-            return
-          })
+          // //get user name
+          // this.api.getUserById(idea.user.userId).subscribe((d: any) => {
+          //   idea.userName = d.data.firstName + " " + d.data.lastName
+          //   idea.avatarUser = d.data.avatar
+          //   console.log(d);
+          //   return
+          // }, err => {
+          //   console.log(err);
+          //   idea.userName = ""
+          //   return
+          // })
           
-          // get event name
-          this.api.getEventById(idea.event.id).subscribe((res: any) => {
-            idea.eventName = res.data.name
-            console.log(idea.eventName);
-            return
-          },
-          error => {
-            console.log(error);
-            idea.eventName = ""
-            return
-          })
+          // // get event name
+          // this.api.getEventById(idea.event.id).subscribe((res: any) => {
+          //   idea.eventName = res.data.name
+          //   console.log(idea.eventName);
+          //   return
+          // },
+          // error => {
+          //   console.log(error);
+          //   idea.eventName = ""
+          //   return
+          // })
           
-          //add category name
-          this.api.getCategory().subscribe((res: any) => {
-            //get name category
-            var d = res.data.list
-            console.log(d);
-            d.forEach((c: any) => {
+          // //add category name
+          // this.api.getCategory().subscribe((res: any) => {
+          //   //get name category
+          //   var d = res.data.list
+          //   console.log(d);
+          //   d.forEach((c: any) => {
               
-              if (c.id == idea.categoryId) {
-                //add category name to ideas
-                idea.categoryName = c.name
-                console.log(idea.categoryName);
-              }
-            })
-          })
+          //     if (c.id == idea.categoryId) {
+          //       //add category name to ideas
+          //       idea.categoryName = c.name
+          //       console.log(idea.categoryName);
+          //     }
+          //   })
+          // })
           
         })
         

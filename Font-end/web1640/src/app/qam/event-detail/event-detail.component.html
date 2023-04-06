@@ -50,13 +50,13 @@
                     <hr>
 
 
-                    <h3 class="mb-0 text-center">Document Download</h3>
+                    <h3 class="mb-0 text-center">Event: {{document.name}}</h3>
                     <br>
 
 
 
-                    <button type="button" class="btn btn-youtube m-1;" style="float: right;"><i
-                            class="lni lni-zip"></i>Download File Zip</button>
+                    <!--<button type="button" class="btn btn-youtube m-1;" style="float: right;"><i
+                            class="lni lni-zip"></i>Download File Zip</button> -->
                     <hr>
 
                 </div>
@@ -89,16 +89,26 @@
                                 <!-- <tr *ngFor="let event of events"> -->
                                 <tr *ngFor="let event of document.idea; let i = index">
                                     <td>{{i + 1}}</td>
-                                    <td>{{event.staff.name}}</td>
-                                    <td>{{event.idea.name}}</td>
-                                    <td>{{event.idea.createdAt}}</td>
-                                    <td>{{event.idea.totalLike}}</td>
-                                    <td>{{event.idea.totalComment}}</td>
-                                    <td><i class="text-primary" data-feather="download">{{event.idea.files}}</i></td>
-                                    <p-overlayPanel #op>
-                                        <img [src]="imageURL" alt="image" />
-                                    </p-overlayPanel>
-                                    <p-button (click)="op.toggle($event)" icon="pi pi-image" label="Show"></p-button>
+                                    <td>{{event.user.fullName}}</td>
+                                    <td>{{event.title}}</td>
+                                    <td>{{event.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+                                    <td>{{event.totalLike}}</td>
+                                    <td>{{event.totalComment}}</td>
+                                    <td><i class="text-primary" data-feather="download">
+                                        <div *ngFor="let i of event.file.file">
+                                            <a *ngIf="isImage(i); else downloadLink" type="button" (click)="op.toggle($event)">{{i}}</a>
+                                            
+                                                <p-overlayPanel #op>
+                                                    <img style="width: 280px; height: 230px" src="http://139.162.47.239/upload/1680295009008_13.jpg" alt="File" />
+                                                </p-overlayPanel>
+                                            
+                                            
+                                            <ng-template #downloadLink>
+                                                <a [href]="dowload('http://139.162.47.239/download/'+i)" download>{{i}}</a>
+                                              </ng-template>
+                                        </div>
+                                    </i></td>
+
                                 </tr>
 
 
@@ -111,22 +121,7 @@
                 </ul>
                 <!-- h6 class="mb-0 text-center text-danger">Total: {{events.length}} </h6>-->
 
-                <div class="pagination justify-content-end">
-                    <nav aria-label="Page navigation example ">
-                        <ul class="pagination round-pagination ">
-                            <li class="page-item"><a class="page-link" href="javascript:;">Previous</a>
-                            </li>
-                            <li class="page-item-action"><a class="page-link" href="javascript:;javascript:;">1</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="javascript:;">2</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="javascript:;">3</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="javascript:;">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+
 
 
             </div>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from 'src/app/api.service';
 import { saveAs } from 'file-saver';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
@@ -15,6 +16,7 @@ export class EventDetailComponent implements OnInit {
   eventData!: any
   imageURL!: string;
   constructor(
+    private sanitizer: DomSanitizer,
     private http: HttpClient,
     private api: ApiService,
     private router: Router, private route: ActivatedRoute, private toast: NgToastService) { }
@@ -60,6 +62,28 @@ getDocumentById():
       }
     
   }
+
+  isImage(file: string): boolean {
+    return /\.(jpe?g|png|gif)$/i.test(file);
+  }
+
+  // encodeURI(data: string): any {
+  //   const data2 =encodeURIComponent(data)
+  //   console.log(data);
+  //   return data2
+  // }
+
+  dowload(link: any): any {
+    console.log(link);
+    const data: any = this.sanitizer.bypassSecurityTrustUrl(link);
+    //  const data =encodeURIComponent(link)
+    console.log(data);
+    return data
+  }
+
+
+
+
   
 }
 

@@ -770,7 +770,7 @@ export class ApiService {
    
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Authorization': 'Barer ' + localStorage.getItem('accessToken'),
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })
@@ -788,7 +788,7 @@ export class ApiService {
    
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Authorization': 'Barer ' + localStorage.getItem('accessToken'),
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })

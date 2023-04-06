@@ -44,15 +44,15 @@
 
                 </div>
                 <div class="row align-items-center text-center ">
-                    
+
                     <div class="col-md-3 text-center">
                         <i class="bx bx-user-circle font-60 text-danger"></i>
                     </div>
                     <div class="col-md-2">
-                        
+
                         <h5>50</h5>
                     </div>
-                    
+
 
                 </div>
 
@@ -71,21 +71,21 @@
 
             <div class="row m-auto">
 
-                <div class="col-md-4">
+                <div *ngFor="let idea of ideas" class="col-md-4">
                     <div class="card radius-30 d-flex text-center m-auto ">
                         <div class="my-2 font-20">
 
 
                             <div class="row">
-                                <h6 class="text-center text-danger">Event Name</h6>
+                                <h6 class="text-center text-danger">Event Name: {{idea.event.name}}</h6>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-8">Name Staff </div>
+                                <div class="col-md-8">Name Staff: {{idea.user.fullName}}</div>
                                 <div class="col-md-4">11</div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8">Content of Idea </div>
+                                <div class="col-md-8">Content of Idea: {{idea.content}}</div>
                                 <div class="col-md-4">11</div>
                             </div>
                             <div class="row">
@@ -105,7 +105,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <!--<div class="col-md-4">
                     <div class="card radius-30 d-flex text-center m-auto my-2">
                         <div class="my-2 font-20">
 
@@ -171,7 +171,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
 
             </div>
 

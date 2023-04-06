@@ -30,13 +30,11 @@
                             <ul class="list-group mb-2 " *ngFor="let category of categories">
                                 <div class="row">
 
-                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip"
-                                        title="List Idea">
+                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip" title="List Idea">
                                         <p class="mb-0"><i class='bx bx-globe'></i> {{category.name}}
                                         </p>
                                     </li>
-                                    <button (click)="deleteCategory(category.id)" class="col-md-2 btn btn-danger"
-                                        data-toggle="tooltip" title="Delete Category"><i
+                                    <button (click)="deleteCategory(category.id)" class="col-md-2 btn btn-danger" data-toggle="tooltip" title="Delete Category"><i
                                             class="fadeIn animated bx bx-trash-alt"></i></button>
                                 </div>
 
@@ -89,10 +87,8 @@
                                             <div class="form-group">
                                                 <h4>Name Category </h4>
 
-                                                <input type="text" class="form-control"
-                                                    placeholder="Enter Name Category" formControlName="name" />
-                                                <div class="text-danger text-center invalid-feedback d-block"
-                                                    *ngIf="!categoryForm.get('name')?.valid && (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)">
+                                                <input type="text" class="form-control" placeholder="Enter Name Category" formControlName="name" />
+                                                <div class="text-danger text-center invalid-feedback d-block" *ngIf="!categoryForm.get('name')?.valid && (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)">
                                                     <span [hidden]="!categoryForm!.get('name')?.errors?.['required']">
                                                         Name is required!
                                                     </span>
@@ -154,7 +150,7 @@
                                     </div>
 
                                 </ul>
-                                <div class="pagination justify-content-end">
+                                <!--<div class="pagination justify-content-end">
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination round-pagination ">
                                             <li class="page-item"><a class="page-link" href="javascript:;">Previous</a>
@@ -170,7 +166,7 @@
                                             </li>
                                         </ul>
                                     </nav>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
