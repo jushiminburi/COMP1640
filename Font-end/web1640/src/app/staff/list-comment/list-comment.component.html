@@ -1,3 +1,40 @@
+<div class="media  pt-3 m-auto">
+    <div class="chat-user-online">
+        <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
+    </div>
+    <div class="media-body ml-2">
+        <div class="row">
+            <h5 class="mb-0 chat-title col-8">Anna</h5>
+            <p class="col-4 text-right">12/03/2023 08:20</p>
+        </div>
+        <div class="row">
+            <p class=" mb-0 pt-0 form-label col-7">Ohh, wow </p>
+            <div class="dropdown text-right">
+                <div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"><i
+                        class='bx bx-dots-horizontal-rounded'></i>
+                </div>
+                <div class="dropdown-menu dropdown-menu-right bg-body"> <a class="dropdown-item"
+                        href="javascript:;">Edit Comment</a>
+                    <a class="dropdown-item" href="javascript:;">Delete Comment</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-1" >
+                <p type="button" class=" btn btn-sm text-info font-13"><i class="fadeIn animated bx bx-like"></i> 11</p>
+            </div>
+            <div class="col-1" >
+                <p type="button" class="btn btn-sm text-info font-13"><i class="fadeIn animated bx bxs-like"></i> 12</p>
+            </div>
+        </div>
+        
+
+    </div>
+
+</div>
+
 <div class="media col-7 pt-3 m-auto" *ngFor="let comment of comments | slice:0:2">
     <div class="chat-user-online">
         <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
@@ -7,15 +44,33 @@
             <h5 class="mb-0 chat-title col-8">{{comment.user.fullName}}</h5>
             <p class="col-4 text-right">12/03/2023 08:20</p>
         </div>
-        <p class="pt-0 form-control">{{comment.content}}/p>
-            <div class="row">
-                <div class="col-2" type="button">
-                    <i class="fadeIn animated bx bx-like"></i> 12
+        <div class="row">
+            <p class="pt-0 form-control">{{comment.content}}</p>
+            <div class="dropdown justify-content-end m-auto">
+                <div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"><i
+                        class='bx bx-dots-horizontal-rounded'></i>
                 </div>
-                <div class="col-2" type="button">
-                    <i class="fadeIn animated bx bx-dislike"></i> 2
+                <div class="dropdown text-right">
+                    <div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"><i
+                            class='bx bx-dots-horizontal-rounded'></i>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-right"> <a class="dropdown-item"
+                            href="javascript:;">Edit Comment</a>
+                        <a class="dropdown-item" href="javascript:;">Delete Comment</a>
+                    </div>
                 </div>
             </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-2" type="button">
+                <button class="btn btn-outline-secondary"><i class="fadeIn animated bx bx-like"></i> 12</button>
+            </div>
+            <div class="col-2" type="button">
+                <button class="btn btn-outline-secondary"><i class="fadeIn animated bx bxs-like"></i> 12</button>
+            </div>
+        </div>
 
     </div>
 

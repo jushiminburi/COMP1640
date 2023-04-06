@@ -1,151 +1,206 @@
 <div *ngFor="let idea of ideas" class="col-md-12  card radius-15 align-content-center border mb-0  mt-2">
     <div class="mt-2">
-        <div class="media col-7 pt-3">
+        <div class="media pt-3 m-auto">
             <div class="chat-user-online">
                 <img src="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
             </div>
             <div class="media-body ml-2">
-
-                <h5 class="mb-0 chat-title col-8">{{idea.userName}}</h5>
-            </div>
-            <div class="media-body ml-2">
-
-                <!--<h5 class="mb-0 chat-title col-8">Staff Name</h5>-->
-            </div>
-        </div>
-
-    </div>
-    <div class="card-body">
-        <div class="row text-center m-auto">
-            <div class="col-3">
-                <h6>Title: {{idea.title}}</h6>
-            </div>
-            <div class="col-3">
-                <h6>Category: {{idea.category.name}}</h6>
-            </div>
-            <div class="col-3">
-                <h6>Event: {{idea.eventName}}</h6>
-            </div>
-            <div class="col-3">
-                <h6>Created at: {{idea.createdAt | date}}</h6>
-
-            </div>
-        </div>
-
-        <div class="row card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" (click)="show(idea.id)">
-            <div>
-                <h5 class="text-center">{{idea.content}}</h5>
-            </div>
-
-        </div>
-        <br>
-        <div class="row ">
-            <div class="col-10 d-flex">
-                <div class="col-1">
-                    <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
-                </div>
-                <div class="col-1">
-                    <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
-                </div>
-                <div class="col-1">
-                    <i class="lni lni-eye"></i> {{idea.totalViews}}
-                </div>
-            </div>
-            <div class="col-2 justify-content-end">
-                <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
-            </div>
-
-        </div>
-        <hr color="black" size="10px" />
-        <div class="row m-auto">
-            <div class="col-1">
-                <button (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i
-                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</button>
-            </div>
-            <div class="col-1">
-                <button (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i
-                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
-                </button>
-            </div>
-            <div class="col-1">
-                <button type="button" class=" btn text-info font-14 "><i
-                        [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
-                </button>
-            </div>
-            <div class="col-1">
-                <button (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i
-                    [ngClass]="{ 'disliked': isDisliked }"class="fadeIn animated bx bxs-dislike"></i> Disliked
-                </button>
-            </div>
-        </div>
-        <hr color="black" size="10px" />
-
-        <list-comment [comments]="idea.comments"></list-comment>
-
-        <!--<input-comment [postId]="idea.id"></input-comment> -->
-        <div class="row m-auto ">
-
-            <a (click)="show(idea.id)" type="button">
-                <div class="media ">
-                    <div class="chat-user-online">
-                        <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
+                <div class="row">
+                    <h5 class="mb-0 chat-title col-11">{{idea.userName}}</h5>
+                    <div class="dropdown  col-1 justify-content-end">
+                        <div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-right bg-body"> <a class="dropdown-item" href="javascript:;">Edit Idea</a>
+                            <a class="dropdown-item" href="javascript:;">Delete Idea</a>
+                        </div>
                     </div>
-                    <div class="media-body ml-2 col-7">
-                        <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
-                        <div class="input-group-append">
-                            <textarea class="form-control" rows="1" cols="3" placeholder="Write comment..."></textarea>
+                </div>
 
-                            <!-- button input file -->
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
+            </div>
+
+
+        </div>
+        <div class="card-body">
+            <div class="row text-center m-auto">
+                <div class="col-3">
+                    <h6>Title: {{idea.title}}</h6>
+                </div>
+                <div class="col-3">
+                    <h6>Category: {{idea.category.name}}</h6>
+                </div>
+                <div class="col-3">
+                    <h6>Event: {{idea.eventName}}</h6>
+                </div>
+                <div class="col-3">
+                    <h6>Created at: {{idea.createdAt | date}}</h6>
+
+                </div>
+            </div>
+
+            <div class="card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" (click)="show(idea.id)">
+                <div class="row">
+                    <p class="card-text text-justify text-center font-20">{{idea.content}}</p>
+                </div>
+                <br>
+                <div class="row col-12 text-center align-content-center m-auto ">
+
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                    </div>
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                    </div>
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                    </div>
+
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                    </div>
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                    </div>
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                    </div>
+
+                </div>
+
+                <br>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
+                    </div>
+                    <div>Tên file.pdf</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
+                    </div>
+                    <div>Tên file.ppt</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
+                    </div>
+                    <div>Tên file.doc hoặc .docx</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
+                    </div>
+                    <div>Tên file.csv</div>
+                </div>
+
+                <!-- </div> -->
+                <br>
+                <div class="row mt-1">
+                    <div class="col-10 d-flex">
+                        <div class="col-1">
+                            <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
+                        </div>
+                        <div class="col-1">
+                            <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
+                        </div>
+                        <div class="col-2">
+                            <i class="lni lni-eye"></i> {{idea.totalViews}}
+                        </div>
+                    </div>
+                    <div class="col-2 justify-content-end">
+                        <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
+                    </div>
+
+                </div>
+
+                <div class="row m-auto">
+                    <hr color="black" size="10px" />
+                    <div class="col-1">
+                        <p (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</p>
+                    </div>
+                    <div class="col-1">
+                        <p (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
+                        </p>
+                    </div>
+                    <div class="col-1">
+                        <p (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
+                        </p>
+                    </div>
+                    <div class="col-1">
+                        <p (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bxs-dislike"></i> Disliked
+                        </p>
+                    </div>
+                    <hr color="black" size="10px" />
+                </div>
+
+
+
+                <!--<input-comment [postId]="idea.id"></input-comment> -->
+                <div class="row m-auto ">
+
+                    <a (click)="show(idea.id)" type="button">
+                        <div class="media ">
+                            <div class="chat-user-online">
+                                <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
                             </div>
+                            <div class="media-body ml-2 col-7">
+                                <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
+                                <div class="input-group-append">
+                                    <textarea class="form-control col-7" rows="1" cols="3" placeholder="Write comment..."></textarea>
 
-                            <!-- <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                                    <!-- button input file -->
+                                    <!-- <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
+                            </div> -->
+                                    <div class="input-group-append custom-control custom-switch col-4 align-content-center text-center m-auto">
+                                        <input formControlName="anonymous" type="checkbox" class="custom-control-input" id="customSwitch1">
+                                        <label class="custom-control-label font-14" for="customSwitch1">Hide
+                                            Identity</label>
+                                    </div>
+
+                                    <!-- <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
                                 <ng-template pTemplate="content">
                                     <ul *ngIf="uploadedFiles.length">
         
                                     </ul>
                                 </ng-template>
                             </p-fileUpload> -->
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
-                                        class="bx bx-send"></i></button>
-                            </div>
-                        </div>
-                        <!--<p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+                                                class="bx bx-send"></i></button>
+                                    </div>
+                                </div>
+                                <!--<p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
                             <ng-template pTemplate="content">
                                 <ul *ngIf="uploadedFiles.length">
         
                                 </ul>
                             </ng-template>
                         </p-fileUpload> -->
-                    </div>
+                            </div>
+
+                        </div>
+                    </a>
 
                 </div>
-            </a>
+                <list-comment [comments]="idea.comments"></list-comment>
 
+
+
+                <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
+
+            </div>
         </div>
-
-
-
-        <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
-
     </div>
-</div>
 
 
 
-<div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
-    <nav aria-label="Page navigation example ">
-        <ul class="pagination round-pagination ">
-            <li class="page-item">
-                <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-            </li>
-            <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
-
+    <div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
+        <nav aria-label="Page navigation example ">
+            <ul class="pagination round-pagination ">
                 <li class="page-item">
-                    <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+                    <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
                 </li>
-        </ul>
-    </nav>
-</div>
+                <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
+
+                    <li class="page-item">
+                        <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+                    </li>
+            </ul>
+        </nav>
+    </div>

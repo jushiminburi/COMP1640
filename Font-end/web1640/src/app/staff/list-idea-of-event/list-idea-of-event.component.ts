@@ -559,7 +559,7 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
 
     show(id: any) {
         this.ref = this.dialogService.open(EachIdeaComponent, {
-            header: 'Select a Product',
+            // header: 'Select a Product',
             width: '70%',
             contentStyle: { overflow: 'auto' },
             baseZIndex: 10000,

@@ -1,23 +1,24 @@
-<hr color="black" size="10px" />
-<div class="row mb-auto m-auto">
+
+<div class="row m-auto">
+    <hr color="black" size="10px" />
     <div class="col-1">
-        <button type="button" class=" btn text-info font-14 "><i (click)="like()"
-                [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</button>
+        <p type="button" class=" btn text-info font-14 "><i (click)="like()"
+                [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</p>
     </div>
     <div class="col-1">
-        <button type="button" class=" btn text-info font-14 "><i (click)="like()"
+        <p type="button" class=" btn text-info font-14 "><i (click)="like()"
                 [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
-        </button>
+        </p>
     </div>
     <div class="col-1">
-        <button type="button" class=" btn text-info font-14 "><i (click)="dislike()"
+        <p type="button" class=" btn text-info font-14 "><i (click)="dislike()"
                 [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
-        </button>
+        </p>
     </div>
     <div class="col-1">
-        <button type="button" class=" btn text-info font-14 "><i (click)="dislike()"
+        <p type="button" class=" btn text-info font-14 "><i (click)="dislike()"
             [ngClass]="{ 'disliked': isDisliked }"class="fadeIn animated bx bxs-dislike"></i> Disliked
-        </button>
+        </p>
     </div>
+    <hr color="black" size="10px" />
 </div>
-<hr color="black" size="10px" />
