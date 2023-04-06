@@ -42,96 +42,72 @@
                     <div class="col-2">
                         <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                     </div>
-                    <div class="row mb-auto">
-                        <hr color="black" size="10px" />
-                        <div class="row m-auto">
-                            <div class="col-1">
-                                <button (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i
-                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</button>
-                            </div>
-                            <div class="col-1">
-                                <button (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i
-                        [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
-                </button>
-                            </div>
-                            <div class="col-1">
-                                <button type="button" class=" btn text-info font-14 "><i
-                        [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
-                </button>
-                            </div>
-                            <div class="col-1">
-                                <button (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i
-                    [ngClass]="{ 'disliked': isDisliked }"class="fadeIn animated bx bxs-dislike"></i> Disliked
-                </button>
-                            </div>
-                        </div>
-                        <hr color="black" size="10px" />
-                        <div class="col-2">
-                            <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                        </div>
-
-                        <div class="col-2">
-                            <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                        </div>
-                        <div class="col-2">
-                            <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                        </div>
-                        <div class="col-2">
-                            <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                        </div>
-
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                     </div>
 
-                    <br>
-                    <div class="d-flex align-items-center">
-                        <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
-                        </div>
-                        <div>Tên file.pdf</div>
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                     </div>
-                    <div class="d-flex align-items-center">
-                        <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
-                        </div>
-                        <div>Tên file.ppt</div>
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                     </div>
-                    <div class="d-flex align-items-center">
-                        <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
-                        </div>
-                        <div>Tên file.doc hoặc .docx</div>
+                    <div class="col-2">
+                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
                     </div>
-                    <div class="d-flex align-items-center">
-                        <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
-                        </div>
-                        <div>Tên file.csv</div>
-                    </div>
-
-                    <!-- </div> -->
-                    <br>
 
                 </div>
+
                 <br>
-                <div class="row ">
-                    <div class="col-11 d-flex">
-                        <div class="col-1">
-                            <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
-                        </div>
-                        <div class="col-1">
-                            <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
-                        </div>
-                        <div class="col-2">
-                            <i class="lni lni-eye"></i> {{idea.totalViews}}
-                        </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
                     </div>
-                    <div class="col-1 justify-content-end">
-                        <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
+                    <div>Tên file.pdf</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
                     </div>
+                    <div>Tên file.ppt</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
+                    </div>
+                    <div>Tên file.doc hoặc .docx</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
+                    </div>
+                    <div>Tên file.csv</div>
                 </div>
 
-                <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
+                <!-- </div> -->
+                <br>
 
-                <!-- comment -->
-                <input-comment></input-comment>
-                <list-comment></list-comment>
             </div>
-        </div>
+            <br>
+            <div class="row ">
+                <div class="col-11 d-flex">
+                    <div class="col-1">
+                        <i class="fadeIn animated bx bx-like"></i> {{idea.totalLike}}
+                    </div>
+                    <div class="col-1">
+                        <i class="fadeIn animated bx bx-dislike"></i> {{idea.totalDislike}}
+                    </div>
+                    <div class="col-2">
+                        <i class="lni lni-eye"></i> {{idea.totalViews}}
+                    </div>
+                </div>
+                <div class="col-1 justify-content-end">
+                    <i class="fadeIn animated bx bx-comment"></i> {{idea.totalComment}}
+                </div>
+            </div>
 
+            <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
+
+            <!-- comment -->
+            <input-comment></input-comment>
+            <list-comment></list-comment>
+        </div>
     </div>
+
+</div>
