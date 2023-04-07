@@ -6,8 +6,9 @@
             </div>
             <div class="media-body ml-2">
                 <div class="row">
-                    <h5 class="mb-0 chat-title col-11">{{idea.userName}}</h5>
-                    <div class="dropdown  col-1 justify-content-end">
+                    <h5 *ngIf="idea.anonymous == false" class="mb-0 chat-title col-11">{{idea.user.fullName}}</h5>
+                    <h5 *ngIf="idea.anonymous == true" class="mb-0 chat-title col-11">Unknow</h5>
+                    <div *ngIf="checkUpdateDeleteOptions(idea.user.userId)" class="dropdown  col-1 justify-content-end">
                         <div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right bg-body"> <a class="dropdown-item" href="javascript:;">Edit Idea</a>
@@ -29,7 +30,7 @@
                     <h6>Category: {{idea.category.name}}</h6>
                 </div>
                 <div class="col-3">
-                    <h6>Event: {{idea.eventName}}</h6>
+                    <h6>Event: {{idea.event.name}}</h6>
                 </div>
                 <div class="col-3">
                     <h6>Created at: {{idea.createdAt | date}}</h6>
@@ -37,56 +38,43 @@
                 </div>
             </div>
 
-            <div class="card-body Regular shadow col-11 m-auto align-content-center  radius-15" type="button" (click)="show(idea.id)">
-                <div class="row">
+            <div class="card-body Regular shadow col-11 m-auto align-content-center  radius-15">
+                <div class="row" type="button" (click)="show(idea.id)">
                     <p class="card-text text-justify text-center font-20">{{idea.content}}</p>
                 </div>
                 <br>
-                <div class="row col-12 text-center align-content-center m-auto ">
+                <div *ngIf="idea.file != ''" class="row col-12 text-center align-content-center m-auto ">
+                    <div *ngFor="let f of idea.file">
+                        <div class="col-2" type="button">
+                            <img src="'http://139.162.47.239/upload/' + f.name" class="card-img" alt="...">
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'pdf'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
 
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.pdf</a>
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'ppt'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
+
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.ppt</a>
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'docx'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
+
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.doc hoặc .docx</a>
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'csv'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.csv</a>
+                        </div>
                     </div>
 
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-
                 </div>
 
-                <br>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.pdf</div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.ppt</div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.doc hoặc .docx</div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.csv</div>
-                </div>
 
                 <!-- </div> -->
                 <br>
@@ -132,7 +120,7 @@
 
 
                 <!--<input-comment [postId]="idea.id"></input-comment> -->
-                <div class="row m-auto ">
+                <div class="row m-auto pt-2">
 
                     <a (click)="show(idea.id)" type="button">
                         <div class="media ">
@@ -149,8 +137,8 @@
                                 <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
                             </div> -->
                                     <div class="input-group-append custom-control custom-switch col-4 align-content-center text-center m-auto">
-                                        <input formControlName="anonymous" type="checkbox" class="custom-control-input" id="customSwitch1">
-                                        <label class="custom-control-label font-14" for="customSwitch1">Hide
+                                        <input type="checkbox" class="custom-control-input">
+                                        <label class="custom-control-label font-14">Hide
                                             Identity</label>
                                     </div>
 
@@ -179,9 +167,7 @@
                     </a>
 
                 </div>
-                <list-comment [comments]="idea.comments"></list-comment>
-
-
+                <list-comment [comments]="idea.comment"></list-comment>
 
                 <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
 

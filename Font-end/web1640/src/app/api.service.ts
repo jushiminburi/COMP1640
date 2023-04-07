@@ -31,11 +31,11 @@ export class ApiService {
  
 
 
-  createComment(formData: FormData): Observable<any> {
+  createComment(formData: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
-        'Content-Type': 'application/json',
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        
         'Access-Control-Allow-Origin': '*',
       })
     };
@@ -688,7 +688,7 @@ export class ApiService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Authorization': 'Barer ' + localStorage.getItem('accessToken'),
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })
@@ -729,7 +729,7 @@ export class ApiService {
 
   }
 
-  updateComment(id:any,formData: FormData) {
+  updateComment(id:any,formData: any) {
 
     const httpOptions = {
       headers: new HttpHeaders({

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -12,12 +12,15 @@ import { EachIdeaComponent } from '../each-idea/each-idea.component';
   templateUrl: './input-comment.component.html',
   styleUrls: ['./input-comment.component.css']
 })
-export class InputCommentComponent {
+export class InputCommentComponent implements OnInit {
   comment: string = '';
   @Input() postId!: number;
   
 
   uploadedFiles: File[] = [];
+
+
+  
 
   onSelect(event: any) {
         for(let file of event.files) {
@@ -72,20 +75,24 @@ createComment() {
 
 
     let formData = new FormData();
-    formData.append('content', this.comment);
+    formData.append('content', this.commentForm.value.content);
+    formData.append('anonymous', this.commentForm.value.anonymous.toString());
     formData.append('ideaId', this.postId.toString());
-    for (let i = 0; i < this.uploadedFiles.length; i++) {
-      formData.append('files', this.uploadedFiles[i]);
-    }
+    console.log(formData.get('content'));
+    console.log(formData.get('anonymous'));
+    console.log(formData.get('ideaId'));
     this.api.createComment(formData).subscribe(data => {
       console.log(data);
-      this.toast.success({ detail: "Comment successfully!", duration: 3000, position: "top-right" })
-      this.comment = '';
-      this.uploadedFiles = [];
+      
+      this.ideaEvent.emit("abc")
+      this.cdr.detectChanges();
+      this.commentForm.reset()
+      
     }, error => {
-      this.comment = '';
-      this.uploadedFiles = [];
+      
+     
       this.toast.error({ detail: "Comment failed!", duration: 3000, position: "top-right" })
+      this.comment = '';
       console.log(error)
       // this.router.navigate(['/login']);
 
@@ -93,11 +100,25 @@ createComment() {
     );
   }
 
+  commentForm!: FormGroup;
+  @Output() loadData = new EventEmitter();
+
 constructor(
+  private cdr: ChangeDetectorRef,
   public dialogService: DialogService,
   private api: ApiService, private router: Router, 
   private route: ActivatedRoute, private http: HttpClient,
-  private fb: FormBuilder, private toast: NgToastService) { }
+  private fb: FormBuilder, private toast: NgToastService) {
+    
+    
+
+  }
+  ngOnInit(): void {
+    this.commentForm = this.fb.group({
+      content: ['' ],
+      anonymous: [false]
+    })
+  }
 
 
   ref!: DynamicDialogRef;
@@ -130,6 +151,69 @@ constructor(
           this.ref.close();
       }
   }
+
+  @Output() ideaEvent = new EventEmitter<string>();
+  addComment(data: any) {
+    const d = {
+      comment: this.commentForm.value.comment,
+      anonymous: this.commentForm.value.anonymous
+    }
+    this.api.createComment(data).subscribe(data => {
+      console.log(data);
+     
+      
+      this.commentForm.reset()
+    }, error => {
+     
+      console.log(error)
+      this.toast.error({ detail: "Comment failed!", duration: 3000, position: "top-right" })
+      
+      // this.router.navigate(['/login']);
+
+    }
+    );
+  }
+
+
+  updateComment(id: any, comment: any) {
+    const d = {
+      comment: this.commentForm.value.comment,
+      anonymous: this.commentForm.value.anonymous
+    }
+    this.api.updateComment(id, comment).subscribe(data => {
+      console.log(data);
+      this.toast.success({ detail: "Comment successfully!", duration: 3000, position: "top-right" })
+     
+      this.commentForm.reset()
+    }, error => {
+      this.commentForm.reset()
+      this.toast.error({ detail: "Comment failed!", duration: 3000, position: "top-right" })
+      console.log(error)
+      // this.router.navigate(['/login']);
+
+    }
+    );
+  }
+
+
+  deleteComment(id: any) {
+    
+    this.api.deleteComment(id).subscribe(data => {
+      console.log(data);
+      this.toast.success({ detail: "Comment successfully!", duration: 3000, position: "top-right" })
+     
+      this.commentForm.reset()
+    }, error => {
+      this.commentForm.reset()
+      this.toast.error({ detail: "Comment failed!", duration: 3000, position: "top-right" })
+      console.log(error)
+      // this.router.navigate(['/login']);
+
+    }
+    );
+  }
+
+   
 
 }
 

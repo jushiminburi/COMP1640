@@ -19,7 +19,7 @@
                     <h6>Category: {{idea.category.name}}</h6>
                 </div>
                 <div class="col-3">
-                    <h6>Event: {{idea.eventName}}</h6>
+                    <h6>Event: {{idea.event.name}}</h6>
                 </div>
                 <div class="col-3">
                     <h6>Created at: {{idea.createdAt | date}}</h6>
@@ -34,51 +34,38 @@
 
                 </div>
                 <br>
-                <div class="row col-12 text-center align-content-center m-auto ">
+                <div *ngIf="idea.file != ''" class="row col-12 text-center align-content-center m-auto ">
+                    <div *ngFor="let f of idea.file">
+                        <div class="col-2" type="button">
+                            <img src="'http://139.162.47.239/upload/' + f.name" class="card-img" alt="...">
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'pdf'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
 
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.pdf</a>
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'ppt'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
+
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.ppt</a>
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'docx'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
+
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.doc hoặc .docx</a>
+                        </div>
+                        <div *ngIf="checkFileType(f) == 'csv'" class="d-flex align-items-center">
+                            <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
+                            </div>
+                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.csv</a>
+                        </div>
                     </div>
 
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-                    <div class="col-2">
-                        <img src="https://via.placeholder.com/450x600" class="card-img" alt="...">
-                    </div>
-
                 </div>
 
-                <br>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.pdf</div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.ppt</div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.doc hoặc .docx</div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
-                    </div>
-                    <div>Tên file.csv</div>
-                </div>
 
                 <!-- </div> -->
                 <br>
@@ -105,8 +92,8 @@
             <app-like-dislike (loadData)="onLoadData()"></app-like-dislike>
 
             <!-- comment -->
-            <input-comment></input-comment>
-            <list-comment></list-comment>
+            <input-comment [postId]="idea.id" (ideaEvent)="receiveIdea($event)"></input-comment>
+            <list-comment [comments]="comments"></list-comment>
         </div>
     </div>
 

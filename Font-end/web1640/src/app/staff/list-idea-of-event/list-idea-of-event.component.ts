@@ -142,8 +142,37 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     )
   }
 
-  
+  checkUpdateDeleteOptions(id: any) {
+    const helper = new JwtHelperService();
+    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    console.log(data);
+    if (id == data.id) {
+      return true;
+    }
+    return false;
+  }
 
+  checkFileType(fileName: string): any {
+    const imageExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$/i;
+    const pdfExtensions = /\.pdf$/i;
+    const docxExtensions = /(\.docx|\.doc)$/i;
+    const csvExtensions = /(\.csv|\.xls|\.xlsx)$/i;
+    const pptExtensions = /\.ppt$/i;
+  
+    if (imageExtensions.test(fileName)) {
+      return 'image'
+    } else if (pdfExtensions.test(fileName)) {
+      return 'pdf'
+    } else if (docxExtensions.test(fileName)) {
+      return 'docx'
+    } else if (csvExtensions.test(fileName)) {
+      return 'csv'
+    } else if (pptExtensions.test(fileName)) {
+      return 'ppt'
+    } else {
+     return null
+    }
+  }
   
 
  

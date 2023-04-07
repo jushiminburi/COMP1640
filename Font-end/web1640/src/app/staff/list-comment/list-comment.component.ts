@@ -24,11 +24,11 @@ export class ListCommentComponent {
 
     const helper = new JwtHelperService();
     const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
-   for (let i = 0; i < this.comments.length; i++) {
-     if (this.comments[i].user.id == user.id) {
-        this.comments[i].action = true;
-     }
-   }
+  //  for (let i = 0; i < this.comments.length; i++) {
+  //    if (this.comments[i].user.id == user.id) {
+  //       this.comments[i].action = true;
+  //    }
+  //  }
 
   }
 
@@ -63,6 +63,17 @@ export class ListCommentComponent {
     })
 
 
+  }
+
+
+  checkUpdateDeleteOptions(id: any) {
+    const helper = new JwtHelperService();
+    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    console.log(data);
+    if (id == data.id) {
+      return true;
+    }
+    return false;
   }
 
   
@@ -102,12 +113,6 @@ export class ListCommentComponent {
 
 
   }
-
-
-
-
-
-
 
   constructor(
     private http: HttpClient,

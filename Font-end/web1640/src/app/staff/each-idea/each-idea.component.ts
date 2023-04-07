@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
 })
 export class EachIdeaComponent implements OnInit {
   id!: any;
+  @Output() ideaEvent = new EventEmitter<string>();
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -36,6 +37,17 @@ export class EachIdeaComponent implements OnInit {
      
    
      }
+
+     receiveIdea($event:any) {
+      console.log($event);
+      this.getIdea();
+      this.listComment();
+    this.getListIdea();
+      this.cdr.detectChanges();
+    }
+
+
+
 
      isLiked = false;
      isDisliked = false;
@@ -75,6 +87,57 @@ export class EachIdeaComponent implements OnInit {
       )
     }
 
+    checkUpdateDeleteOptions(id: any) {
+      const helper = new JwtHelperService();
+      const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+      console.log(data);
+      if (id == data.id) {
+        return true;
+      }
+      return false;
+    }
+
+    checkFileType(fileName: string): any {
+      const imageExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$/i;
+      const pdfExtensions = /\.pdf$/i;
+      const docxExtensions = /(\.docx|\.doc)$/i;
+      const csvExtensions = /(\.csv|\.xls|\.xlsx)$/i;
+      const pptExtensions = /\.ppt$/i;
+    
+      if (imageExtensions.test(fileName)) {
+        return 'image'
+      } else if (pdfExtensions.test(fileName)) {
+        return 'pdf'
+      } else if (docxExtensions.test(fileName)) {
+        return 'docx'
+      } else if (csvExtensions.test(fileName)) {
+        return 'csv'
+      } else if (pptExtensions.test(fileName)) {
+        return 'ppt'
+      } else {
+       return null
+      }
+    }
+
+
+    listComment() {
+      this.api.getListComment(this.id).subscribe(async (res: any) => {
+        console.log(res);
+        if (res.status == 200) {
+          console.log(res.data);
+          this.comments = res.data.listComment;
+          // this.totalPages = res.totalPages;
+          // this.pageArray = Array(this.totalPages).fill(0).map((x, i) => i + 1);
+          this.cdr.detectChanges(); // Thêm dòng này
+        }
+      }, error => {
+        this.toast.error({ detail: "Like idea failed!" });
+        console.log(error);
+        return
+      }
+      )
+    }
+
   // products!: any[];
 
   //   selectProduct() {
@@ -91,6 +154,25 @@ export class EachIdeaComponent implements OnInit {
     //             return 'danger';
     //     }
     // }
+
+
+    isImage(file: string): boolean {
+      return /\.(jpe?g|png|gif)$/i.test(file);
+    }
+  
+    // encodeURI(data: string): any {
+    //   const data2 =encodeURIComponent(data)
+    //   console.log(data);
+    //   return data2
+    // }
+  
+    dowload(link: any): any {
+      // console.log(link);
+      // const data: any = this.sanitizer.bypassSecurityTrustUrl(link);
+      // //  const data =encodeURIComponent(link)
+      // console.log(data);
+      // return data
+    }
 
   @Input() postId!: number;
 
@@ -318,6 +400,7 @@ export class EachIdeaComponent implements OnInit {
     this.id = this.config.data.id;
    
     this.getIdea();
+    this.listComment();
     this.getListIdea();
     this.createAccountForm = this.fb.group({
       firstName: null,
