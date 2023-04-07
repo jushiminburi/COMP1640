@@ -47,6 +47,18 @@ export class EachIdeaComponent implements OnInit {
     }
 
 
+    receiveComment($event: any) {
+      console.log($event);
+      this.getIdea();
+      this.listComment();
+    this.getListIdea();
+      this.cdr.detectChanges();
+   
+   
+    
+  }
+
+
 
 
      isLiked = false;
@@ -156,6 +168,37 @@ export class EachIdeaComponent implements OnInit {
         }
       })
     }
+
+
+    editingComment = false ;
+  editingCommentText?: any //[(ngModel)]="editingCommentText"
+  ananymous!: any
+  editComment() {
+    this.editingComment == true
+  }
+
+  cancelEdit() {
+    this.editingComment = false;
+    this.editingCommentText = '';
+  }
+  
+  saveEditComment(id: any) {
+    let data = {
+      content: this.editingCommentText,
+      anonymous: this.ananymous
+    }
+    this.api.editComment(id, data).subscribe((data: any) => {
+      console.log(data);
+      this.editingComment = false;
+      this.editingCommentText = '';
+      this.toast.success({ detail: "Edit comment success!", duration: 3000, position: "top-right" })
+    }, error => {
+      console.log(error);
+      this.toast.error({ detail: "Edit comment failed!", duration: 3000, position: "top-right" })
+    })
+
+    
+  }
 
     checkFileType(fileName: string): any {
       const imageExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$/i;

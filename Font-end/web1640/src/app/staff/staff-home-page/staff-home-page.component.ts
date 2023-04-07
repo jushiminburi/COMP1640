@@ -62,6 +62,7 @@ export class StaffHomePageComponent implements OnInit {
     this.getListEvent();
     }
 
+    
     categorySelected!: any;
     eventSelected!: any;
     departmentSelected!: any;
@@ -73,24 +74,66 @@ export class StaffHomePageComponent implements OnInit {
       this.getListIdea();
       this.cdr.detectChanges();
     }
+    arrayBip: any[] = [];
+    
+
 
     onDropdownEvent(selectedValue: any) {
       this.eventSelected = selectedValue.target.value;
+      this.arrayBip = [];
+      if(this.eventSelected != null && this.eventSelected != undefined && this.eventSelected != "0"){
+        this.arrayBip.push(this.eventSelected)
+      }
+      if(this.categorySelected != null && this.categorySelected != undefined && this.categorySelected != "0"){
+        this.arrayBip.push(this.categorySelected)
+      }
+      if(this.departmentSelected != null && this.departmentSelected != undefined && this.departmentSelected != "0"){
+        this.arrayBip.push(this.departmentSelected)
+      }
+
+      
+     
+      
+
       this.getListIdea();
     }
   
     onDropdownCategory(selectedValue: any) {
       this.categorySelected = selectedValue.target.value;
+      this.arrayBip = [];
+      if(this.eventSelected != null && this.eventSelected != undefined && this.eventSelected != "0"){
+        this.arrayBip.push(this.eventSelected)
+      }
+      if(this.categorySelected != null && this.categorySelected != undefined && this.categorySelected != "0"){
+        this.arrayBip.push(this.categorySelected)
+      }
+      if(this.departmentSelected != null && this.departmentSelected != undefined && this.departmentSelected != "0"){
+        this.arrayBip.push(this.departmentSelected)
+      }
+      
       this.getListIdea();
     }
   
     onDropdownDepartment(selectedValue: any) {
       this.departmentSelected = selectedValue.target.value;
+      this.arrayBip = [];
+      if(this.eventSelected != null && this.eventSelected != undefined && this.eventSelected != "0"){
+        this.arrayBip.push(this.eventSelected)
+      }
+      if(this.categorySelected != null && this.categorySelected != undefined && this.categorySelected != "0"){
+        this.arrayBip.push(this.categorySelected)
+      }
+      if(this.departmentSelected != null && this.departmentSelected != undefined && this.departmentSelected != "0"){
+        this.arrayBip.push(this.departmentSelected)
+      }
+     
       this.getListIdea();
     }
 
     onDropdownFilter(selectedValue: any) {
       this.ngFilterSelected = selectedValue.target.value;
+     
+     
       this.getListIdea();
     }
 

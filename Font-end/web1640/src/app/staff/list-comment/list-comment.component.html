@@ -21,8 +21,8 @@
         </div>
 
         <div class="row">
-            <div class="col-1">
-                <p type="button" class=" btn btn-sm text-info font-13"><i class="fadeIn animated bx bx-like"></i> 11</p>
+            <div (click)="likeComment(comment.id)" class="col-1">
+                <p type="button" class=" btn btn-sm text-info font-13"><i [ngClass]="{ 'bxs-like': comment.isLiked == true }" class="fadeIn animated bx bx-like"></i> 11</p>
             </div>
             <div class="col-1">
                 <p type="button" class="btn btn-sm text-info font-13"><i class="fadeIn animated bx bxs-like"></i> 12</p>

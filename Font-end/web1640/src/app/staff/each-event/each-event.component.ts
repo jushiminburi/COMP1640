@@ -131,6 +131,21 @@ export class EachEventComponent {
 
   }
 
+  ideas: any[] = [];
+
+  getIdeaByEventId() {
+    const id = this.route.snapshot.params['id'];
+    this.api.getIdeaByEvent(id).subscribe((res: any) => {
+      this.ideas = res.data.list;
+    }, (err: any) => {
+      console.log(err)
+      this.toast.error({ detail: "Get idea failed", duration: 3000 });
+    }
+    )
+  }
+
+  
+
   allowCreateIdea: boolean = true;
 
   getEvent() {
@@ -361,6 +376,7 @@ export class EachEventComponent {
 
   ngOnInit() {
     this.getEvent();
+    this.getIdeaByEventId();
     
     
     this.createIdeaForm = this.fb.group({

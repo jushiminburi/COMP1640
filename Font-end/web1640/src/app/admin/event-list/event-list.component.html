@@ -186,9 +186,9 @@
                                                 <div class="col-sm-12">
                                                     <input type="datetime-local" class="form-control" placeholder="" formControlName="deadlineIdea" required="">
                                                     <div class="text-danger text-center invalid-feedback d-block" *ngIf="!eventForm.get('deadlineIdea')?.valid && (eventForm.get('deadlineIdea')?.dirty || eventForm.get('deadlineIdea')?.touched)">
-                                                        <div *ngIf="eventForm.get('deadlineIdea')?.errors?.['incorrect']">
+                                                        <!--<div *ngIf="eventForm.get('deadlineIdea')?.errors?.['incorrect']">
                                                             <small class="text-danger text-center invalid-feedback d-block">Deadline Idea should be a future date.</small>
-                                                        </div>
+                                                        </div> -->
                                                         <div *ngIf="eventForm.get('deadlineIdea')?.errors?.['required']">
                                                             <small class="text-danger text-center invalid-feedback d-block">Deadline Idea is required.</small>
                                                         </div>
@@ -211,9 +211,9 @@
 
                                                     </div>
 
-                                                    <div *ngIf="eventForm.get('deadlineComment')?.errors?.['incorrect']">
+                                                    <!--<div *ngIf="eventForm.get('deadlineComment')?.errors?.['incorrect']">
                                                         <small class="text-danger text-center invalid-feedback d-block">Deadline Comment should be a future date.</small>
-                                                    </div>
+                                                    </div> -->
 
                                                     <div *ngIf="eventForm.get('deadlineComment')?.errors?.['invalid']">
                                                         <small class="text-danger text-center invalid-feedback d-block">Deadline Comment should be after Deadline Idea.</small>

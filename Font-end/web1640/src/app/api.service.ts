@@ -12,6 +12,49 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  getDashboard(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.get(api + `qam/dashboard`, {headers:httpOptions.headers, responseType: 'json'})
+  }
+
+
+  editIdea(id: any, data: any): Observable<any> {
+    const httpOptions = {
+      
+        headers: new HttpHeaders({
+          'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        })
+        
+      }
+      
+    
+    return this.http.put(api + `idea/update/${id}`, data, {headers:httpOptions.headers, responseType: 'json'})
+  }
+
+  getIdeaByEvent(id: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.get(api + `event/list-idea/${id}`, {headers:httpOptions.headers, responseType: 'json'})
+  }
+
+
+
+
   getIdeaByCategory(id: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -366,7 +409,7 @@ export class ApiService {
 
   
 
-  editComment(id: number, formData: FormData){
+  editComment(id: number, data: any){
 
 
     const headers = new HttpHeaders({
@@ -376,7 +419,7 @@ export class ApiService {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
     });
 
-    return this.http.put(api + `comment/update/${id}`, formData, {headers:headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    return this.http.put(api + `comment/update/${id}`, data, {headers:headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   }
 

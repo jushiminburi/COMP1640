@@ -41,6 +41,32 @@ export class DashBoardComponent implements OnInit {
   ];
   public pieChartType: ChartType = 'pie';
 
+  dataDashBoard: any;
+
+  getDashboardAPI() {
+    this.api.getDashboard().subscribe((d: any) => {
+      console.log(d);
+      if (d.status == 200) {
+        this.dataDashBoard = d.data;
+        this.totalIdeas = d.data.totalIdea;
+        this.totalComments = d.data.totalComment;
+        this.totalUsers = d.data.totalUser;
+        this.totalCategory = d.data.totalCategory;
+        this.totalDepartment = d.data.totalDepartment;
+        console.log(this.totalIdeas);
+        console.log(this.totalComments);
+        console.log(this.totalUsers);
+        console.log(this.totalCategory);
+        console.log(this.totalDepartment);
+      } else {
+        this.toast.error({ summary: "Get dashboard failed!", position: 'top-right' });
+      }
+    }, error => {
+      this.toast.error({ summary: "Get dashboard error!", position: 'top-right' });
+    })
+  }
+  
+
 
   getTotalIdeas(): any {
     this.api.getIdeas().subscribe((d: any) => {

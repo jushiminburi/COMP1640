@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -17,6 +17,8 @@ export class ListCommentComponent {
   @Input() comments!: any[];
   @Input() postId!: number;
 
+  @Output() commentEvent = new EventEmitter<string>();
+
 
   ngOnInit(): void {
     // this.getCommentsByPostId();
@@ -29,6 +31,19 @@ export class ListCommentComponent {
   //       this.comments[i].action = true;
   //    }
   //  }
+
+  }
+
+  likeComment(id: any) {
+    this.api.likeComment(id).subscribe(async (res: any) => {
+      if (res.status == 200) {
+        this.commentEvent.emit('like');
+      }
+    }, (err: any) => {
+      
+      console.log(err);
+      // location.reload();
+    })
 
   }
 
@@ -130,7 +145,7 @@ export class ListCommentComponent {
 
   } //dependency injection
 
-
+  
 
   // createAccountForm = new FormGroup({
 

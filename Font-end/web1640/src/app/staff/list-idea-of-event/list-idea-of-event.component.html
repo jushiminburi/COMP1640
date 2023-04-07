@@ -98,65 +98,62 @@
                 <hr color="black" size="10px" class="align-content-center m-auto" />
                 <div class="row align-content-center text-center m-auto">
 
-                    <div class="col-1 m-1">
-                        <p (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bx-like"></i> Like</p>
-                    </div>
+
                     <div class="col-1  m-1">
-                        <p (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'liked': isLiked }" class="fadeIn animated bx bxs-like"></i> Liked
+                        <p (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'bxs-like': idea.isLiked == true }" class="fadeIn animated bx"></i> Liked
                         </p>
                     </div>
+
                     <div class="col-1  m-1">
-                        <p (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bx-dislike"></i> Dislike
-                        </p>
-                    </div>
-                    <div class="col-1  m-1">
-                        <p (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'disliked': isDisliked }" class="fadeIn animated bx bxs-dislike"></i> Disliked
+                        <p (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'bxs-dislike': idea.isDisLiked == true }" class=" fadeIn animated bx "></i> Disliked
                         </p>
                     </div>
 
                 </div>
-                <hr color="black" size="10px" class="align-content-center m-auto" />
+                <hr color="black " size="10px " class="align-content-center m-auto " />
 
 
 
-                <!--<input-comment [postId]="idea.id"></input-comment> -->
-                <div class="row m-auto pt-2">
+                <!--<input-comment [postId]="idea.id "></input-comment> -->
+                <div class="row m-auto pt-2 ">
 
-                    <a (click)="show(idea.id)" type="button">
+                    <a (click)="show(idea.id) " type="button ">
                         <div class="media ">
-                            <div class="chat-user-online">
-                                <img src="https://via.placeholder.com/110x110" width="42" height="42" class="rounded-circle" alt="" />
+                            <div class="chat-user-online ">
+                                <img src="https://via.placeholder.com/110x110 " width="42 " height="42 " class="rounded-circle " alt=" " />
                             </div>
-                            <div class="media-body ml-2 col-7">
-                                <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
-                                <div class="input-group-append">
-                                    <textarea class="form-control col-7" rows="1" cols="3" placeholder="Write comment..."></textarea>
+                            <div class="media-body ml-2 col-7 ">
+                                <!-- <h6 class="mb-0 chat-title ">Louis Litt</h6> -->
+                                <div class="input-group-append ">
+                                    <textarea class="form-control col-7 " rows="1 " cols="3 " placeholder="Write comment... "></textarea>
 
                                     <!-- button input file -->
-                                    <!-- <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
+                                    <!-- <div class="input-group-append ">
+                                <button class="btn btn-outline-secondary " type="file "> <i class="lni lni-add-files "></i></button>
                             </div> -->
-                                    <div class="input-group-append custom-control custom-switch col-4 align-content-center text-center m-auto">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <label class="custom-control-label font-14">Hide
+                                    <div class="input-group-append custom-control custom-switch col-4 align-content-center text-center m-auto ">
+                                        <input type="checkbox " class="custom-control-input ">
+                                        <label class="custom-control-label font-14 ">Hide
                                             Identity</label>
                                     </div>
 
-                                    <!-- <p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
-                                <ng-template pTemplate="content">
-                                    <ul *ngIf="uploadedFiles.length">
+                                    <!-- <p-fileUpload class="input-group-append " name="demo[] " [showUploadButton]="false " (onRemove)="onRemove($event) " [chooseIcon]=" 'pi pi-link' " (onClear)="onClear($event) " url="https://www.primefaces.org/cdn/api/upload.php
+                                " (onSelect)="onSelect($event) " [maxFileSize]="5000000 ">
+                                <ng-template pTemplate="content ">
+                                    <ul *ngIf="uploadedFiles.length ">
         
                                     </ul>
                                 </ng-template>
                             </p-fileUpload> -->
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
-                                                class="bx bx-send"></i></button>
+                                    <div class="input-group-append ">
+                                        <button class="btn btn-outline-secondary " type="button " id="button-addon2 "><i
+                                                class="bx bx-send "></i></button>
                                     </div>
                                 </div>
-                                <!--<p-fileUpload class="input-group-append" name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" [chooseIcon]="'pi pi-link'" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [maxFileSize]="5000000">
-                            <ng-template pTemplate="content">
-                                <ul *ngIf="uploadedFiles.length">
+                                <!--<p-fileUpload class="input-group-append " name="demo[] " [showUploadButton]="false " (onRemove)="onRemove($event) " [chooseIcon]=" 'pi pi-link' " (onClear)="onClear($event) " url="https://www.primefaces.org/cdn/api/upload.php
+                                " (onSelect)="onSelect($event) " [maxFileSize]="5000000 ">
+                            <ng-template pTemplate="content ">
+                                <ul *ngIf="uploadedFiles.length ">
         
                                 </ul>
                             </ng-template>
@@ -169,7 +166,7 @@
                 </div>
                 <list-comment [comments]="idea.comment"></list-comment>
 
-                <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
+                <a (click)="show(idea.id) " type="button " class="link-info ">See more comment...</a>
 
             </div>
         </div>
@@ -177,7 +174,7 @@
 
 
 
-    <div *ngIf="totalPages >=2" class="pagination justify-content-end pt-2">
+    <div *ngIf="totalPages>=2" class="pagination justify-content-end pt-2">
         <nav aria-label="Page navigation example ">
             <ul class="pagination round-pagination ">
                 <li class="page-item">

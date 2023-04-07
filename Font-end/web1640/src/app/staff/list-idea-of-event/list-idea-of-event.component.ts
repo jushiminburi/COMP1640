@@ -416,6 +416,8 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     this.currentPage--;
     this.getListIdea();
   }
+  
+
 
 
 
@@ -468,9 +470,56 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     department: new FormControl('', [Validators.required])
   })
 
-  editComment(id:any): void {
-    Swal
+  editingComment = false ;
+  editingCommentText?: any //[(ngModel)]="editingCommentText"
+  ananymous!: any
+  editComment() {
+    this.editingComment == true
   }
+
+  cancelEdit() {
+    this.editingComment = false;
+    this.editingCommentText = '';
+  }
+  
+  saveEditComment(id: any) {
+    let data = {
+      content: this.editingCommentText,
+      anonymous: this.ananymous
+    }
+    this.api.editComment(id, data).subscribe((data: any) => {
+      console.log(data);
+      this.editingComment = false;
+      this.editingCommentText = '';
+      this.toast.success({ detail: "Edit comment success!", duration: 3000, position: "top-right" })
+    }, error => {
+      console.log(error);
+      this.toast.error({ detail: "Edit comment failed!", duration: 3000, position: "top-right" })
+    })
+
+    
+  }
+
+  editIdeas(id: any, data: any) {
+    // data = {
+    //   title: this.editingIdeaTitle,
+    //   content: this.editingIdeaContent,
+    //   anonymous: this.ananymous
+    // }
+    this.api.editIdea(id, data).subscribe((data: any) => {
+      console.log(data);
+      this.toast.success({ detail: "Edit idea success!", duration: 3000, position: "top-right" })
+    }, error => {
+      console.log(error);
+      this.toast.error({ detail: "Edit idea failed!", duration: 3000, position: "top-right" })
+    })
+
+  }
+
+  
+  
+
+  
 
   deleteIdea(id: number) {
     Swal.fire({
@@ -531,6 +580,8 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
       }
     })
   }
+
+  
 
     // if (confirm("Are you sure you want to delete this account?")) {
     //   this.api.deleteUser(id).subscribe((data: any) => {

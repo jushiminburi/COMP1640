@@ -282,10 +282,10 @@ export class EventListComponent implements OnInit {
       const deadlineComment = new Date(Date.parse( this.eventForm.get('deadlineComment')?.value));
       
       
-      if (deadlineIdea <= now) {
+      // if (deadlineIdea <= now) {
         
-        this.eventForm.get('deadlineIdea')?.setErrors({ incorrect: true });
-      } else{
+      //   this.eventForm.get('deadlineIdea')?.setErrors({ incorrect: true });
+      // } else{
         if(deadlineComment <= deadlineIdea) {
           this.eventForm.get('deadlineIdea')?.setErrors({invalid: true });
         } else {
@@ -293,7 +293,7 @@ export class EventListComponent implements OnInit {
           this.eventForm.get('deadlineIdea')?.setErrors(null);
         }
         
-      }
+      // }
 
 
       // if(deadlineIdea > deadlineComment) {
@@ -312,10 +312,10 @@ export class EventListComponent implements OnInit {
       const now = new Date();
       const deadlineIdea = new Date(Date.parse( this.eventForm.get('deadlineIdea')?.value));
       const deadlineComment = new Date(Date.parse( this.eventForm.get('deadlineComment')?.value));
-      if (deadlineComment <= now) {
+      // if (deadlineComment <= now) {
         
-        this.eventForm.get('deadlineComment')?.setErrors({incorrect: true });
-      } else {
+      //   this.eventForm.get('deadlineComment')?.setErrors({incorrect: true });
+      // } else {
         if(deadlineComment <= deadlineIdea) {
           this.eventForm.get('deadlineComment')?.setErrors({invalid: true });
         } else {
@@ -323,7 +323,7 @@ export class EventListComponent implements OnInit {
           this.eventForm.get('deadlineComment')?.setErrors(null);
         }
         
-      }
+      // }
 
       
     });

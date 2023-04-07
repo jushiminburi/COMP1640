@@ -46,6 +46,8 @@ ideas: any[] = [];
     this.api.getIdeaByCategory(categoryId).subscribe((res: any) => {
       console.log(res);
       this.ideas = res.data.ideas
+    }, (err: any) => {
+      this.toast.error({ detail: "Get idea by category failed!", duration: 3000, position: "top-right" })
     })
 
 
