@@ -41,8 +41,18 @@ export class CategorymanagerComponent implements OnInit {
 
 
   }
+ideas: any[] = [];
+  getIdeaByCategory(categoryId: number) {
+    this.api.getIdeaByCategory(categoryId).subscribe((res: any) => {
+      console.log(res);
+      this.ideas = res.data.ideas
+    })
+
+
+  }
 
   deleteCategory(id: number) {
+
     
     Swal.fire({
       title: 'Are you sure?',
@@ -53,6 +63,13 @@ export class CategorymanagerComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
+        
+    this.api.getIdeaByCategory(id).subscribe((res: any) => {
+      console.log(res);
+      if(res.data.totalIdea >0){
+        this.toast.warning({ detail: "Can't delete category because it has idea!", duration: 3000, position: "top-right" })
+      } else {
+
         this.api.deleteCategory(id).subscribe(async (res: any) => {
 
           if (res.status == 200) {
@@ -74,6 +91,10 @@ export class CategorymanagerComponent implements OnInit {
     
         }
         )
+        
+      }
+    })
+        
         
       } 
       // else if (result.dismiss === Swal.DismissReason.cancel) {

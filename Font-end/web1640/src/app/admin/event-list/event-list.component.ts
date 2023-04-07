@@ -174,8 +174,9 @@ export class EventListComponent implements OnInit {
        
 
         var events =res.data.list
+
         let event = events.filter((event: any) => event.id == id)[0];
-        console.log(event)
+       
 
         //convert date to dd/mm/yyyy - dùng moment cũng đc để chuyển giữa múi giờ.
         // let deadlineIdea: Date = new Date(event.deadlineIdea);
@@ -195,13 +196,13 @@ export class EventListComponent implements OnInit {
        
       const dateObj1 = new Date(event.deadlineIdea);
       const dateObj2 = new Date(event.deadlineComment);
-      const formattedDate1 = datePipe.transform(dateObj1, 'yyyy-MM-ddTHH:mm:ss');
-      const formattedDate2 = datePipe.transform(dateObj2, 'yyyy-MM-ddTHH:mm:ss');
+      const formattedDate1 = datePipe.transform(dateObj1, 'yyyy-MM-dd HH:mm');
+      const formattedDate2 = datePipe.transform(dateObj2, 'yyyy-MM-dd HH:mm');
       event.deadlineIdea = formattedDate1
         event.deadlineComment = formattedDate2
         console.log(event.deadlineIdea);
         this.eventForm.patchValue(event);
-        console.log(event);
+        console.log(this.eventForm);
 
       }, error => {
         console.log(error);
@@ -218,6 +219,8 @@ export class EventListComponent implements OnInit {
         console.log(res);
         var events = res.data.list;
         console.log(events);
+
+        
 
 
         for (let event of events) {
@@ -266,18 +269,30 @@ export class EventListComponent implements OnInit {
 
 
     this.loadEvents();
-
+  
+   
     this.eventForm.get('deadlineIdea')?.valueChanges.subscribe(value => {
+      console.log(this.eventForm.get('deadlineIdea')?.value);
+      console.log(this.eventForm.get('deadlineComment')?.value);
+
+      console.log(this.eventForm.errors);
+      
       const now = new Date();
       const deadlineIdea = new Date(Date.parse( this.eventForm.get('deadlineIdea')?.value));
       const deadlineComment = new Date(Date.parse( this.eventForm.get('deadlineComment')?.value));
       
-      console.log(now > deadlineIdea? "true" : "false");
+      
       if (deadlineIdea <= now) {
         
         this.eventForm.get('deadlineIdea')?.setErrors({ incorrect: true });
       } else{
-        this.eventForm.get('deadlineIdea')?.setErrors(null);
+        if(deadlineComment <= deadlineIdea) {
+          this.eventForm.get('deadlineIdea')?.setErrors({invalid: true });
+        } else {
+          console.log("this.eventForm.valid");
+          this.eventForm.get('deadlineIdea')?.setErrors(null);
+        }
+        
       }
 
 
@@ -289,16 +304,22 @@ export class EventListComponent implements OnInit {
     });
 
     this.eventForm.get('deadlineComment')?.valueChanges.subscribe(value => {
+      console.log(this.eventForm.get('deadlineIdea')?.value);
+      console.log(this.eventForm.get('deadlineComment')?.value);
+
+      
+    
       const now = new Date();
       const deadlineIdea = new Date(Date.parse( this.eventForm.get('deadlineIdea')?.value));
       const deadlineComment = new Date(Date.parse( this.eventForm.get('deadlineComment')?.value));
       if (deadlineComment <= now) {
-        console.log("deadlineComment < now");
+        
         this.eventForm.get('deadlineComment')?.setErrors({incorrect: true });
       } else {
         if(deadlineComment <= deadlineIdea) {
           this.eventForm.get('deadlineComment')?.setErrors({invalid: true });
         } else {
+          console.log("this.eventForm.valid");
           this.eventForm.get('deadlineComment')?.setErrors(null);
         }
         
