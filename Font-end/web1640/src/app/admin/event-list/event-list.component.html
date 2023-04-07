@@ -192,6 +192,9 @@
                                                         <div *ngIf="eventForm.get('deadlineIdea')?.errors?.['required']">
                                                             <small class="text-danger text-center invalid-feedback d-block">Deadline Idea is required.</small>
                                                         </div>
+                                                        <div *ngIf="eventForm.get('deadlineIdea')?.errors?.['invalid']">
+                                                            <small class="text-danger text-center invalid-feedback d-block">Deadline Comment should be after Deadline Idea.</small>
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -231,7 +234,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" [disabled]="!eventForm.valid" class="btn
+                                <button type="submit" class="btn 
                                     btn-primary ">Save
                                     Change</button>
                             </div>
@@ -244,22 +247,6 @@
             </div>
 
 
-            <div class="pagination justify-content-end">
-                <nav aria-label="Page navigation example ">
-                    <ul class="pagination round-pagination ">
-                        <li class="page-item"><a class="page-link" href="javascript:;">Previous</a>
-                        </li>
-                        <li class="page-item-action"><a class="page-link" href="javascript:;javascript:;">1</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="javascript:;">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="javascript:;">3</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="javascript:;">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
         </div>
 
 

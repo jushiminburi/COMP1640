@@ -43,7 +43,7 @@
                     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-toggle="dropdown">
                         <div class="media user-box align-items-center">
                             <div class="media-body user-info">
-                                <p class="user-name mb-0">{{user.firstName + user.lastName}}</p>
+                                <p class="user-name mb-0">{{user.firstName + " " + user.lastName}}</p>
                                 <p *ngIf="user.userId == 1" class="designattion mb-0">Admin</p>
                                 <p *ngIf="user.userId == 2" class="designattion mb-0">QAM</p>
                                 <p *ngIf="user.userId == 3" class="designattion mb-0">QAC</p>
@@ -52,7 +52,14 @@
                             <img [src]="user.avatar" class="user-img" alt="user avatar">
                         </div>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right"> <a [routerLink]="['/staff/profileuser']" class="dropdown-item" href="javascript:;"><i
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a *ngIf="user.role == 1" [routerLink]="['/admin/profileuser']" class="dropdown-item" href="javascript:;"><i
+                            class="bx bx-user"></i><span>Profile</span></a>
+                        <a *ngIf="user.role == 2" [routerLink]="['/qam/profileuser']" class="dropdown-item" href="javascript:;"><i
+                                class="bx bx-user"></i><span>Profile</span></a>
+                        <a *ngIf="user.role == 3" [routerLink]="['/qac/profileuser']" class="dropdown-item" href="javascript:;"><i
+                                    class="bx bx-user"></i><span>Profile</span></a>
+                        <a *ngIf="user.role == 4" [routerLink]="['/staff/profileuser']" class="dropdown-item" href="javascript:;"><i
                                 class="bx bx-user"></i><span>Profile</span></a>
 
                         <a [routerLink]="['/resetpassword']" class="dropdown-item" href="javascript:;"><i

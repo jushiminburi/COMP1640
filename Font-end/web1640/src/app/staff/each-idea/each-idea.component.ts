@@ -97,6 +97,66 @@ export class EachIdeaComponent implements OnInit {
       return false;
     }
 
+    deleteIdea(id: number) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.api.deleteIdea(id).subscribe((data: any) => {
+            // Swal.fire(
+            //   'Deleted!',
+            //   'Your file has been deleted.',
+            //   'success'
+            // )
+            this.toast.success({ detail: "Delete idea successfully!", duration: 3000, position: "top-right" })
+            this.loadStudents();
+          },
+  
+            error => {
+              this.toast.error({ detail: "Delete idea failed!", duration: 3000, position: "top-right" })
+              console.log(error)
+            }
+          )
+        }
+      })
+    }
+  
+    deleteComment(id: number) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.api.deleteComment(id).subscribe((data: any) => {
+            // Swal.fire(
+            //   'Deleted!',
+            //   'Your file has been deleted.',
+            //   'success'
+            // )
+            this.toast.success({ detail: "Delete comment successfully!", duration: 3000, position: "top-right" })
+            this.loadStudents();
+          },
+  
+            error => {
+              this.toast.error({ detail: "Delete comment failed!", duration: 3000, position: "top-right" })
+              console.log(error)
+            }
+          )
+        }
+      })
+    }
+
     checkFileType(fileName: string): any {
       const imageExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$/i;
       const pdfExtensions = /\.pdf$/i;

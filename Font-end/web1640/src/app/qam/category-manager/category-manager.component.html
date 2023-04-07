@@ -30,7 +30,7 @@
                             <ul class="list-group mb-2 " *ngFor="let category of categories">
                                 <div class="row">
 
-                                    <li class=" col-md-10 list-group-item" type="button" data-toggle="tooltip" title="List Idea">
+                                    <li (click)="getIdeaByCategory(category.id)" class=" col-md-10 list-group-item" type="button" data-toggle="tooltip" title="List Idea">
                                         <p class="mb-0"><i class='bx bx-globe'></i> {{category.name}}
                                         </p>
                                     </li>

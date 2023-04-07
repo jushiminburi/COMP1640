@@ -12,6 +12,18 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  getIdeaByCategory(id: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    return this.http.get(api + `category/list-idea/${id}`, {headers:httpOptions.headers, responseType: 'json'})
+  }
+
   
 
 
@@ -315,7 +327,7 @@ export class ApiService {
       })
     };
 
-      return this.http.delete(api + `comment/delete/${id}`
+      return this.http.delete(api + `event/delete/${id}`
       , {headers:httpOptions.headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
 

@@ -55,6 +55,7 @@ export class DepartmentManagerComponent implements OnInit{
   
 
   deleteDepartment(id: number) {
+    console.log(id);
     
     Swal.fire({
       title: 'Are you sure?',
@@ -84,12 +85,13 @@ export class DepartmentManagerComponent implements OnInit{
           // this.getlistDepartment()
           // console.log(err);
           // // location.reload();
+          console.log(err);
 
           this.router.navigateByUrl('/admin', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/admin/department']).then(() => {
               this.getlistDepartment()
   
-              this.toast.success({ detail: "Delete Department Success!", duration: 3000, position: "top-right" })
+              this.toast.error({ detail: "Delete Department failed!", duration: 3000, position: "top-right" })
             })
           })
     
