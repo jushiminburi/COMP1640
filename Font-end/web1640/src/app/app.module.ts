@@ -23,7 +23,6 @@ import { SuccessDialogComponentComponent } from './admin/create-account/success-
 import { QamComponent } from './qam/qam.component';
 import { SwitcherWrapperComponent } from './switcher-wrapper/switcher-wrapper.component';
 
-import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
 import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-idea.component';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -49,7 +48,6 @@ import { DashBoardComponent } from './qam/dash-board/dash-board.component';
 
 import { QacComponent } from './qac/qac.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
-import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
 
@@ -159,6 +157,10 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LikeDislikeComponent } from './staff/each-idea/like-dislike/like-dislike.component';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
+import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
+import { TopPopularIdeasComponent } from './top-popular-ideas/top-popular-ideas.component';
+import { QacHomepageComponent } from './qac/qac-homepage/qac-homepage.component';
+import { EditIdeaComponent } from './staff/each-event/edit-idea/edit-idea.component';
 
 
 @NgModule({
@@ -181,7 +183,6 @@ import { DialogComponentComponent } from './dialog-component/dialog-component.co
     EventListComponent,
     EventAndDeadLineComponent,
 
-    DashboardsAdminComponent,
     MostPopularIdeaComponent,
     CategorymanagerComponent,
     SwitcherWrapperComponent,
@@ -192,8 +193,6 @@ import { DialogComponentComponent } from './dialog-component/dialog-component.co
     DocumentDownloadComponent,
     DashBoardComponent,
     QacComponent,
-
-    EmailComponent,
 
     EventDetailComponent ,
     StaffComponent,
@@ -208,6 +207,10 @@ import { DialogComponentComponent } from './dialog-component/dialog-component.co
     ProfileUserComponent,
     NewIdeaComponent,
     LikeDislikeComponent,
+    AdminHomepageComponent,
+    TopPopularIdeasComponent,
+    QacHomepageComponent,
+    EditIdeaComponent
 
 
 
