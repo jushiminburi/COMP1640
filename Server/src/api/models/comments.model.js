@@ -9,7 +9,8 @@ const Comment = mongoose.model('Comment', new mongoose.Schema({
   user: { type: String, ref: 'User' },
   isEdited: { type: Boolean, default: false },
   likes: [{ type: String, ref: 'User' }],
-  totalLike: { type: Number, default: 0 }
+  totalLike: { type: Number, default: 0 },
+  anonymous: { type: Boolean, default: false }
 }, {
   timestamps: true
 }))

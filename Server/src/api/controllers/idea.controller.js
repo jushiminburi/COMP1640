@@ -7,7 +7,6 @@ const { Ideas, validate } = require('../models/idea.model')
 const Files = require('../models/file.model')
 const { Category } = require('../models/category.model')
 const path = require('path')
-const { BASEURL_FILE } = require('../utils/global')
 const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEmail')
 const { User } = require('../models/user.model')
 const { Event } = require('../models/event.model')
@@ -93,6 +92,8 @@ module.exports = {
       }
       await newIdea.save()
       await Event.findOneAndUpdate({ id: eventId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
+      await Department.findOneAndUpdate({ _id: _departmentId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 }}, { new: true })
+      await Category.findOneAndUpdate({ _id: categoryValue._doc._id }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 }}, { new: true })
       // sendIdeaQAC(_departmentId)
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
