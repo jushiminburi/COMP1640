@@ -12,21 +12,20 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { StaffComponent } from './staff/staff.component';
 import { TesttemComponent } from './testtem/testtem.component';
 
-import { DashboardsAdminComponent } from './admin/dashboards/dashboards.component';
 import { EventListComponent } from './admin/event-list/event-list.component';
 import { EventAndDeadLineComponent } from './admin/event-and-deadline/event-and-deadline.component';
 import { MostPopularIdeaComponent } from './qam/most-popular-idea/most-popular-idea.component';
 import { DashBoardComponent } from './qam/dash-board/dash-board.component';
 import { QacComponent } from './qac/qac.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
-import { EmailComponent } from './qac/email/email.component';
 import { EventDetailComponent } from './qam/event-detail/event-detail.component';
 import { DocumentDownloadComponent } from './qam/document-download/document-download.component';
-import { ViewIdeaComponent } from './qac/view-idea/view-idea.component';
 import { StaffHomePageComponent } from './staff/staff-home-page/staff-home-page.component';
 import { EachEventComponent } from './staff/each-event/each-event.component';
 import { DepartmentManagerComponent } from './admin/department-manager/department-manager.component';
 import { NewIdeaComponent } from './staff/each-event/new-idea/new-idea.component';
+import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
+import { QacHomepageComponent } from './qac/qac-homepage/qac-homepage.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -48,18 +47,17 @@ const routes: Routes = [
     path: 'qac', component: QacComponent,
     children:
       [
-        { path: '', redirectTo: 'viewidea', pathMatch: 'full' },
-        { path: 'viewidea', component: ViewIdeaComponent },
+        { path: '', redirectTo: 'homepage', pathMatch: 'full' },
+        { path: 'homepage', component: QacHomepageComponent },
         { path: 'profileuser', component: ProfileUserComponent }
-
       ]
-  }
-  ,
+  },
   { path: 'resetpassword', component: ResetPasswordComponent },
   {
     path: 'admin', component: AdminComponent,
     children: [
-      { path: 'dashboard', component: DashboardsAdminComponent },
+      { path: '', redirectTo: 'homepage', pathMatch: 'full'},
+      { path: 'homepage', component: AdminHomepageComponent},
       { path: 'createaccount', component: CreateAccountComponent },
       { path: 'accountmanager', component: AccountManagerComponent },
       { path: 'eventlist', component: EventListComponent },
