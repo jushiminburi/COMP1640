@@ -16,6 +16,7 @@ export class ResetPasswordComponent {
 
   status: any;
   constructor(
+    
     private http: HttpClient,
     private api: ApiService,
     private router: Router,
@@ -31,7 +32,9 @@ export class ResetPasswordComponent {
     console.log(localStorage.getItem('token'))
     this.resetPasswordForm = this.fb.group({
       
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      oldPassword: ['', [Validators.required, Validators.minLength(6)]],
+      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       
     });
 
@@ -43,44 +46,15 @@ export class ResetPasswordComponent {
 
    onSubmit() {
     
-    //get password from localstorage
-
-    // if(this.loginForm.invalid){
-    //     return false;
-    // } 
-    // truyen du lieu vao form
-    // console.log(data.phone, data.password);
-    // this.router.navigateByUrl('/students');
-
-    // return true;
-    // console.log(
-    //  this.resetPasswordForm.value);
-    // if (this.resetPasswordForm.value.oldPassword != oldPw) {
-
-    //   alert("Mật khẩu cũ không đúng");
-    //   return false;
-    // }
-    // else if (this.resetPasswordForm.value.newPassword != this.resetPasswordForm.value.reNewPassword) {
-    //   alert("Mật khẩu mới không trùng khớp");
-    //   return false;
-    // }
-    // else {
-    // console.log("hii");
-
-    var formData = new FormData();
-    formData = this.resetPasswordForm.getRawValue()
-    console.log(formData)
-    // formData.append('firstname', this.myForm?.get('FirstName')?.value);
-    // formData.append('lastname', this.myForm?.get('LastName')?.value);
-    // formData.append('username', this.myForm?.get('UserName')?.value);
-    // formData.append('email', this.myForm?.get('Email')?.value);
-    // formData.append('role', this.myForm?.get('Role')?.value);
-    // formData.append('password', this.myForm?.get('Password')?.value);
-    // formData.append('department', this.myForm?.get('Department')?.value);
+    const data = {
+      oldPassword: this.resetPasswordForm.value.oldPassword,
+      newPassword: this.resetPasswordForm.value.newPassword,
+      confirmPassword: this.resetPasswordForm.value.confirmPassword,
+    }
 
     
     
-    this.api.changePassword( formData
+    this.api.changePassword( data
     ).subscribe(res => {
 
       // alert("Login Successful!");
@@ -90,14 +64,16 @@ export class ResetPasswordComponent {
         console.log(data.data.username);
 
         if (data.status == 200) {
+          
 
-          alert("Change Password Successful!");
+          this.toast.success({detail: "Change Password Successful!", duration: 3000});
+          this.router.navigate(['/resetpassword'])
          
-          this.router.navigate(['/admin'])
+          
         
           // this.router.navigate(['/admin'])
         } else if (data.status == 400) {
-          alert("Change Password Failed!");
+          this.toast.error({detail: "Change Password Failed!", duration: 3000});
           this.router.navigate(['/resetpassword'])
         } 
         // else if (user.role == 4) {
@@ -115,7 +91,7 @@ export class ResetPasswordComponent {
     },
 
       error => {
-        alert("Change Password Failed!");
+        this.toast.error({detail: "Change Password Failed!", duration: 3000});
         this.router.navigate(['/resetpassword'])
         console.log(error)
         // this.router.navigate(['/login']);

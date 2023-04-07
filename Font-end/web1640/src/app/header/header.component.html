@@ -43,10 +43,13 @@
                     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-toggle="dropdown">
                         <div class="media user-box align-items-center">
                             <div class="media-body user-info">
-                                <p class="user-name mb-0">Jessica Doe</p>
-                                <p class="designattion mb-0">Role</p>
+                                <p class="user-name mb-0">{{user.firstName + user.lastName}}</p>
+                                <p *ngIf="user.userId == 1" class="designattion mb-0">Admin</p>
+                                <p *ngIf="user.userId == 2" class="designattion mb-0">QAM</p>
+                                <p *ngIf="user.userId == 3" class="designattion mb-0">QAC</p>
+                                <p *ngIf="user.userId == 4" class="designattion mb-0">Staff</p>
                             </div>
-                            <img src="http://139.162.47.239/upload/default-avatar.png" class="user-img" alt="user avatar">
+                            <img [src]="user.avatar" class="user-img" alt="user avatar">
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right"> <a [routerLink]="['/staff/profileuser']" class="dropdown-item" href="javascript:;"><i

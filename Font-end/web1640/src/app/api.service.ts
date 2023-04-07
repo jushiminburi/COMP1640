@@ -12,6 +12,9 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  
+
+
 
   likeDislike(id: any, like: boolean, dislike: boolean): Observable<any> {
     const httpOptions = {
@@ -909,26 +912,15 @@ export class ApiService {
     return this.http.put(api + `user/update/${id}`, form, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }
 
-  changePassword(formData: Object){
-    let newForm = new FormData();
+  changePassword(formData: any){
+   
     const helper = new JwtHelperService();
     const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
-    formData = {...formData, userId: user!.id}
-
-
-    console.log(user)
-    newForm.append('userId', user.id.toString());
-    console.log(newForm.get('userId'));
-    console.log(formData);
-
-
-
-
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
-    return this.http.put(api + 'user/change-password'
-    , newForm// data minh se gui len
+    return this.http.put(api + `user/change-password-user/${user.id}`
+    , formData// data minh se gui len
     , {headers:headers, responseType: 'text'} //bao gui kieu json cho phia server va kieu du lieu tra ve tu server la json text
   )
   }//resetPassword

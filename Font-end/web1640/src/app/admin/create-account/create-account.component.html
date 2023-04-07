@@ -81,7 +81,7 @@
                                                     <label>Department</label>
                                                     <select class="form-select text-center" formControlName="department" required>
 
-                                                        <option *ngFor="let opt of departments" [value]="opt.id">
+                                                        <option *ngFor="let opt of departments" [value]="opt.name">
                                                             {{opt.name}}
                                                         </option>
                                                         
@@ -95,7 +95,7 @@
 
                                             <div class=" col-sm-12 form-group text-center align-content-center">
                                                 <label>Image</label>
-                                                <input type="file" class="form-control" (change)="selectFile($event, 'files')" formControlName="files">
+                                                <input type="file" accept="image/*" class="form-control" (change)="selectFile($event, 'files')" formControlName="files">
 
 
                                             </div>

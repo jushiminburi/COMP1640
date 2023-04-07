@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from '../api.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import { ApiService } from '../api.service';
 })
 export class HeaderComponent {
   durationInSeconds = 5;
-
+  user!: any;
   
 
   status: any;
@@ -19,7 +20,19 @@ export class HeaderComponent {
     private http: HttpClient,
     private api: ApiService,
     private router: Router, private toast: NgToastService) { } //dependency injection
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    
+    this.getUserById();
+   }
+
+   getUserById() {
+    const helper = new JwtHelperService();
+    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    this.api.getUserById(data.id).subscribe((res: any) => {
+      this.user = res.data;
+    })
+
+   }
 
   // showSuccess() { // in ra thàh công
   //   this.toastr.success('Thành công', 'Thông báo', {
