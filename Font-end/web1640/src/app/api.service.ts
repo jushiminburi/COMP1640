@@ -12,6 +12,24 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+   // Kiểm tra xem người dùng đã đăng nhập hay chưa
+   isLoggedIn(): boolean {
+    const user = localStorage.getItem('accessToken')
+    return user !== null;
+  }
+
+  // Lấy thông tin người dùng
+  getUserRole(): string {
+   
+    const helper = new JwtHelperService();
+    if(localStorage.getItem('accessToken') == null){
+      return '';
+    }
+    const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    console.log(user.role);
+    return user ? user.role : '';
+  }
+
   getDashboard(): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
