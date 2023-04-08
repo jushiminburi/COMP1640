@@ -64,6 +64,7 @@ exports.registerUser = async (req, res) => {
         userId
       })
       await user.save()
+      await Department.findOneAndUpdate({ _id: departments._doc._id }, { $push: { user: user._doc._id }}, { new: true })
       transporter.sendMail(mailCreatedAccountOptions(user.email, password))
       return apiResponse.response_data(res, Languages.REGISTER_SUCCESS, 200, user)
     }

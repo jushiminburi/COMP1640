@@ -11,6 +11,7 @@ const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEm
 const { User } = require('../models/user.model')
 const { Event } = require('../models/event.model')
 const { Department } = require('../models/department.model')
+const moment = require('moment')
 
 function unlinkFile (file) {
   fs.unlink(file, function (err) {
@@ -31,6 +32,27 @@ function removeElement (array, elem) {
   if (index > -1) {
     array.splice(index, 1)
   }
+}
+function timeComment (diffMinutes) {
+  let message
+  if (diffMinutes < 1) {
+    message = Languages.JUST_FINISHED
+  } else if (diffMinutes === 1) {
+    message = `${diffMinutes} minute ago`
+  } else if (diffMinutes < 60) {
+    message = `${diffMinutes} minutes ago`
+  } else if (diffMinutes === 60) {
+    message = `${Math.floor(diffMinutes / 60)} hour ago`
+  } else if (diffMinutes < 1440) {
+    message = `${Math.floor(diffMinutes / 60)} hours ago`
+  } else if (diffMinutes === 1440) {
+    message = `${Math.floor(diffMinutes / 1440)} day ago`
+  } else if (diffMinutes < 10080) {
+    message = `${Math.floor(diffMinutes / 1440)} days ago`
+  } else {
+    message = Languages.LONG_TIME
+  }
+  return message
 }
 function validateIdea (idea) {
   const schema = Joi.object({
@@ -159,7 +181,7 @@ module.exports = {
         select: 'id name -_id'
       }).populate({
         path: 'comment',
-        select: 'id content file user isEdited likes totalLike',
+        select: 'id content file user isEdited likes createdAt anonymous totalLike',
         options: { sort: { createAt: -1 }, limit: 1 },
         populate: [
           { path: 'user', select: 'id userId fullName email avatar -_id' },
@@ -167,9 +189,23 @@ module.exports = {
         ]
       }).skip(skip).limit(limit).sort(sortIdea).lean()
       const listIdea = ideas.map((idea) => {
+        const commentTime = new Date(idea.comment.createdAt)
+        const diffMinutes = moment().diff(commentTime, 'minutes')
+        const time = timeComment(diffMinutes)
         const isLikes = idea.likes && idea.likes.includes(userId)
-        const files = idea.file
+        const files = idea.file ?? []
         const isDislikes = idea.dislikes && idea.dislikes.includes(userId)
+        const comments = [{
+            _id: idea.comment[0]._id,
+            id: idea.comment[0].id,
+            content: idea.comment[0].content,
+            user: idea.comment[0].user,
+            isEdited: idea.comment[0].isEdited,
+            isLikes: idea.comment[0].likes && idea.comment[0].likes.includes(userId),
+            totalLike: idea.comment[0].totalLike,
+            timeAgo: time,
+            anonymous: idea.comment[0].anonymous
+        }]
         const users = {
           userId: idea.user.userId,
           fullName: idea.user.fullName,
@@ -177,13 +213,14 @@ module.exports = {
           department: idea.user.department,
           avatar: idea.user.avatar
         }
-        const { likes, user, dislikes, ...ideaWithoutLikesAndDislikes } = idea
+        const { likes, user, dislikes,comment, ...ideaWithoutLikesAndDislikes } = idea
         return {
           ...ideaWithoutLikesAndDislikes,
           user: users,
           isLikes,
           isDislikes,
-          file: files
+          file: files,
+          comment: comments
         }
       })
       const totalIdea = await Ideas.find().countDocuments()

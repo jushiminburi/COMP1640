@@ -19,6 +19,7 @@ function validateComment (comment) {
   const schema = Joi.object({
     ideaId: Joi.number().required(),
     content: Joi.string().min(2).max(1000).required(),
+    anonymous: Joi.bool(),
     commentId: Joi.number()
   })
   return schema.validate(comment)
