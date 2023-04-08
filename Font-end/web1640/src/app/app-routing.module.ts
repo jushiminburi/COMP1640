@@ -26,12 +26,13 @@ import { DepartmentManagerComponent } from './admin/department-manager/departmen
 import { NewIdeaComponent } from './staff/each-event/new-idea/new-idea.component';
 import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
 import { QacHomepageComponent } from './qac/qac-homepage/qac-homepage.component';
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'testtem', component: TesttemComponent },
   {
-    path: 'qam', component: QamComponent,
+    path: 'qam', component: QamComponent,  canActivate: [AuthGuard], data: { allowedRoles: [2] },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'categorymanager', component: CategorymanagerComponent },
@@ -44,7 +45,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'qac', component: QacComponent,
+    path: 'qac', component: QacComponent,canActivate: [AuthGuard], data: { allowedRoles: [3] },
     children:
       [
         { path: '', redirectTo: 'homepage', pathMatch: 'full' },
@@ -54,7 +55,7 @@ const routes: Routes = [
   },
   { path: 'resetpassword', component: ResetPasswordComponent },
   {
-    path: 'admin', component: AdminComponent,
+    path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { allowedRoles: [1] },
     children: [
       { path: '', redirectTo: 'homepage', pathMatch: 'full'},
       { path: 'homepage', component: AdminHomepageComponent},
@@ -69,7 +70,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'staff', component: StaffComponent,
+    path: 'staff', component: StaffComponent, canActivate: [AuthGuard], data: { allowedRoles: [4] },
     children: [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', component: StaffHomePageComponent },
