@@ -10,6 +10,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { SuccessDialogComponentComponent } from 'src/app/admin/create-account/success-dialog-component/success-dialog-component.component';
 import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
+import { EditIdeaComponent } from '../each-event/edit-idea/edit-idea.component';
 
 @Component({
   selector: 'each-idea',
@@ -37,6 +38,33 @@ export class EachIdeaComponent implements OnInit {
      
    
      }
+
+     
+
+    show(id: any) {
+        this.ref = this.dialogService.open(EditIdeaComponent, {
+            // header: 'Select a Product',
+            width: '70%',
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            maximizable: true,
+            data: {
+              id: id
+          },
+        });
+
+        this.ref.onClose.subscribe((product: any) => {
+            // if (product) {
+            //     this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: product.name });
+            // }
+        });
+
+        this.ref.onMaximize.subscribe((value: any) => {
+            // this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
+        });
+    }
+
+    
 
      receiveIdea($event:any) {
       console.log($event);
@@ -682,4 +710,6 @@ export class EachIdeaComponent implements OnInit {
     //             return 'danger';
     //     }
     // }
+
+    
   }
