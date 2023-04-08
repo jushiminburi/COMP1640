@@ -161,13 +161,10 @@ import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.co
 import { TopPopularIdeasComponent } from './top-popular-ideas/top-popular-ideas.component';
 import { QacHomepageComponent } from './qac/qac-homepage/qac-homepage.component';
 import { EditIdeaComponent } from './staff/each-event/edit-idea/edit-idea.component';
-
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
     AdminComponent,
     CreateAccountComponent,
     HeaderComponent,
@@ -177,16 +174,12 @@ import { EditIdeaComponent } from './staff/each-event/edit-idea/edit-idea.compon
     ResetPasswordComponent,
     AccountManagerComponent,
     QamComponent,
-
     SwitcherWrapperComponent,
-
     EventListComponent,
     EventAndDeadLineComponent,
-
     MostPopularIdeaComponent,
     CategorymanagerComponent,
     SwitcherWrapperComponent,
-
     SnackBarComponent,
     CommentsComponent,
     CommentsListComponent,

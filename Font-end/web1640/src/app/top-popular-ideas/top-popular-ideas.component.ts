@@ -349,17 +349,6 @@ export class TopPopularIdeasComponent implements OnInit {
     })
   }
 
-  // getEventById(id: any) {
-  //   this.api.getEventById(id).subscribe((res: any) => {
-  //     console.log(res.data.name);
-
-  //     return res.data.name
-      
-  //   }, error => {
-     
-  //     console.log(error);
-  //     return ""})
-  // }
   
   ref!: DynamicDialogRef;
   getTotalUser() {
@@ -414,12 +403,7 @@ export class TopPopularIdeasComponent implements OnInit {
         console.log(res);
         var users = JSON.parse(res);
         
-        // this.users = users.data.listUser;
-        // //change avater url
-        // this.users.forEach((user: any) => {
-        //   //change localhost to ip
-        //   user.avatar = user.avatar.replace("localhost:8888", "139.162.47.239");
-        // })
+      
         console.log(users);
         this.totalPages = Math.ceil(users.data.totalUser / this.limit);
         console.log(this.totalPages);
