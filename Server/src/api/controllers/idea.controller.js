@@ -297,7 +297,7 @@ module.exports = {
     try {
       const userId = req.userId
       const ideaId = req.params.id
-      const idea = await Ideas.findOne({ id: ideaId })
+      const idea = await Ideas.findOne({id: ideaId})
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
       }
