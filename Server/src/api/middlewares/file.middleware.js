@@ -7,6 +7,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, '../../../upload'))
   },
   filename: (req, file, cb) => {
+    console.log(file);
     const filname = `${Date.now()}_${file.originalname}`
     cb(null, filname)
     listFile.push(filname)

@@ -101,12 +101,13 @@ module.exports = {
   },
   async listComment (req, res) {
     try {
+      const userId = req.userId
       const ideaId = parseInt(req.query.ideaId)
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
       const idea = await Ideas.findOne({ id: ideaId })
-      const comments = await Comment.find({ idea: idea._doc._id }).populate({ path: 'user', select: 'id userId fullName email avatar -_id' })
+      const comments = await Comment.find({ idea: idea._doc._id },{}).populate({ path: 'user', select: 'id userId fullName email avatar -_id' })
         .populate({ path: 'file', select: 'file -_id' }).skip(skip).limit(limit).lean()
       const listComment = comments.map(comment => {
         const commentTime = new Date(comment.createdAt)
@@ -115,6 +116,7 @@ module.exports = {
         return {
           anonymous: comment.anonymous,
           id: comment.id,
+          isLiked: comment.likes && comment.likes.includes(`${userId}`),
           content: comment.content,
           createdAt: comment.createAt,
           totalReply: comment.totalReply,

@@ -192,20 +192,23 @@ module.exports = {
         const commentTime = new Date(idea.comment.createdAt)
         const diffMinutes = moment().diff(commentTime, 'minutes')
         const time = timeComment(diffMinutes)
-        const isLikes = idea.likes && idea.likes.includes(userId)
+        const isLikes = idea.likes && idea.likes.includes(`${userId}`)
         const files = idea.file ?? []
-        const isDislikes = idea.dislikes && idea.dislikes.includes(userId)
-        const comments = [{
-            _id: idea.comment[0]._id,
-            id: idea.comment[0].id,
-            content: idea.comment[0].content,
-            user: idea.comment[0].user,
-            isEdited: idea.comment[0].isEdited,
-            isLikes: idea.comment[0].likes && idea.comment[0].likes.includes(userId),
-            totalLike: idea.comment[0].totalLike,
-            timeAgo: time,
-            anonymous: idea.comment[0].anonymous
-        }]
+        const isDislikes = idea.dislikes && idea.dislikes.includes(`${userId}`)
+        const comments = (idea.comment.isNotEmpty)
+          ? [{
+              _id: idea.comment[0]._id,
+              id: idea.comment[0].id,
+              content: idea.comment[0].content,
+              user: idea.comment[0].user,
+              isEdited: idea.comment[0].isEdited,
+              isLikes: idea.comment[0].likes?.contains(userId) ?? false,
+              totalLike: idea.comment[0].totalLike,
+              timeAgo: time,
+              anonymous: idea.comment[0].anonymous
+            }
+            ]
+          : []
         const users = {
           userId: idea.user.userId,
           fullName: idea.user.fullName,
@@ -351,8 +354,8 @@ module.exports = {
       }
       const data = {
         ...idea,
-        isLikes: idea.likes.includes(userId),
-        isDislikes: idea.dislikes.includes(userId)
+        isLikes: idea.likes.includes(`${userId}`),
+        isDislikes: idea.dislikes.includes(`${userId}`)
       }
       return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, data)
     } catch (error) {
