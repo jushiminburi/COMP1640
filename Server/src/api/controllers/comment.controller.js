@@ -122,6 +122,7 @@ module.exports = {
           totalReply: comment.totalReply,
           isEdited: comment.isEdited,
           user: comment.user,
+          totalLike: comment.totalLike,
           files: comment.file,
           timeAgo: time
 
