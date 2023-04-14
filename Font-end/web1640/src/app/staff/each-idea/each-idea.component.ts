@@ -354,12 +354,21 @@ export class EachIdeaComponent implements OnInit {
   }
 
   idea: any
+  allowComment: boolean = false;
 
   getIdea() {
     this.api.getIdeaById(this.id).subscribe((d: any) => {
    
 
     this.idea = d.data;
+    for (let i = 0; i < this.idea.event.length; i++) {
+      if (new Date(this.idea.listComment[i].deadlineComment)< new Date()) {
+        this.allowComment = true;
+        
+      } else {
+        this.allowComment = false;
+      }
+    }
     console.log(this.idea);
 
   })

@@ -15,6 +15,14 @@ export class StaffComponent implements OnInit{
   eventForm!: FormGroup;
   events: any[] = [];
 
+  navigateToEvent(id: number) {
+    this.router.navigateByUrl('/staff', {skipLocationChange: true}).then(() => {
+      this.router.navigate(['/staff/event', id]);
+      // this.router.navigate([this.route.snapshot.url.join('/')]);
+    });
+   
+  }
+
   ngListEvent = ["Event 1", "Event 2", "Event 3", "Event 4", "Event 5"];
   constructor(private api: ApiService, private router: Router, private modalService: NgbModal,
     private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toast: NgToastService) {

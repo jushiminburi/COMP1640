@@ -29,7 +29,7 @@
                 </a>
                 <ul>
 
-                    <li *ngFor="let event of events" [value]="event"><a [routerLink]="['/staff/event', event.id]"><i
+                    <li *ngFor="let event of events" [value]="event"><a type="button" (click)="navigateToEvent(event.id)"><i
                                                                 class="bx bx-menu"></i> {{event.name}}</a>
                     </li>
 

@@ -114,6 +114,7 @@ export class NewIdeaComponent {
   }
 
   addAnIdea(data: any) {
+    if(this.createIdeaForm.valid){
     console.log(this.createIdeaForm.value.isCheckedTerms)
     console.log(this.createIdeaForm.value.isCheckedIncognito)
     console.log(this.uploadedFiles)
@@ -190,6 +191,7 @@ export class NewIdeaComponent {
       }
     })
   }
+}
   }
 
 
@@ -239,13 +241,13 @@ export class NewIdeaComponent {
 
     this.createIdeaForm = this.fb.group({
       files: new FormControl(null),
-      title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      content: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      title: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      content: new FormControl('', [Validators.required, Validators.minLength(5)]),
 
-      categoryId: new FormControl('', [Validators.required]),
-      tags: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      eventId: new FormControl('', [Validators.required]),
-      department: new FormControl('', [Validators.required]),
+      categoryId: new FormControl('',[Validators.required]),
+      // tags: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      eventId: new FormControl(''),
+      department: new FormControl(''),
       isCheckedTerms: new FormControl(false),
 
       anonymous: new FormControl(false)
@@ -253,7 +255,7 @@ export class NewIdeaComponent {
 
     })
 
-    if (this.uploadedFiles && this.createIdeaForm.value.isCheckedTerms == false) {
+    if (this.uploadedFiles.length != 0 && this.createIdeaForm.value.isCheckedTerms == false) {
 
       this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
     } else {

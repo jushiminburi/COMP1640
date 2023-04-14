@@ -34,6 +34,15 @@
                 <div class="form-group">
                     <h5 class="text-center">Title</h5>
                     <input type="text" class="form-control" placeholder="Title..." formControlName="title">
+                    <div class="text-danger text-center invalid-feedback d-block" *ngIf="!createIdeaForm.get('title')?.valid && (createIdeaForm.get('title')?.touched)">
+                        <span [hidden]="!createIdeaForm.get('title')?.errors?.['minlength']">
+                            Title must be at least 5 characters long!
+                        </span>
+                        <div *ngIf="createIdeaForm.get('title')?.errors?.['required']">
+                            Title Idea is required.
+                        </div>
+
+                    </div>
                 </div>
                 <div class="form-group">
                     <h5 class="text-center">Category</h5>
@@ -42,11 +51,27 @@
                                 {{category.name}}</option>
 
                         </select>
+                    <div class="text-danger text-center invalid-feedback d-block" *ngIf="!createIdeaForm.get('categoryId')?.valid && (createIdeaForm.get('categoryId')?.dirty || createIdeaForm.get('categoryId')?.touched)">
+
+                        <div *ngIf="createIdeaForm.get('categoryId')?.errors?.['required']">
+                            Category's Idea is required.
+                        </div>
+
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <h5 class="text-center">Content</h5>
                     <textarea formControlName="content" class="form-control" placeholder="Content..." rows="3" cols="3"></textarea>
+                    <div class="text-danger text-center invalid-feedback d-block" *ngIf="!createIdeaForm.get('content')?.valid && (createIdeaForm.get('content')?.dirty || createIdeaForm.get('content')?.touched)">
+                        <span [hidden]="!createIdeaForm.get('content')?.errors?.['minlength']">
+                            Content must be at least 5 characters long!
+                        </span>
+                        <div *ngIf="createIdeaForm.get('content')?.errors?.['required']">
+                            Content Idea is required.
+                        </div>
+
+                    </div>
                 </div>
                 <div class="form-group">
                     <h5 class="text-center">Document</h5>
@@ -79,7 +104,7 @@
 
                             <div class="row mt-2">
                                 <div class="form-check">
-                                    <input formControlName="isCheckedTerms" type="checkbox" class="form-check-input" name="customCheck" id="customCheck1" required>
+                                    <input formControlName="isCheckedTerms" type="checkbox" class="form-check-input" name="customCheck" id="customCheck1">
 
                                     <label class="form-check-label link-info" type="button" data-toggle="modal" data-target="#termsModal">Terms
                                         and Conditions before submit document</label>
@@ -124,11 +149,11 @@
 
                     </div>
                     <div class="form-check m-3">
-                        <input formControlName="anonymous" type="checkbox" class="form-check-input" required>
+                        <input formControlName="anonymous" type="checkbox" class="form-check-input">
                         <label class="form-check-label" for="customCheck1">Incognito</label>
                     </div>
                     <div class="row col-3 text-center justify-content-center m-auto">
-                        <button type="submit" class="btn btn-primary">Create Idea</button>
+                        <button [disabled]="createIdeaForm.invalid" type="submit" class="btn btn-primary">Create Idea</button>
                     </div>
                 </div>
             </form>

@@ -92,7 +92,7 @@
             <app-like-dislike [idea]="idea" (ideaEvent)="receiveIdea($event)"></app-like-dislike>
 
             <!-- comment -->
-            <input-comment [postId]="idea.id" (ideaEvent)="receiveIdea($event)"></input-comment>
+            <input-comment [allowComment]="allowComment" [postId]="idea.id" (ideaEvent)="receiveIdea($event)"></input-comment>
             <list-comment [comments]="comments" (commentEvent)="receiveIdea($event)"></list-comment>
         </div>
     </div>

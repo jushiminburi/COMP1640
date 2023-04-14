@@ -28,7 +28,7 @@
 
             </div>
             <div class="col-5">
-                <h6 class="text-center align-content-center">12/03/2023 - 12/04/2023</h6>
+                <h6 class="text-center align-content-center">{{event.deadlineIdea | date : "medium"}} - {{event.deadlineComment | date : "medium"}}</h6>
             </div>
 
         </div>
@@ -40,7 +40,7 @@
         </div>
         <!-- Modal -->
 
-        <list-idea-of-event></list-idea-of-event>
+        <list-idea-of-event [ideas]="ideas" (ideaEvent)="receiveIdea($event)"></list-idea-of-event>
     </div>
 
 </div>

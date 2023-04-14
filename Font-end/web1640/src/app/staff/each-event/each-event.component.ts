@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -43,7 +43,9 @@ export class EachEventComponent {
   createIdeaForm!: FormGroup;
   fileContent?: string;
 
-  constructor(public dialog: MatDialog, private api: ApiService, private router: Router, private sanitizer: DomSanitizer,
+  constructor(
+    private cdr: ChangeDetectorRef,
+    public dialog: MatDialog, private api: ApiService, private router: Router, private sanitizer: DomSanitizer,
     private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toast: NgToastService) { }
 
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
@@ -131,7 +133,106 @@ export class EachEventComponent {
 
   }
 
+  receiveIdea($event:any) {
+    console.log($event);
+    this.getListIdea();
+    this.cdr.detectChanges();
+  }
+
   ideas: any[] = [];
+
+  getListIdea() {
+
+    let params= {
+      eventId: this.route.snapshot.params['id']
+      
+
+    }
+    
+    
+    const helper = new JwtHelperService();
+    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    console.log(localStorage.getItem('accessToken'));
+    
+    console.log(data);
+
+    
+    
+    this.api.getIdeas(this.currentPage, this.limit, params).subscribe((d: any) => {
+      var data = JSON.parse(d);
+      console.log(data.data.listIdea[0].file.file[0]);
+      var category = ""
+     
+      if (data.status == 200) {
+        this.ideas = data.data.listIdea;
+        
+        this.ideas?.forEach((idea: any) => {
+
+          // //get user name
+          // this.api.getUserById(idea.user.userId).subscribe((d: any) => {
+          //   idea.userName = d.data.firstName + " " + d.data.lastName
+          //   idea.avatarUser = d.data.avatar
+          //   console.log(d);
+          //   return
+          // }, err => {
+          //   console.log(err);
+          //   idea.userName = ""
+          //   return
+          // })
+          
+          // // get event name
+          // this.api.getEventById(idea.event.id).subscribe((res: any) => {
+          //   idea.eventName = res.data.name
+          //   console.log(idea.eventName);
+          //   return
+          // },
+          // error => {
+          //   console.log(error);
+          //   idea.eventName = ""
+          //   return
+          // })
+          
+          // //add category name
+          // this.api.getCategory().subscribe((res: any) => {
+          //   //get name category
+          //   var d = res.data.list
+          //   console.log(d);
+          //   d.forEach((c: any) => {
+              
+          //     if (c.id == idea.categoryId) {
+          //       //add category name to ideas
+          //       idea.categoryName = c.name
+          //       console.log(idea.categoryName);
+          //     }
+          //   })
+          // })
+          
+        })
+        
+        this.totalPages = Math.ceil(data.data.totalIdea / this.limit);
+        this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i+1)
+
+        
+        
+        // this.totalItems = data.data.totalItems;
+        // this.totalPages = data.data.totalPages;
+        // this.pageArray = Array(this.totalPages).fill(0).map((x, i) => i + 1);
+        // console.log(this.pageArray);
+
+      } else {
+        this.toast.error({ detail: "Get idea failed!" });
+        console.log(data.message);
+        return
+      }
+
+    }, error => {
+      this.toast.error({ detail: "Get idea failed!" });
+      console.log(error);
+      return
+    }
+    )
+
+  }
 
   getIdeaByEventId() {
     const id = this.route.snapshot.params['id'];
@@ -152,7 +253,10 @@ export class EachEventComponent {
     const id = this.route.snapshot.params['id'];
     this.api.getEventById(id).subscribe((res: any) => {
       this.event = res.data;
-      if (this.event.deadlineIda < new Date()) {
+      
+      console.log(new Date(this.event.deadlineIdea))
+     
+      if (new Date(this.event.deadlineIdea) < new Date()) {
         this.allowCreateIdea = false;
       }
     // this.api.getEvents().subscribe((res: any) => {
@@ -377,6 +481,8 @@ export class EachEventComponent {
   ngOnInit() {
     this.getEvent();
     this.getIdeaByEventId();
+
+    this.getListIdea();
     
     
     this.createIdeaForm = this.fb.group({
@@ -541,4 +647,6 @@ export class EachEventComponent {
 
 
   // }
+
+  
 }

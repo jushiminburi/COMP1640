@@ -16,6 +16,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class InputCommentComponent implements OnInit {
   comment: string = '';
   @Input() postId!: number;
+  @Input() allowComment!: boolean;
   
 
   uploadedFiles: File[] = [];
