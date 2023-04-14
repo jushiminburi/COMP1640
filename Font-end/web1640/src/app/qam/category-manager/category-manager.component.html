@@ -115,12 +115,12 @@
                                 <hr>
 
 
-                                <h3 class="mb-0 text-center">Idea List </h3>
+                                <h3 *ngIf="ideas.length!=0" class="mb-0 text-center">Idea List </h3>
                                 <br>
 
-                                <h6 class="mb-0 text-center text-danger">Total Idea: {{categories.length}} </h6>
+                                <h6 *ngIf="ideas.length!=0" class="mb-0 text-center text-danger">Total Idea: {{ideas.length}} </h6>
                                 <hr />
-                                <ul>
+                                <ul *ngIf="ideas.length!=0">
                                     <div class="table-responsive">
                                         <table class="table mb-0 font-20">
                                             <thead>
@@ -132,17 +132,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Nguyễn Linh Đan</td>
-                                                    <td>hdvnfdjvnfj</td>
-                                                    <td>12/03/2022</td>
-                                                </tr>
-                                                <tr *ngFor="let category of categories">
-                                                    <td>{{category.id}}</td>
-                                                    <td>{{category.name}}</td>
-                                                    <td>{{category.startDate | date : "medium" }}</td>
-                                                    <td>{{category.endDate | date : "medium"}}</td>
+                                                <tr *ngFor="let idea of ideas">
+                                                    <td>{{idea.id}}</td>
+                                                    <td>{{idea.user.fullName}}</td>
+                                                    <td>{{idea.content}}</td>
+                                                    <td>{{idea.createdAt | date : "medium"}}</td>
                                                 </tr>
                                             </tbody>
 
