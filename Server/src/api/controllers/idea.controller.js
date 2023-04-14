@@ -7,8 +7,8 @@ const { Ideas, validate } = require('../models/idea.model')
 const Files = require('../models/file.model')
 const { Category } = require('../models/category.model')
 const path = require('path')
-const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEmail')
-const { User } = require('../models/user.model')
+// const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEmail')
+// const { User } = require('../models/user.model')
 const { Event } = require('../models/event.model')
 const { Department } = require('../models/department.model')
 const moment = require('moment')
@@ -22,11 +22,11 @@ function unlinkFile (file) {
     }
   })
 }
-async function sendIdeaQAC (department) {
-  const qac = await User.find({ role: 3, department })
-  const email = qac.map(user => user.email)
-  transporter.sendMail(mailNewIdeaNotificationOptions(email))
-}
+// async function sendIdeaQAC (department) {
+//   const qac = await User.find({ role: 3, department })
+//   const email = qac.map(user => user.email)
+//   transporter.sendMail(mailNewIdeaNotificationOptions(email))
+// }
 function removeElement (array, elem) {
   const index = array.indexOf(elem)
   if (index > -1) {
