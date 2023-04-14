@@ -114,8 +114,8 @@ module.exports = {
       }
       await newIdea.save()
       await Event.findOneAndUpdate({ id: eventId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
-      await Department.findOneAndUpdate({ _id: _departmentId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 }}, { new: true })
-      await Category.findOneAndUpdate({ _id: categoryValue._doc._id }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 }}, { new: true })
+      await Department.findOneAndUpdate({ _id: _departmentId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
+      await Category.findOneAndUpdate({ _id: categoryValue._doc._id }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
       // sendIdeaQAC(_departmentId)
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
@@ -216,7 +216,7 @@ module.exports = {
           department: idea.user.department,
           avatar: idea.user.avatar
         }
-        const { likes, user, dislikes,comment, ...ideaWithoutLikesAndDislikes } = idea
+        const { likes, user, dislikes, comment, ...ideaWithoutLikesAndDislikes } = idea
         return {
           ...ideaWithoutLikesAndDislikes,
           user: users,
@@ -297,7 +297,7 @@ module.exports = {
     try {
       const userId = req.userId
       const ideaId = req.params.id
-      const idea = await Ideas.findOne({id: ideaId})
+      const idea = await Ideas.findOne({ id: ideaId })
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
       }

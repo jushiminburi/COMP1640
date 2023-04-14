@@ -107,7 +107,7 @@ module.exports = {
       const limit = parseInt(req.query.limit) || 5
       const skip = (limit * page) - limit
       const idea = await Ideas.findOne({ id: ideaId })
-      const comments = await Comment.find({ idea: idea._doc._id },{}).populate({ path: 'user', select: 'id userId fullName email avatar -_id' })
+      const comments = await Comment.find({ idea: idea._doc._id }, {}).populate({ path: 'user', select: 'id userId fullName email avatar -_id' })
         .populate({ path: 'file', select: 'file -_id' }).skip(skip).limit(limit).lean()
       const listComment = comments.map(comment => {
         const commentTime = new Date(comment.createdAt)
