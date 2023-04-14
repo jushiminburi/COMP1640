@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
@@ -12,9 +12,13 @@ import { ApiService } from 'src/app/api.service';
 })
 export class LikeDislikeComponent {
 
-  @Output() loadData = new EventEmitter();
+  @Output() ideaEvent = new EventEmitter();
+  
+  @Input() idea!: any;
 
-  constructor(private api: ApiService, private router: Router,
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private api: ApiService, private router: Router,
     private route: ActivatedRoute, private http: HttpClient,
     private fb: FormBuilder, private toast: NgToastService) {
    
@@ -25,41 +29,54 @@ export class LikeDislikeComponent {
   isLiked = false;
   isDisliked = false;
 
-  like() {
-    this.isLiked = !this.isLiked;
-
-    // if (this.isLiked) {
-    //   this.isDisliked = false;
-    // }
-    this.isDisliked = false;
-    this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+  like(id: any) {
+    this.api.likeIdea(id).subscribe(async (res: any) => {
       console.log(res);
-      this.loadData.emit();
      
-    } , (err: any) => {
-      console.log(err);
+        
+        this.ideaEvent.emit("abc")
+        this.cdr.detectChanges(); // Thêm dòng này
+        // this.cdr.markForCheck(); // Thêm dòng này
       
-    } )
+    }, error => {
+      this.toast.error({ detail: "Like idea failed!" });
+      console.log(error);
+      return
+    }
+    )
+    
+    // this.isLiked = !this.isLiked;
+
+    // // if (this.isLiked) {
+    // //   this.isDisliked = false;
+    // // }
+    // this.isDisliked = false;
+    // this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+    //   console.log(res);
+    //   // this.loadData.emit();
+     
+    // } , (err: any) => {
+    //   console.log(err);
+      
+    // } )
 
 
   }
 
-  dislike() {
-    this.isDisliked = !this.isDisliked;
-
-    // if (this.isDisliked) {
-    //   this.isLiked = false;
-    // }
-    this.isLiked = false;
-
-    this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
+  dislike(id: any) {
+    this.api.dislikeIdea(id).subscribe(async (res: any) => {
       console.log(res);
-      this.loadData.emit();
-     
-    } , (err: any) => {
-      console.log(err);
-      
-    } )
+      if (res.status == 200) {
+        
+        this.ideaEvent.emit("abc")
+        this.cdr.detectChanges(); // Thêm dòng này
+      }
+    }, error => {
+      this.toast.error({ detail: "Like idea failed!" });
+      console.log(error);
+      return
+    }
+    )
   }
 
 }

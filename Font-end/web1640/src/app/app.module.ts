@@ -76,7 +76,7 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
-import { ChartModule } from 'primeng/chart';
+// import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
@@ -161,6 +161,9 @@ import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.co
 import { TopPopularIdeasComponent } from './top-popular-ideas/top-popular-ideas.component';
 import { QacHomepageComponent } from './qac/qac-homepage/qac-homepage.component';
 import { EditIdeaComponent } from './staff/each-event/edit-idea/edit-idea.component';
+
+import { ChartModule } from 'angular-highcharts'
+import { HighchartsChartModule } from 'highcharts-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -209,6 +212,8 @@ import { EditIdeaComponent } from './staff/each-event/edit-idea/edit-idea.compon
 
   ],
   imports: [
+    ChartModule,
+    HighchartsChartModule,
     AvatarModule,
     BrowserModule,
     FormsModule,

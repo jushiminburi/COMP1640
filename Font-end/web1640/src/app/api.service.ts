@@ -427,7 +427,7 @@ export class ApiService {
 
   
 
-  editComment(id: number, data: any){
+  editComment(id: any, data: any){
 
 
     const headers = new HttpHeaders({
@@ -437,7 +437,7 @@ export class ApiService {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
     });
 
-    return this.http.put(api + `comment/update/${id}`, data, {headers:headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
+    return this.http.put(api + `comment/update/${id}`, {content: data}, {headers:headers, responseType: 'json'})//stringify de chuyen doi tu object sang json
 
   }
 
@@ -881,7 +881,7 @@ export class ApiService {
    
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Barer  ' + localStorage.getItem('accessToken'),
+        'Authorization': 'Barer ' + localStorage.getItem('accessToken'),
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       })
@@ -951,9 +951,6 @@ export class ApiService {
 
 
     console.log(localStorage.getItem('accessToken'));
-
-
-
 
     return this.http.post(api + 'user/register', formData, {headers:headers, responseType: 'text'})//stringify de chuyen doi tu object sang json
   }

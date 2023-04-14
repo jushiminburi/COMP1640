@@ -38,6 +38,15 @@ export class EachIdeaComponent implements OnInit {
      
    
      }
+     user!: any;
+     getUserById() {
+      const helper = new JwtHelperService();
+      const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+      this.api.getUserById(data.id).subscribe((res: any) => {
+        this.user = res.data;
+      })
+  
+     }
 
      
 
@@ -67,10 +76,11 @@ export class EachIdeaComponent implements OnInit {
     
 
      receiveIdea($event:any) {
+      
       console.log($event);
       this.getIdea();
       this.listComment();
-    this.getListIdea();
+    
       this.cdr.detectChanges();
     }
 
@@ -528,6 +538,7 @@ export class EachIdeaComponent implements OnInit {
 
   
   ngOnInit() {
+    this.getUserById()
     this.id = this.config.data.id;
    
     this.getIdea();

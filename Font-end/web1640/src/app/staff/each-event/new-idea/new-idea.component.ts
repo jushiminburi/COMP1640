@@ -116,12 +116,15 @@ export class NewIdeaComponent {
   addAnIdea(data: any) {
     console.log(this.createIdeaForm.value.isCheckedTerms)
     console.log(this.createIdeaForm.value.isCheckedIncognito)
-    if (this.uploadedFiles && this.createIdeaForm.value.isCheckedTerms == false) {
+    console.log(this.uploadedFiles)
+    if (this.uploadedFiles.length != 0 && this.createIdeaForm.value.isCheckedTerms == false) {
 
       this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
     } else {
       this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
     }
+    if(this.createIdeaForm.get('isCheckedTerms')?.errors == null){
+      console.log('okkkkkkkkkkkkkkkkkkkk')
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this imaginary file!',
@@ -136,8 +139,19 @@ export class NewIdeaComponent {
         var formData: any = new FormData();
 
         formData.append('content', this.createIdeaForm.get('content')!.value?.toString());
-        console.log(this.uploadedFiles)
-        formData.append('files', this.uploadedFiles[0]);
+        // console.log(this.uploadedFiles)
+        // formData.append('files', this.uploadedFiles[0]);
+        if(this.uploadedFiles.length != 0){
+        
+
+           
+            formData.append('files', this.uploadedFiles[0]);
+          
+          
+
+        
+      }
+      console.log(formData.get('files'))
         formData.append('title', this.createIdeaForm.get('title')!.value);
         formData.append('anonymous', this.createIdeaForm.get('anonymous')!.value);
         formData.append('categoryId', this.createIdeaForm.get('categoryId')!.value);
@@ -175,6 +189,7 @@ export class NewIdeaComponent {
 
       }
     })
+  }
   }
 
 

@@ -6,6 +6,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiService } from 'src/app/api.service';
 import { EachIdeaComponent } from '../each-idea/each-idea.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'input-comment',
@@ -113,7 +114,17 @@ constructor(
     
 
   }
+  user!: any;
+  getUserById() {
+    const helper = new JwtHelperService();
+    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    this.api.getUserById(data.id).subscribe((res: any) => {
+      this.user = res.data;
+    })
+
+   }
   ngOnInit(): void {
+    this.getUserById()
     this.commentForm = this.fb.group({
       content: ['' ],
       anonymous: [false]

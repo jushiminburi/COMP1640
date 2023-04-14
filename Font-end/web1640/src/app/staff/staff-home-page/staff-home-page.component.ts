@@ -237,7 +237,7 @@ export class StaffHomePageComponent implements OnInit {
     
     this.api.getIdeas(this.currentPage, this.limit, params).subscribe((d: any) => {
       var data = JSON.parse(d);
-      console.log(data);
+      console.log(data.data.listIdea[0].file.file[0]);
       var category = ""
      
       if (data.status == 200) {

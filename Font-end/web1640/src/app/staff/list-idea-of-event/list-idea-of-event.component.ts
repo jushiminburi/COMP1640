@@ -8,6 +8,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
 import { EachIdeaComponent } from '../each-idea/each-idea.component';
+import { EditIdeaComponent } from '../each-event/edit-idea/edit-idea.component';
 
 @Component({
   selector: 'list-idea-of-event',
@@ -50,6 +51,15 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
   ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
   public aElement?: boolean = true;
+  user!: any
+  getUserById() {
+    const helper = new JwtHelperService();
+    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    this.api.getUserById(data.id).subscribe((res: any) => {
+      this.user = res.data;
+    })
+
+   }
 
 
   onclick() {
@@ -145,7 +155,7 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
   checkUpdateDeleteOptions(id: any) {
     const helper = new JwtHelperService();
     const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
-    console.log(data);
+    
     if (id == data.id) {
       return true;
     }
@@ -425,6 +435,7 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     
     // this.getAnUser();
     // this.getListIdea();
+    this.getUserById();
     this.createAccountForm = this.fb.group({
       firstName: null,
       lastName: null,
@@ -533,6 +544,7 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     }).then((result) => {
       if (result.isConfirmed) {
         this.api.deleteIdea(id).subscribe((data: any) => {
+          this.getListIdea();
           // Swal.fire(
           //   'Deleted!',
           //   'Your file has been deleted.',
@@ -668,6 +680,30 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
 
     ref!: DynamicDialogRef;
 
+
+    editIdea(idea: any) {
+      this.ref = this.dialogService.open(EditIdeaComponent, {
+          // header: 'Select a Product',
+          width: '70%',
+          contentStyle: { overflow: 'auto' },
+          baseZIndex: 10000,
+          maximizable: true,
+          data: {
+            idea: idea
+        },
+      });
+
+      this.ref.onClose.subscribe((product: any) => {
+          // if (product) {
+          //     this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: product.name });
+          // }
+      });
+
+      this.ref.onMaximize.subscribe((value: any) => {
+          // this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
+      });
+  }
+
     show(id: any) {
         this.ref = this.dialogService.open(EachIdeaComponent, {
             // header: 'Select a Product',
@@ -692,7 +728,10 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     }
 
     ngOnDestroy() {
+      this.ideaEvent.emit("abc");
         if (this.ref) {
+
+
             this.ref.close();
         }
     }

@@ -2,7 +2,7 @@
     <div class="mt-2">
         <div class="media pt-3 m-auto">
             <div class="chat-user-online">
-                <img src="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
+                <img [src]="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
             </div>
             <div class="media-body ml-2">
                 <div class="row">
@@ -11,8 +11,8 @@
                     <div *ngIf="checkUpdateDeleteOptions(idea.user.userId)" class="dropdown  col-1 justify-content-end">
                         <div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
                         </div>
-                        <div class="dropdown-menu dropdown-menu-right bg-body"> <a class="dropdown-item" href="javascript:;">Edit Idea</a>
-                            <a class="dropdown-item" href="javascript:;">Delete Idea</a>
+                        <div class="dropdown-menu dropdown-menu-right bg-body"> <a (click)="editIdea(idea)" type="button" class="dropdown-item">Edit Idea</a>
+                            <a (click)="deleteIdea(idea.id)" type="button" class="dropdown-item">Delete Idea</a>
                         </div>
                     </div>
                 </div>
@@ -43,33 +43,33 @@
                     <p class="card-text text-justify text-center font-20">{{idea.content}}</p>
                 </div>
                 <br>
-                <div *ngIf="idea.file != ''" class="row col-12 text-center align-content-center m-auto ">
-                    <div *ngFor="let f of idea.file">
+                <div *ngIf="idea.file.file" class="row col-12 text-center align-content-center m-auto ">
+                    <div *ngFor="let f of idea.file.file">
                         <div class="col-2" type="button">
-                            <img src="'http://139.162.47.239/upload/' + f.name" class="card-img" alt="...">
+                            <img [src]="'http://139.162.47.239/upload/' + f" class="card-img" alt="...">
                         </div>
                         <div *ngIf="checkFileType(f) == 'pdf'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
                             </div>
 
-                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.pdf</a>
+                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
                         </div>
                         <div *ngIf="checkFileType(f) == 'ppt'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
                             </div>
 
-                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.ppt</a>
+                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
                         </div>
                         <div *ngIf="checkFileType(f) == 'docx'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
                             </div>
 
-                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.doc hoặc .docx</a>
+                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
                         </div>
                         <div *ngIf="checkFileType(f) == 'csv'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
                             </div>
-                            <a [href]="'http://139.162.47.239/download/'+f.name">Tên file.csv</a>
+                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
                         </div>
                     </div>
 
@@ -98,14 +98,13 @@
                 <hr color="black" size="10px" class="align-content-center m-auto" />
                 <div class="row align-content-center text-center m-auto">
 
-
-                    <div class="col-1  m-1">
-                        <p (click)="like(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'bxs-like': idea.isLiked == true }" class="fadeIn animated bx"></i> Liked
+                    <div (click)="like(idea.id)" class="col-1  m-1">
+                        <p type="button" class=" btn text-info font-14 "><i [ngClass]="{'bxs-like': idea.isLikes == true, 'bx-like': idea.isLikes == false}" class="fadeIn animated bx"></i> Liked
                         </p>
                     </div>
 
                     <div class="col-1  m-1">
-                        <p (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'bxs-dislike': idea.isDisLiked == true }" class=" fadeIn animated bx "></i> Disliked
+                        <p (click)="dislike(idea.id)" type="button" class=" btn text-info font-14 "><i [ngClass]="{ 'bxs-dislike': idea.isDislikes == true }" class=" fadeIn animated bx "></i> Disliked
                         </p>
                     </div>
 
@@ -120,7 +119,7 @@
                     <a (click)="show(idea.id) " type="button ">
                         <div class="media ">
                             <div class="chat-user-online ">
-                                <img src="https://via.placeholder.com/110x110 " width="42 " height="42 " class="rounded-circle " alt=" " />
+                                <img [src]="user.avatar" width="42 " height="42 " class="rounded-circle " alt=" " />
                             </div>
                             <div class="media-body ml-2 col-7 ">
                                 <!-- <h6 class="mb-0 chat-title ">Louis Litt</h6> -->
@@ -166,7 +165,7 @@
                 </div>
                 <list-comment [comments]="idea.comment"></list-comment>
 
-                <a (click)="show(idea.id) " type="button " class="link-info ">See more comment...</a>
+                <a (click)="show(idea.id)" type="button" class="link-info">See more comment...</a>
 
             </div>
         </div>

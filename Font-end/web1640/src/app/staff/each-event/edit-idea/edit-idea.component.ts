@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgToastService } from 'ng-angular-popup';
 import Swal from 'sweetalert2';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-edit-idea',
   templateUrl: './edit-idea.component.html',
@@ -39,11 +40,14 @@ export class EditIdeaComponent {
   page?: number;
 
   accounts?: any[];
+  idea!: any
 
   createIdeaForm!: FormGroup;
   fileContent?: string;
 
-  constructor(public dialog: MatDialog, private api: ApiService, private router: Router, private sanitizer: DomSanitizer,
+  constructor(
+    public config: DynamicDialogConfig,
+    public dialog: MatDialog, private api: ApiService, private router: Router, private sanitizer: DomSanitizer,
     private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toast: NgToastService) { }
 
   ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
@@ -112,15 +116,8 @@ export class EditIdeaComponent {
 
   }
 
-  addAnIdea(data: any) {
-    console.log(this.createIdeaForm.value.isCheckedTerms)
-    console.log(this.createIdeaForm.value.isCheckedIncognito)
-    if (this.uploadedFiles && this.createIdeaForm.value.isCheckedTerms == false) {
-
-      this.createIdeaForm.get('isCheckedTerms')?.setErrors({ incorrect: true });
-    } else {
-      this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
-    }
+  editAnIdea(data: any) {
+    
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this imaginary file!',
@@ -135,22 +132,21 @@ export class EditIdeaComponent {
         var formData: any = new FormData();
 
         formData.append('content', this.createIdeaForm.get('content')!.value?.toString());
-        console.log(this.uploadedFiles)
-        formData.append('files', this.uploadedFiles[0]);
+       
         formData.append('title', this.createIdeaForm.get('title')!.value);
         formData.append('anonymous', this.createIdeaForm.get('anonymous')!.value);
-        formData.append('categoryId', this.createIdeaForm.get('categoryId')!.value);
+       
 
-        formData.append('eventId', this.route.snapshot.params['id']);
+       
 
-        console.log(formData)
-        this.api.addIdea(formData
+     
+        this.api.editIdea(this.idea.id, formData
         ).subscribe(res => {
           console.log(res)
           const id = this.route.snapshot.params['id'];
           this.router.navigateByUrl('/staff', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/staff/newidea', id]).then(() => {
-              this.toast.success({ detail: "Add idea successful!", duration: 3000, position: "top-right" })
+              this.toast.success({ detail: "Edit idea successfully!", duration: 3000, position: "top-right" })
             })
           })
 
@@ -216,6 +212,8 @@ export class EditIdeaComponent {
   }
   ngOnInit() {
 
+    this.idea = this.config.data.idea;
+
     this.getlistCategory();
 
     this.getEvent();
@@ -223,16 +221,9 @@ export class EditIdeaComponent {
 
     this.createIdeaForm = this.fb.group({
       files: new FormControl(null),
-      title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      content: new FormControl('', [Validators.required, Validators.minLength(3)]),
-
-      categoryId: new FormControl('', [Validators.required]),
-      tags: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      eventId: new FormControl('', [Validators.required]),
-      department: new FormControl('', [Validators.required]),
-      isCheckedTerms: new FormControl(false),
-
-      anonymous: new FormControl(false)
+      title: new FormControl(this.idea.title, [Validators.required, Validators.minLength(3)]),
+      content: new FormControl(this.idea.content, [Validators.required, Validators.minLength(3)]),
+      anonymous: new FormControl(this.idea.anonymous)
       // files: new FormControl(null, [Validators.required]),
 
     })

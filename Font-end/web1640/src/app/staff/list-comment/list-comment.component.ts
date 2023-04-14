@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -34,18 +34,27 @@ export class ListCommentComponent {
 
   }
 
+
+
   likeComment(id: any) {
     this.api.likeComment(id).subscribe(async (res: any) => {
-      if (res.status == 200) {
-        this.commentEvent.emit('like');
-      }
-    }, (err: any) => {
+      console.log(res);
+      this.commentEvent.emit("abc")
+        this.cdr.detectChanges(); // Thêm dòng này
+        
+        // this.cdr.markForCheck(); // Thêm dòng này
       
-      console.log(err);
-      // location.reload();
-    })
+    }, error => {
+      this.toast.error({ detail: "Like idea failed!" });
+      console.log(error);
+      return
+    }
+    )
+
 
   }
+
+ 
 
 
 
@@ -90,14 +99,35 @@ export class ListCommentComponent {
     }
     return false;
   }
+  commentText!: string;
+
+  isEditing: boolean = false;
+  
+  enableEditing() {
+    this.isEditing = true;
+  }
+
+  disableEditing(id: any) {
+    this.api.editComment(id, this.commentText).subscribe(async (res: any) => {
+      console.log(res);
+      this.commentEvent.emit("abc")
+
+      this.cdr.detectChanges();
+      this.toast.success({ detail: "Edit comment successfully!", duration: 3000, position: "top-right" })
+    }, error => {
+      this.toast.error({ detail: "Edit comment failed!" });
+      console.log(error);
+      return
+    }
+    )
+
+    this.isEditing = false;
+  }
 
   
 
 
-  deleteComment() {
-    
-
-
+  deleteComment(id: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this imaginary file!',
@@ -107,14 +137,13 @@ export class ListCommentComponent {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.api.deleteComment(this.categoryForm.value.name).subscribe(async (res: any) => {
-          if (res.status == 200) {
-            this.router.navigateByUrl('/staff', { skipLocationChange: true }).then(() => {
-              this.router.navigateByUrl(this.router.url).then(() => {
-                this.toast.success({ detail: "Delete Comment Success!", duration: 3000, position: "top-right" })
-              })
-            })
-          }
+        this.api.deleteComment(id).subscribe(async (res: any) => {
+          
+            
+                this.commentEvent.emit("abc")
+                this.cdr.detectChanges();
+            
+          
         }, (err: any) => {
           this.toast.error({ detail: "Delete comment failed!", duration: 3000, position: "top-right" })
           console.log(err);
@@ -130,6 +159,7 @@ export class ListCommentComponent {
   }
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private http: HttpClient,
     private api: ApiService,
     private router: Router,
