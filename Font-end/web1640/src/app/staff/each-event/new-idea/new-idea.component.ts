@@ -140,17 +140,11 @@ export class NewIdeaComponent {
         var formData: any = new FormData();
 
         formData.append('content', this.createIdeaForm.get('content')!.value?.toString());
-        // console.log(this.uploadedFiles)
-        // formData.append('files', this.uploadedFiles[0]);
-        if(this.uploadedFiles.length != 0){
         
-
+        if(this.uploadedFiles.length != 0){
            
             formData.append('files', this.uploadedFiles[0]);
           
-          
-
-        
       }
       console.log(formData.get('files'))
         formData.append('title', this.createIdeaForm.get('title')!.value);
@@ -171,19 +165,10 @@ export class NewIdeaComponent {
           })
 
           this.createIdeaForm.reset();
-          // Swal.fire(
-          //   'Added!',
-          //   'Your idea has been added.',
-          //   'success'
-          // )
-
-
-
+          
         }, error => {
-
           this.toast.error({ detail: "Add idea failed!", duration: 3000, position: "top-right" })
           console.log(error)
-          // this.router.navigate(['/login']);
         }
 
         );
@@ -205,9 +190,7 @@ export class NewIdeaComponent {
       }
 
     }
-
     console.log(this.uploadedFiles)
-
 
   }
 
@@ -238,21 +221,15 @@ export class NewIdeaComponent {
 
     this.getEvent();
 
-
     this.createIdeaForm = this.fb.group({
       files: new FormControl(null),
       title: new FormControl('', [Validators.required, Validators.minLength(5)]),
       content: new FormControl('', [Validators.required, Validators.minLength(5)]),
-
       categoryId: new FormControl('',[Validators.required]),
-      // tags: new FormControl('', [Validators.required, Validators.minLength(3)]),
       eventId: new FormControl(''),
       department: new FormControl(''),
       isCheckedTerms: new FormControl(false),
-
       anonymous: new FormControl(false)
-      // files: new FormControl(null, [Validators.required]),
-
     })
 
     if (this.uploadedFiles.length != 0 && this.createIdeaForm.value.isCheckedTerms == false) {
@@ -261,8 +238,6 @@ export class NewIdeaComponent {
     } else {
       this.createIdeaForm.get('isCheckedTerms')?.setErrors(null);
     }
-
-
 
   }
 }

@@ -90,11 +90,6 @@ export class StaffHomePageComponent implements OnInit {
       if(this.departmentSelected != null && this.departmentSelected != undefined && this.departmentSelected != "0"){
         this.arrayBip.push(this.departmentSelected)
       }
-
-      
-     
-      
-
       this.getListIdea();
     }
   
@@ -217,7 +212,6 @@ export class StaffHomePageComponent implements OnInit {
 
 
   getListIdea() {
-
     let params= {
       eventId: this.eventSelected,
       categoryId: this.categorySelected,
@@ -225,76 +219,25 @@ export class StaffHomePageComponent implements OnInit {
       sort: this.ngFilterSelected
 
     }
-    
-    
+  
     const helper = new JwtHelperService();
     const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
     console.log(localStorage.getItem('accessToken'));
-    
-    console.log(data);
 
-    
-    
     this.api.getIdeas(this.currentPage, this.limit, params).subscribe((d: any) => {
       var data = JSON.parse(d);
       console.log(data.data.listIdea[0].file.file[0]);
       var category = ""
-     
       if (data.status == 200) {
         this.ideas = data.data.listIdea;
         
         this.ideas?.forEach((idea: any) => {
 
-          // //get user name
-          // this.api.getUserById(idea.user.userId).subscribe((d: any) => {
-          //   idea.userName = d.data.firstName + " " + d.data.lastName
-          //   idea.avatarUser = d.data.avatar
-          //   console.log(d);
-          //   return
-          // }, err => {
-          //   console.log(err);
-          //   idea.userName = ""
-          //   return
-          // })
-          
-          // // get event name
-          // this.api.getEventById(idea.event.id).subscribe((res: any) => {
-          //   idea.eventName = res.data.name
-          //   console.log(idea.eventName);
-          //   return
-          // },
-          // error => {
-          //   console.log(error);
-          //   idea.eventName = ""
-          //   return
-          // })
-          
-          // //add category name
-          // this.api.getCategory().subscribe((res: any) => {
-          //   //get name category
-          //   var d = res.data.list
-          //   console.log(d);
-          //   d.forEach((c: any) => {
-              
-          //     if (c.id == idea.categoryId) {
-          //       //add category name to ideas
-          //       idea.categoryName = c.name
-          //       console.log(idea.categoryName);
-          //     }
-          //   })
-          // })
-          
         })
         
         this.totalPages = Math.ceil(data.data.totalIdea / this.limit);
         this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i+1)
-
-        
-        
-        // this.totalItems = data.data.totalItems;
-        // this.totalPages = data.data.totalPages;
-        // this.pageArray = Array(this.totalPages).fill(0).map((x, i) => i + 1);
-        // console.log(this.pageArray);
+       
 
       } else {
         this.toast.error({ detail: "Get idea failed!" });

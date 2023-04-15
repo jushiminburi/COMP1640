@@ -23,8 +23,6 @@ interface LoginDetails {
 export class LoginComponent {
   durationInSeconds = 5;
 
-  
-
   status: any;
   constructor(
     private http: HttpClient,
@@ -33,16 +31,6 @@ export class LoginComponent {
   ngOnInit(): void {
     
    }
-
-  // showSuccess() { // in ra thàh công
-  //   this.toastr.success('Thành công', 'Thông báo', {
-  //     timeOut: 2000,
-  //     progressBar: true,
-  //     progressAnimation: 'increasing',
-  //     closeButton: true,
-  //     positionClass: 'toast-top-right'
-  //   });
-  // }
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.minLength(9), Validators.email]),
@@ -55,34 +43,20 @@ export class LoginComponent {
       data.email,
       data.password
     ).subscribe(res => {
-      // confirm("Đăng nhập thành công");
-      
       
       localStorage.setItem('accessToken', res.accessToken);
       console.log(res.accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
       console.log(res.message);
-      // this._snackBar.openFromComponent(SnackBarComponent, {
-      //   duration: this.durationInSeconds * 1000,
-      // });
-      
       
       if (res.status != 200) {
-        
-        // alert("Email or password is incorrect! Please try again!")
 
         this.toast.error({detail: "Email or password is incorrect! Please try again!", position: "top-right", duration:5000})
         this.loginForm.reset();
         this.router.navigate(['/login']);
       } else if (res.status == 200){
-        // alert("Login Successful!");
-        // this.snackBar.open('Đăng nhập thành công', 'Đóng', { duration: 2000 });
-        
-
-       
         const helper = new JwtHelperService();
         const user = helper.decodeToken(res.accessToken);
-
         console.log(user);
 
         if (user.role == 1) {
@@ -90,49 +64,30 @@ export class LoginComponent {
             this.toast.success({detail: "Login Successful!", position: "top-right", duration:3000})
         this.loginForm.reset();
 
-            
-            // Reload the current page
-            // window.location.reload();
           });
-          // this.router.navigate(['/admin'])
+          
         } else if (user.role == 2) {
           this.router.navigateByUrl('/qam').then(() => {
             this.toast.success({detail: "Login Successful!", position: "top-right", duration:3000})
         this.loginForm.reset();
-
-            
-            // Reload the current page
-            // window.location.reload();
           });
         } 
         else if (user.role == 4) {
-          
-         
 
           this.router.navigateByUrl('/staff').then(() => {
             this.toast.success({detail: "Login Successful!", position: "top-right", duration:3000})
         this.loginForm.reset();
-
-            
-            // Reload the current page
-            // window.location.reload();
           });
         }
         
 
       }
 
-
-
-      // luu lai trang trc roi quay lai trang do, sau do xoa di
-      // this.router.navigateByUrl('/students');
-      // localStorage.setItem('token', res.result);
     },
 
       error => {
         
         this.toast.error({detail: "Email or password is incorrect! Please try again!", position: "top-right", duration:5000})
-        // alert("Email or password is incorrect! Please try again")
         
         this.router.navigate(['/login']);
       }
