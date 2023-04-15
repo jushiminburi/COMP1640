@@ -13,13 +13,13 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
 
-   // Kiểm tra xem người dùng đã đăng nhập hay chưa
+  // Check user login yet
    isLoggedIn(): boolean {
     const user = localStorage.getItem('accessToken')
     return user !== null;
   }
 
-  // Lấy thông tin người dùng
+  // Get user's info
   getUserRole(): string {
    
     const helper = new JwtHelperService();
@@ -41,6 +41,22 @@ export class ApiService {
     };
 
     return this.http.get(api + `qam/dashboard`, {headers:httpOptions.headers, responseType: 'json'})
+  }
+
+
+  dowloadFileZip() {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+        'Content-Type': 'application/zip',
+        'Accept': 'application/zip',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+      return this.http.get(api + 'qam/download-files'
+      , {headers:httpOptions.headers, responseType: 'blob'})
+
   }
 
 
@@ -71,9 +87,6 @@ export class ApiService {
     return this.http.get(api + `event/list-idea/${id}`, {headers:httpOptions.headers, responseType: 'json'})
   }
 
-
-
-
   getIdeaByCategory(id: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -85,8 +98,6 @@ export class ApiService {
 
     return this.http.get(api + `category/list-idea/${id}`, {headers:httpOptions.headers, responseType: 'json'})
   }
-
-  
 
 
 
@@ -833,25 +844,7 @@ export class ApiService {
 
 
 
-  dowloadFileZip() {
-    
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-       
-        'Content-Type': 'application/zip',
-        'Accept': 'application/zip',
-        'Access-Control-Allow-Origin': '*',
-      })
-    };
-   
-    
-      return this.http.get(api + 'qam/download-files'
-      , {headers:httpOptions.headers, responseType: 'blob'})//stringify de chuyen doi tu object sang json
-   
-    
-
-  }
 
 
   likeIdea(id:any) {

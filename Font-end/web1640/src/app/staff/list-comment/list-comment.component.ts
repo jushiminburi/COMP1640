@@ -26,11 +26,6 @@ export class ListCommentComponent {
 
     const helper = new JwtHelperService();
     const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
-  //  for (let i = 0; i < this.comments.length; i++) {
-  //    if (this.comments[i].user.id == user.id) {
-  //       this.comments[i].action = true;
-  //    }
-  //  }
 
   }
 
@@ -40,9 +35,9 @@ export class ListCommentComponent {
     this.api.likeComment(id).subscribe(async (res: any) => {
       console.log(res);
       this.commentEvent.emit("abc")
-        this.cdr.detectChanges(); // Thêm dòng này
+        this.cdr.detectChanges(); 
         
-        // this.cdr.markForCheck(); // Thêm dòng này
+        // this.cdr.markForCheck(); 
       
     }, error => {
       this.toast.error({ detail: "Like idea failed!" });
@@ -54,25 +49,8 @@ export class ListCommentComponent {
 
   }
 
- 
-
-
-
-
-
-  // getCommentsByPostId() {
-  //   this.api.getComment(this.postId).subscribe((res: any) => {
-  //     console.log(res.data.listComment);
-  //     this.comments = res.data.listComment;
-  //     console.log(this.comments)
-  //   })
-
-  // }
-
   status: any;
   categoryForm!: FormGroup;
-
-  // categories: Category[] = [];
 
   categories: any[] = [];
 

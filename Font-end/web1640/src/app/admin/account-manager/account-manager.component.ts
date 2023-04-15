@@ -324,11 +324,6 @@ export class AccountManagerComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.api.deleteUser(id).subscribe((data: any) => {
-          // Swal.fire(
-          //   'Deleted!',
-          //   'Your file has been deleted.',
-          //   'success'
-          // )
           this.toast.success({ detail: "Delete Account Success!", duration: 3000, position: "top-right" })
           this.loadStudents();
         },

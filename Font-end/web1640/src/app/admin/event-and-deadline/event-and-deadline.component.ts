@@ -241,9 +241,6 @@ export class EventAndDeadLineComponent implements OnInit {
 
       
     });
-
-    
-
   }
 
 }

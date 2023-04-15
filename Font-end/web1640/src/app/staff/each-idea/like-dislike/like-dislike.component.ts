@@ -12,9 +12,7 @@ import { ApiService } from 'src/app/api.service';
 })
 export class LikeDislikeComponent {
 
-  @Output() ideaEvent = new EventEmitter();
-  
-  @Input() idea!: any;
+ 
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -25,18 +23,17 @@ export class LikeDislikeComponent {
      }
   
 
-
+  @Output() ideaEvent = new EventEmitter();
+  @Input() idea!: any;
   isLiked = false;
   isDisliked = false;
 
   like(id: any) {
     this.api.likeIdea(id).subscribe(async (res: any) => {
       console.log(res);
-     
-        
         this.ideaEvent.emit("abc")
-        this.cdr.detectChanges(); // Thêm dòng này
-        // this.cdr.markForCheck(); // Thêm dòng này
+        this.cdr.detectChanges();
+        // this.cdr.markForCheck(); 
       
     }, error => {
       this.toast.error({ detail: "Like idea failed!" });
@@ -44,23 +41,6 @@ export class LikeDislikeComponent {
       return
     }
     )
-    
-    // this.isLiked = !this.isLiked;
-
-    // // if (this.isLiked) {
-    // //   this.isDisliked = false;
-    // // }
-    // this.isDisliked = false;
-    // this.api.likeDislike(this.route.snapshot.params['id'], this.isLiked, this.isDisliked).subscribe((res: any) => {
-    //   console.log(res);
-    //   // this.loadData.emit();
-     
-    // } , (err: any) => {
-    //   console.log(err);
-      
-    // } )
-
-
   }
 
   dislike(id: any) {

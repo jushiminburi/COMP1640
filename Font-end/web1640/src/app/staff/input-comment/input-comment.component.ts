@@ -17,12 +17,8 @@ export class InputCommentComponent implements OnInit {
   comment: string = '';
   @Input() postId!: number;
   @Input() allowComment!: boolean;
-  
 
   uploadedFiles: File[] = [];
-
-
-  
 
   onSelect(event: any) {
         for(let file of event.files) {
@@ -45,14 +41,7 @@ export class InputCommentComponent implements OnInit {
   }
 
   onRemove(event: any) {
-    // // Truy cập đối tượng FileList của phần tử <p-fileUpload>
-    // const fileList: FileList = event.fileInput.files;
-
-    // // Lấy index của tệp tin bị xóa
-    // const index = Array.prototype.indexOf.call(fileList, event.file);
-
-    // // Loại bỏ tệp tin khỏi danh sách tệp tin đã chọn
-    // this.uploadedFiles.splice(index, 1);
+    
     this.uploadedFiles.splice(this.uploadedFiles.indexOf(event), 1);
     console.log(this.uploadedFiles)
 
@@ -74,7 +63,6 @@ export class InputCommentComponent implements OnInit {
   }
 
 createComment() {
-
 
     let formData = new FormData();
     formData.append('content', this.commentForm.value.content);
@@ -173,15 +161,11 @@ constructor(
     this.api.createComment(data).subscribe(data => {
       console.log(data);
      
-      
       this.commentForm.reset()
     }, error => {
      
       console.log(error)
       this.toast.error({ detail: "Comment failed!", duration: 3000, position: "top-right" })
-      
-      // this.router.navigate(['/login']);
-
     }
     );
   }

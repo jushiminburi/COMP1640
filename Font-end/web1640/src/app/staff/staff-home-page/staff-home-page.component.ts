@@ -256,9 +256,6 @@ export class StaffHomePageComponent implements OnInit {
 
 
   changePage(i: number): void {
-    // const element = document.getElementById('paginator');
-    // element!.classList.add('active');
-
 
     this.currentPage = i
     this.getListIdea();

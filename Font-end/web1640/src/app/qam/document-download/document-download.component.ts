@@ -25,8 +25,6 @@ export class DocumentDownloadComponent implements OnInit
 
   dowloadCSV(id: any): void {
     
-console.log(id);
-  
     this.api.downloadCSV(id).subscribe((res: any) => {
       console.log(res);
       saveAs(res, 'document.csv');
