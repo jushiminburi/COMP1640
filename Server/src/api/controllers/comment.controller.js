@@ -101,7 +101,7 @@ module.exports = {
   },
   async listComment (req, res) {
     try {
-      const userId = req.userId
+      const _id = req._userId
       const ideaId = parseInt(req.query.ideaId)
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 5
@@ -116,7 +116,7 @@ module.exports = {
         return {
           anonymous: comment.anonymous,
           id: comment.id,
-          isLiked: comment.likes && comment.likes.includes(`${userId}`),
+          isLiked: comment.likes && comment.likes.includes(`${_id}`),
           content: comment.content,
           createdAt: comment.createAt,
           totalReply: comment.totalReply,

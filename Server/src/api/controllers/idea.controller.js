@@ -195,14 +195,14 @@ module.exports = {
         const isLikes = idea.likes && idea.likes.includes(`${userId}`)
         const files = idea.file ?? []
         const isDislikes = idea.dislikes && idea.dislikes.includes(`${userId}`)
-        const comments = (idea.comment.isNotEmpty)
+        const comments = (idea.comment.length > 0)
           ? [{
               _id: idea.comment[0]._id,
               id: idea.comment[0].id,
               content: idea.comment[0].content,
               user: idea.comment[0].user,
               isEdited: idea.comment[0].isEdited,
-              isLikes: idea.comment[0].likes?.contains(userId) ?? false,
+              isLikes: idea.comment[0].likes?.includes(`${userId}`) ?? false,
               totalLike: idea.comment[0].totalLike,
               timeAgo: time,
               anonymous: idea.comment[0].anonymous
