@@ -79,10 +79,10 @@ export class CreateAccountComponent implements OnInit {
     await this.getDepartments();
 
     this.createAccountForm = this.fb.group({
-      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       role: new FormControl('', [Validators.required]),
       department: new FormControl('', [Validators.required]),
       files: new FormControl('')
@@ -118,6 +118,7 @@ export class CreateAccountComponent implements OnInit {
 
   CreateNewAccount(data: any) {
     //get password from localstorage
+    if(this.createAccountForm.valid){
     
     var formData: any = new FormData();
 
@@ -237,32 +238,21 @@ export class CreateAccountComponent implements OnInit {
           
           this.router.navigate(['/admin/createaccount'])
         
-          // this.router.navigate(['/admin'])
-        } else if (data.status == 400) {
-          alert("Create Account Failed!")
+         
         } 
-        // else if (user.role == 4) {
-        //   this.router.navigateByUrl('/staff');
-        // }
         
-
-      
-
-
-
-      // luu lai trang trc roi quay lai trang do, sau do xoa di
-      // this.router.navigateByUrl('/students');
-      // localStorage.setItem('token', res.result);
     },
 
       error => {
-        alert("Create Account Failed!")
-        
+        var err = JSON.parse(error.error)
+        console.log(err);
+        this.toastService.error({detail: err.message, summary: 'Error', duration: 3000})
         console.log(error)
-        // this.router.navigate(['/login']);
+        
       }
 
     );
+    }
 
 
   }

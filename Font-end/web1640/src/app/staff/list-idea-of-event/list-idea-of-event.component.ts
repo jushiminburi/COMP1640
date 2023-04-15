@@ -544,6 +544,7 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
   
 
   deleteIdea(id: number) {
+    console.log(id)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -562,7 +563,7 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
           //   'success'
           // )
           this.toast.success({ detail: "Delete idea successfully!", duration: 3000, position: "top-right" })
-          this.loadStudents();
+          
         },
 
           error => {

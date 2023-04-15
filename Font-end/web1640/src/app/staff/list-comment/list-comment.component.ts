@@ -25,7 +25,7 @@ export class ListCommentComponent {
     console.log(this.postId);
 
     const helper = new JwtHelperService();
-    const user = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    const user = helper.decodeToken(localStorage.getItem('accessToken') || '{}');
 
   }
 
@@ -35,10 +35,10 @@ export class ListCommentComponent {
     this.api.likeComment(id).subscribe(async (res: any) => {
       console.log(res);
       this.commentEvent.emit("abc")
-        this.cdr.detectChanges(); 
-        
-        // this.cdr.markForCheck(); 
-      
+      this.cdr.detectChanges();
+
+      // this.cdr.markForCheck(); 
+
     }, error => {
       this.toast.error({ detail: "Like idea failed!" });
       console.log(error);
@@ -59,9 +59,9 @@ export class ListCommentComponent {
 
   getlistCategory() {
     this.api.getCategory().subscribe((res: any) => {
-      
-     console.log(res.data.list);
-     this.categories = res.data.list
+
+      console.log(res.data.list);
+      this.categories = res.data.list
     })
 
 
@@ -70,7 +70,7 @@ export class ListCommentComponent {
 
   checkUpdateDeleteOptions(id: any) {
     const helper = new JwtHelperService();
-    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    const data = helper.decodeToken(localStorage.getItem('accessToken') || '{}');
     console.log(data);
     if (id == data.id) {
       return true;
@@ -80,7 +80,7 @@ export class ListCommentComponent {
   commentText!: string;
 
   isEditing: boolean = false;
-  
+
   enableEditing() {
     this.isEditing = true;
   }
@@ -102,34 +102,39 @@ export class ListCommentComponent {
     this.isEditing = false;
   }
 
-  
+
 
 
   deleteComment(id: any) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this imaginary file!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, add it!',
-      cancelButtonText: 'No, keep it'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.api.deleteComment(id).subscribe(async (res: any) => {
-          
-            
-                this.commentEvent.emit("abc")
-                this.cdr.detectChanges();
-            
-          
-        }, (err: any) => {
-          this.toast.error({ detail: "Delete comment failed!", duration: 3000, position: "top-right" })
-          console.log(err);
-          // location.reload();
-        }
-        )
+    if (confirm('Are you sure you want delete this comment?')) {
+
+      this.api.deleteComment(id).subscribe( res => {
+
+        console.log(res);
+        this.toast.success({ detail: "Delete comment successfully!", duration: 3000, position: "top-right" })
+
+      }, error => {
+        this.toast.error({ detail: "Delete comment failed!", duration: 3000, position: "top-right" })
+        console.log(error);
+        // location.reload();
       }
-    })
+      )
+    }
+
+
+    // }
+
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: 'You will not be able to recover this imaginary file!',
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Yes, add it!',
+    //   cancelButtonText: 'No, keep it'
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+
+    // })
 
     // this.categoryForm.reset();
 
@@ -149,11 +154,11 @@ export class ListCommentComponent {
       name: new FormControl('', [Validators.required]),
       createdAt: new FormControl(null),
       updatedAt: new FormControl(null)
-    }, {Validators: false})
+    }, { Validators: false })
 
   } //dependency injection
 
-  
+
 
   // createAccountForm = new FormGroup({
 
@@ -169,7 +174,7 @@ export class ListCommentComponent {
 
 
 
-  
+
 
 
 

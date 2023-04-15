@@ -72,6 +72,13 @@ export class LoginComponent {
         this.loginForm.reset();
           });
         } 
+
+        else if (user.role == 3) {
+          this.router.navigateByUrl('/qac').then(() => {
+            this.toast.success({detail: "Login Successful!", position: "top-right", duration:3000})
+        this.loginForm.reset();
+          });
+        } 
         else if (user.role == 4) {
 
           this.router.navigateByUrl('/staff').then(() => {
