@@ -7,8 +7,8 @@ const { Ideas, validate } = require('../models/idea.model')
 const Files = require('../models/file.model')
 const { Category } = require('../models/category.model')
 const path = require('path')
-const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEmail')
-const { User } = require('../models/user.model')
+// const { transporter, mailNewIdeaNotificationOptions } = require('../utils/sendEmail')
+// const { User } = require('../models/user.model')
 const { Event } = require('../models/event.model')
 const { Department } = require('../models/department.model')
 const moment = require('moment')
@@ -22,11 +22,11 @@ function unlinkFile (file) {
     }
   })
 }
-async function sendIdeaQAC (department) {
-  const qac = await User.find({ role: 3, department })
-  const email = qac.map(user => user.email)
-  transporter.sendMail(mailNewIdeaNotificationOptions(email))
-}
+// async function sendIdeaQAC (department) {
+//   const qac = await User.find({ role: 3, department })
+//   const email = qac.map(user => user.email)
+//   transporter.sendMail(mailNewIdeaNotificationOptions(email))
+// }
 function removeElement (array, elem) {
   const index = array.indexOf(elem)
   if (index > -1) {
@@ -114,8 +114,8 @@ module.exports = {
       }
       await newIdea.save()
       await Event.findOneAndUpdate({ id: eventId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
-      await Department.findOneAndUpdate({ _id: _departmentId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 }}, { new: true })
-      await Category.findOneAndUpdate({ _id: categoryValue._doc._id }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 }}, { new: true })
+      await Department.findOneAndUpdate({ _id: _departmentId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
+      await Category.findOneAndUpdate({ _id: categoryValue._doc._id }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
       // sendIdeaQAC(_departmentId)
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
@@ -195,14 +195,14 @@ module.exports = {
         const isLikes = idea.likes && idea.likes.includes(`${userId}`)
         const files = idea.file ?? []
         const isDislikes = idea.dislikes && idea.dislikes.includes(`${userId}`)
-        const comments = (idea.comment.isNotEmpty)
+        const comments = (idea.comment.length > 0)
           ? [{
               _id: idea.comment[0]._id,
               id: idea.comment[0].id,
               content: idea.comment[0].content,
               user: idea.comment[0].user,
               isEdited: idea.comment[0].isEdited,
-              isLikes: idea.comment[0].likes?.contains(userId) ?? false,
+              isLikes: idea.comment[0].likes?.includes(`${userId}`) ?? false,
               totalLike: idea.comment[0].totalLike,
               timeAgo: time,
               anonymous: idea.comment[0].anonymous
@@ -216,7 +216,7 @@ module.exports = {
           department: idea.user.department,
           avatar: idea.user.avatar
         }
-        const { likes, user, dislikes,comment, ...ideaWithoutLikesAndDislikes } = idea
+        const { likes, user, dislikes, comment, ...ideaWithoutLikesAndDislikes } = idea
         return {
           ...ideaWithoutLikesAndDislikes,
           user: users,
@@ -297,7 +297,7 @@ module.exports = {
     try {
       const userId = req.userId
       const ideaId = req.params.id
-      const idea = await Ideas.findOne({id: ideaId})
+      const idea = await Ideas.findOne({ id: ideaId })
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
       }
