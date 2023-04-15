@@ -36,31 +36,31 @@
                 <br>
                 <div *ngIf="idea.file.file" class="row col-12 text-center align-content-center m-auto ">
                     <div *ngFor="let f of idea.file.file">
-                        <div class="col-2" type="button">
+                        <div *ngIf="checkFileType(f) == 'image'" class="col-2" type="button">
                             <img [src]="'http://139.162.47.239/upload/' + f" class="card-img" alt="...">
                         </div>
                         <div *ngIf="checkFileType(f) == 'pdf'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
                             </div>
 
-                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
+                            <a type="button" href="javascript:;" (click)="downloadFile(f)">{{f}}</a>
                         </div>
                         <div *ngIf="checkFileType(f) == 'ppt'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_powerpoint.png" alt="pdf" style="width:30px;height:30px">
                             </div>
 
-                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
+                            <a type="button" href="javascript:;" (click)="downloadFile(f)">{{f}}</a>
                         </div>
                         <div *ngIf="checkFileType(f) == 'docx'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_doc.png" alt="pdf" style="width:30px;height:30px">
                             </div>
 
-                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
+                            <a type="button" href="javascript:;" (click)="downloadFile(f)">{{f}}</a>
                         </div>
                         <div *ngIf="checkFileType(f) == 'csv'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_csv.png" alt="pdf" style="width:30px;height:30px">
                             </div>
-                            <a [href]="'http://139.162.47.239/download/'+ f">{{f}}</a>
+                            <a type="button" href="javascript:;" (click)="downloadFile(f)">{{f}}</a>
                         </div>
                     </div>
 

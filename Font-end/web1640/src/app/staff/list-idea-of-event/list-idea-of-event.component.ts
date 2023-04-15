@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
 import { EachIdeaComponent } from '../each-idea/each-idea.component';
 import { EditIdeaComponent } from '../each-event/edit-idea/edit-idea.component';
+import * as saveAs from 'file-saver';
 
 @Component({
   selector: 'list-idea-of-event',
@@ -182,6 +183,16 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     } else {
      return null
     }
+  }
+
+  downloadFile(fileName: any): void {
+    this.api.downloadFile(fileName).subscribe(async (data) => {
+      await saveAs(data, fileName);
+      this.toast.success({ detail: "Download file successfully!" });
+    }, error => {
+      console.log(error);
+      this.toast.error({ detail: "Download file failed!" });
+    })
   }
   
 

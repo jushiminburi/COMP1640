@@ -12,6 +12,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+
    // Kiểm tra xem người dùng đã đăng nhập hay chưa
    isLoggedIn(): boolean {
     const user = localStorage.getItem('accessToken')
@@ -132,10 +133,21 @@ export class ApiService {
     //   })
     // };
 
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+        'Content-Type': 'application/json',
+        
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+      
+
    
     
-      return this.http.get(`http://139.162.47.239/download/${fileName}}`
-      , {responseType: 'blob'})
+      return this.http.get(`http://139.162.47.239/download/${fileName}`
+      , {headers:httpOptions.headers, responseType: 'blob'})
   }
 
 

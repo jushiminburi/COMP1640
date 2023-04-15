@@ -221,13 +221,6 @@ export class EventAndDeadLineComponent implements OnInit {
       } else{
         this.eventForm.get('deadlineIdea')?.setErrors(null);
       }
-
-
-      // if(deadlineIdea > deadlineComment) {
-      //   this.eventForm.get('deadlineIdea')?.setErrors({incorrect: true });
-      // } else {
-      //   this.eventForm.get('deadlineIdea')?.setErrors(null);
-      // }
     });
 
     this.eventForm.get('deadlineComment')?.valueChanges.subscribe(value => {

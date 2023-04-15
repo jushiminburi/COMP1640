@@ -97,5 +97,19 @@
 
         <list-idea-of-event [ideas]="ideas" (ideaEvent)="receiveIdea($event)"></list-idea-of-event>
 
+        <div *ngIf="totalPages>=2" class="pagination justify-content-end pt-2">
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination round-pagination ">
+                    <li class="page-item">
+                        <button class="page-link" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
+                    </li>
+                    <li *ngFor="let i of pageArray" [ngClass]="{ 'active': i === currentPage }" class="page-item" id="paginator" (click)="changePage(i)"><a class="page-link">{{i}}</a>
+
+                        <li class="page-item">
+                            <button class="page-link" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+                        </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>

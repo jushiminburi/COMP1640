@@ -11,6 +11,7 @@ import { SuccessDialogComponentComponent } from 'src/app/admin/create-account/su
 import { ApiService } from 'src/app/api.service';
 import Swal from 'sweetalert2';
 import { EditIdeaComponent } from '../each-event/edit-idea/edit-idea.component';
+import * as saveAs from 'file-saver';
 
 @Component({
   selector: 'each-idea',
@@ -371,6 +372,16 @@ export class EachIdeaComponent implements OnInit {
     }
     console.log(this.idea);
 
+  })
+}
+
+downloadFile(fileName: any): void {
+  this.api.downloadFile(fileName).subscribe(async (data) => {
+    await saveAs(data, fileName);
+    this.toast.success({ detail: "Download file successfully!" });
+  }, error => {
+    console.log(error);
+    this.toast.error({ detail: "Download file failed!" });
   })
 }
 
