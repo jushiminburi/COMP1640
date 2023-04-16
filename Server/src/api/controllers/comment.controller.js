@@ -8,7 +8,7 @@ const path = require('path')
 const directoryFile = path.join(__dirname, '../../../upload/')
 const moment = require('moment')
 const { Ideas } = require('../models/idea.model')
-
+const { transporter, mailNewIdeaCommentOptions } = require('../utils/sendEmail')
 function unlinkFile (file) {
   fs.unlink(file, function (err) {
     if (err) {
@@ -50,6 +50,8 @@ module.exports = {
   async createComment (req, res) {
     const listFile = req.listFile
     try {
+      const fullName = req.fullName
+      const userId = req.userId
       const _userId = req._userId
       const { ideaId, content, deadlineComment, anonymous } = req.body
       const resultValidate = validate(req.body)
@@ -71,7 +73,7 @@ module.exports = {
         }
         return apiResponse.response_status(res, Languages.EVENT_EXPIRED, 400)
       }
-      const idea = await Ideas.findOne({ id: ideaId })
+      const idea = await Ideas.findOne({ id: ideaId }).populate({ path: 'user', select: 'id userId fullName email avatar' })
       console.log(idea)
       if (!idea) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
@@ -88,6 +90,9 @@ module.exports = {
         const comment = await new Comment({ idea: idea._doc._id, id, user: _userId, content, anonymous }).save()
         await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 }, $push: { comment: comment._id } },
           { new: true })
+      }
+      if(idea.user.userId !== userId) {
+        transporter.sendMail(mailNewIdeaNotificationOptions(idea.user.email, idea.user.fullName))
       }
       return apiResponse.response_status(res, Languages.CREATE_COMMENT_SUCCESS, 200)
     } catch (error) {
