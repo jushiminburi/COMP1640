@@ -148,6 +148,8 @@ export class EachEventComponent {
       
 
     }
+
+    console.log(params);
     
     
     const helper = new JwtHelperService();
@@ -160,8 +162,8 @@ export class EachEventComponent {
     
     this.api.getIdeas(this.currentPage, this.limit, params).subscribe((d: any) => {
       var data = JSON.parse(d);
-      console.log(data.data.listIdea[0].file.file[0]);
-      var category = ""
+      console.log(data);
+      // var category = ""
      
       if (data.status == 200) {
         this.ideas = data.data.listIdea;
@@ -236,8 +238,10 @@ export class EachEventComponent {
 
   getIdeaByEventId() {
     const id = this.route.snapshot.params['id'];
+    console.log(id);
     this.api.getIdeaByEvent(id).subscribe((res: any) => {
-      this.ideas = res.data.list;
+      this.ideas = res.data.listIdea;
+      console.log(res);
     }, (err: any) => {
       console.log(err)
       this.toast.error({ detail: "Get idea failed", duration: 3000 });
@@ -480,7 +484,7 @@ export class EachEventComponent {
 
   ngOnInit() {
     this.getEvent();
-    this.getIdeaByEventId();
+    // this.getIdeaByEventId();
 
     this.getListIdea();
     
