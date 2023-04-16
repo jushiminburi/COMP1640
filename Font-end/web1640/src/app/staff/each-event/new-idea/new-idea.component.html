@@ -34,6 +34,9 @@
                         <div *ngIf="createIdeaForm.get('title')?.errors?.['required']">
                             Title Idea is required.
                         </div>
+                        <div *ngIf="createIdeaForm.get('title')?.errors?.['maxlength']">
+                            Title must be at most 100 characters long!
+                        </div>
 
                     </div>
                 </div>

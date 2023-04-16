@@ -223,7 +223,7 @@ export class NewIdeaComponent {
 
     this.createIdeaForm = this.fb.group({
       files: new FormControl(null),
-      title: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       content: new FormControl('', [Validators.required, Validators.minLength(5)]),
       categoryId: new FormControl('',[Validators.required]),
       eventId: new FormControl(''),
