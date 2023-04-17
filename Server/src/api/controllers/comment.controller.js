@@ -161,15 +161,16 @@ module.exports = {
   async deleteComment (req, res) {
     try {
       const userId = req.userId
+      const _userId = req._userId
       const commentId = req.params.id
-      const commentIsMyself = await Comment.findOne({ id: commentId }).populate({ path: 'user', select: 'userId' })
+      const commentIsMyself = await Comment.findOne({ id: commentId }).populate({ path: 'user', select: 'userId' }).lean()
       if (commentIsMyself == null) {
         return apiResponse.response_status(res, commentIsMyself, 400)
       }
-      if (commentIsMyself._doc.user.userId !== userId) {
+      if (commentIsMyself.user.userId !== userId) {
         return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
       }
-      await Comment.findOneAndDelete({ id: commentId, userId })
+      await Comment.findOneAndDelete({ id: commentId, user: _userId })
       await Ideas.findOneAndUpdate({ id: commentId }, { $inc: { totalComment: -1 } },
         { new: true })
       return apiResponse.response_status(res, Languages.DELETE_COMMENT_SUCCESS, 200)

@@ -166,7 +166,7 @@ module.exports = {
       const limit = parseInt(req.query.limit) || 5
       // const keyword = req.query.keyword
       const skip = (limit * page) - limit
-      const list = await User.find({}, { _id: 0, password: 0, __v: 0 }).skip(skip).limit(limit)
+      const list = await User.find({}, { _id: 0, password: 0, __v: 0 }).populate({ path: 'department', select: 'id name' }).skip(skip).limit(limit)
       const listUser = list.map(user => {
         return {
           ...user._doc,
