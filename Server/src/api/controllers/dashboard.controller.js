@@ -16,42 +16,6 @@ module.exports = {
       const dataCategory = await Category.find({}, { _id: 0, idea: 0, createdAt: 0, updatedAt: 0, __v: 0 }).lean()
       const dataUser = await User.find().lean().countDocuments()
       const dataTotalIdea = await Ideas.find().lean().countDocuments()
-      const ideasStats = await Ideas.aggregate([
-        {
-          $group: {
-            _id: '$event',
-            totalIdea: { $sum: 1 },
-            totalLike: { $sum: { $size: '$likes' } },
-            totalDislike: { $sum: { $size: '$dislikes' } }
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            event: '$_id',
-            totalIdea: 1,
-            totalLike: 1,
-            totalDislike: 1
-          }
-        },
-        {
-          $lookup: {
-            from: 'events',
-            localField: 'event',
-            foreignField: '_id',
-            as: 'event'
-          }
-        },
-        { $unwind: '$event' },
-        {
-          $project: {
-            eventName: '$event.name',
-            totalIdea: 1,
-            totalLike: 1,
-            totalDislike: 1
-          }
-        }
-      ])
       const idea = await Ideas.aggregate([
         {
           $group: {
@@ -65,7 +29,6 @@ module.exports = {
       for (const month of months) {
         const firstDay = new Date(`${year}-${month}-01T00:00:00.000Z`)
         const lastDay = new Date(`${year}-${month}-${new Date(year, month, 0).getDate()}T23:59:59.999Z`)
-
         const data = await Ideas.aggregate([
           {
             $match: {
@@ -87,6 +50,31 @@ module.exports = {
         ])
         dataChartByMonth.push(data)
       }
+      const dataEvent = await Event.aggregate([
+        {
+          $lookup: {
+            from: 'ideas',
+            localField: 'idea',
+            foreignField: '_id',
+            as: 'ideas'
+          }
+        },
+        {
+          $project: {
+            name: 1,
+            totalIdea: 1,
+            totalLike: {
+              $sum: '$ideas.totalLike'
+            },
+            totalDislike: {
+              $sum: '$ideas.totalDislike'
+            },
+            totalComment: {
+              $sum: '$ideas.totalComment'
+            }
+          }
+        }
+      ])
       const totalLike = idea[0].totalLike
       const totalDislike = idea[0].totalDislike
       const totalComment = idea[0].totalComment
@@ -97,7 +85,7 @@ module.exports = {
         totalIdea: dataTotalIdea,
         totalLike,
         totalDislike,
-        ideasStats,
+        dataEvent,
         totalComment,
         dataChartByMonth
       }

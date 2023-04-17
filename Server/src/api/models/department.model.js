@@ -4,8 +4,8 @@ const Joi = require('joi')
 const Department = mongoose.model('Department', new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
   name: { type: String, required: true, maxlength: 30 },
-  user: { type: [String] },
-  idea: { type: [String], ref: 'Ideas' },
+  user: { type: [mongoose.Schema.Types.ObjectId] },
+  idea: { type: [mongoose.Schema.Types.ObjectId], ref: 'Ideas' },
   totalIdea: { type: Number, default: 0 }
 }, {
   timestamps: true

@@ -4,7 +4,7 @@ const Joi = require('joi')
 const Category = mongoose.model('Category', new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
   name: { type: String, required: true, maxlength: 30 },
-  idea: { type: [String], ref: 'Ideas' },
+  idea: { type: [mongoose.Schema.Types.ObjectId], ref: 'Ideas' },
   totalIdea: { type: Number, default: 0 }
 }, {
   timestamps: true

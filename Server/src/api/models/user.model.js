@@ -7,7 +7,7 @@ const User = mongoose.model('User', new mongoose.Schema({
   lastName: { type: String, required: true, minlength: 1, maxlength: 50 },
   fullName: { type: String, minlength: 1, maxlength: 100 },
   department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
-  idea: [String],
+  idea: [mongoose.Schema.Types.ObjectId],
   email: { type: String, required: true, minlength: 6, maxlength: 255, unique: true },
   password: { type: String, required: true, minlength: 6, maxlength: 255 },
   role: { type: Number, required: true },

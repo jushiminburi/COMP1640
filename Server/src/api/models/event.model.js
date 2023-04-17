@@ -4,8 +4,8 @@ const Joi = require('joi')
 const Event = mongoose.model('Event', new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
   name: { type: String, required: true, maxlength: 30 },
-  user: { type: String, ref: 'User' },
-  idea: { type: [String], ref: 'Ideas' },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  idea: { type: [mongoose.Schema.Types.ObjectId], ref: 'Ideas' },
   deadlineIdea: { type: String, required: true },
   deadlineComment: { type: String, required: true },
   totalIdea: { type: Number, default: 0 }
