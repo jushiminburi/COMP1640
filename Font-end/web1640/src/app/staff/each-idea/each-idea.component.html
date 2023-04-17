@@ -5,8 +5,8 @@
                 <img [src]="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
             </div>
             <div class="media-body ml-2">
-
-                <h5 class="mb-0 chat-title col-8">{{idea.userName}}</h5>
+                <h5 *ngIf="idea.anonymous == false" class="mb-0 chat-title col-11">{{idea.user.fullName}}</h5>
+                <h5 *ngIf="idea.anonymous == true" class="mb-0 chat-title col-11">Unknow</h5>
             </div>
 
         </div>

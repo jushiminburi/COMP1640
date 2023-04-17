@@ -108,6 +108,7 @@ constructor(
     const helper = new JwtHelperService();
     const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
     this.api.getUserById(data.id).subscribe((res: any) => {
+      console.log(res.data);
       this.user = res.data;
     })
 
