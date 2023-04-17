@@ -91,8 +91,8 @@ module.exports = {
         await Ideas.findOneAndUpdate({ id: ideaId }, { $inc: { totalComment: 1 }, $push: { comment: comment._id } },
           { new: true })
       }
-      if(idea.user.userId !== userId) {
-        transporter.sendMail(mailNewIdeaNotificationOptions(idea.user.email, idea.user.fullName))
+      if (idea.user.userId !== userId) {
+        transporter.sendMail(mailNewIdeaCommentOptions(idea.user.email, idea.user.fullName))
       }
       return apiResponse.response_status(res, Languages.CREATE_COMMENT_SUCCESS, 200)
     } catch (error) {
@@ -172,7 +172,7 @@ module.exports = {
       await Comment.findOneAndDelete({ id: commentId, userId })
       await Ideas.findOneAndUpdate({ id: commentId }, { $inc: { totalComment: -1 } },
         { new: true })
-      return apiResponse.response_status(res, Languages.UPDATE_COMMENT_SUCCESS, 200)
+      return apiResponse.response_status(res, Languages.DELETE_COMMENT_SUCCESS, 200)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
     }

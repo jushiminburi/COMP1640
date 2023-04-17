@@ -16,6 +16,42 @@ module.exports = {
       const dataCategory = await Category.find({}, { _id: 0, idea: 0, createdAt: 0, updatedAt: 0, __v: 0 }).lean()
       const dataUser = await User.find().lean().countDocuments()
       const dataTotalIdea = await Ideas.find().lean().countDocuments()
+      const ideasStats = await Ideas.aggregate([
+        {
+          $group: {
+            _id: '$event',
+            totalIdea: { $sum: 1 },
+            totalLike: { $sum: { $size: '$likes' } },
+            totalDislike: { $sum: { $size: '$dislikes' } }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            event: '$_id',
+            totalIdea: 1,
+            totalLike: 1,
+            totalDislike: 1
+          }
+        },
+        {
+          $lookup: {
+            from: 'events',
+            localField: 'event',
+            foreignField: '_id',
+            as: 'event'
+          }
+        },
+        { $unwind: '$event' },
+        {
+          $project: {
+            eventName: '$event.name',
+            totalIdea: 1,
+            totalLike: 1,
+            totalDislike: 1
+          }
+        }
+      ])
       const idea = await Ideas.aggregate([
         {
           $group: {
@@ -51,45 +87,6 @@ module.exports = {
         ])
         dataChartByMonth.push(data)
       }
-      const firstDay = new Date('2023-04-01T00:00:00.000Z')
-      const lastDay = new Date('2023-05-01T23:59:59.999Z')
-      const dataChartByWeek = await Ideas.aggregate([
-        {
-          $addFields: {
-            weekStart: {
-              $dateFromParts: {
-                year: { $year: '$createdAt' },
-                month: { $month: '$createdAt' },
-                day: { $subtract: [{ $dayOfMonth: '$createdAt' }, { $dayOfWeek: '$createdAt' }] }
-              }
-            },
-            weekEnd: {
-              $dateFromParts: {
-                year: { $year: '$createdAt' },
-                month: { $month: '$createdAt' },
-                day: { $subtract: [{ $dayOfMonth: '$createdAt' }, { $subtract: [7, { $dayOfWeek: '$createdAt' }] }] }
-              }
-            }
-          }
-        },
-        {
-          $match: {
-            weekStart: {
-              $gte: firstDay,
-              $lte: lastDay
-            }
-          }
-        },
-        {
-          $group: {
-            _id: { $week: '$createdAt' },
-            totalIdea: { $sum: 1 },
-            totalLike: { $sum: '$totalLike' },
-            totalDislike: { $sum: '$totalDislike' }
-          }
-        }
-      ])
-
       const totalLike = idea[0].totalLike
       const totalDislike = idea[0].totalDislike
       const totalComment = idea[0].totalComment
@@ -100,8 +97,8 @@ module.exports = {
         totalIdea: dataTotalIdea,
         totalLike,
         totalDislike,
+        ideasStats,
         totalComment,
-        dataChartByWeek,
         dataChartByMonth
       }
       return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, data)

@@ -23,9 +23,11 @@ function unlinkFile (file) {
   })
 }
 async function sendIdeaQAC (department) {
-  const qac = await User.find({ role: 3, department })
+  const qac = await User.find({ role: 3, department }).lean()
   const email = qac.map(user => user.email)
-  transporter.sendMail(mailNewIdeaNotificationOptions(email))
+  if (email.length > 0) {
+    transporter.sendMail(mailNewIdeaNotificationOptions(email))
+  }
 }
 function removeElement (array, elem) {
   const index = array.indexOf(elem)
@@ -116,7 +118,7 @@ module.exports = {
       await Event.findOneAndUpdate({ id: eventId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
       await Department.findOneAndUpdate({ _id: _departmentId }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
       await Category.findOneAndUpdate({ _id: categoryValue._doc._id }, { $push: { idea: newIdea._doc._id }, $inc: { totalIdea: 1 } }, { new: true })
-      // sendIdeaQAC(_departmentId)
+      sendIdeaQAC(_departmentId)
       return apiResponse.response_status(res, Languages.CREATE_IDEA_SUCCESS, 200)
     } catch (error) {
       if (listFile.length !== 0) {
@@ -244,7 +246,8 @@ module.exports = {
       if (validate.error) {
         return apiResponse.response_status(res, validate.error.message, 400)
       }
-      const idea = await Ideas.findOneAndUpdate({ id: ideaId, userId }, { title, content, anonymous })
+      const user = await User.findOne({ userId }).lean()
+      const idea = await Ideas.findOneAndUpdate({ id: ideaId, user: user._id }, { title, content, anonymous })
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
       }
@@ -257,7 +260,8 @@ module.exports = {
     try {
       const ideaId = req.params.id
       const userId = req.userId
-      const idea = await Ideas.findOneAndDelete({ id: ideaId, userId })
+      const user = await User.findOne({ userId }).lean()
+      const idea = await Ideas.findOneAndDelete({ id: ideaId, user: user._id })
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
       }
