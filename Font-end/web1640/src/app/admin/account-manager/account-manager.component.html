@@ -46,7 +46,8 @@
                                 <td class="align-middle text-center ">{{account.firstName}} {{account.lastName}}</td>
                                 <td class="align-middle text-center ">{{account.email}}</td>
                                 <td class="align-middle text-center">{{checkRole(account.role)}}</td>
-                                <td class="align-middle text-center ">{{checkDepartment(account.department)}}</td>
+                                <td *ngIf="account.department== null" class="align-middle text-center ">Null</td>
+                                <td *ngIf="account.department!= null" class="align-middle text-center ">{{account.department.name}}</td>
                                 <td class="align-middle text-center ">
                                     <!-- <button type="button " class="btn btn-info radius-15 me-3 " data-bs-toggle="modal " data-bs-target="#exampleModal " >Edit</button> -->
                                     <button type="button" class="btn btn-info radius-15 me-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getAnUser(account.userId)"> Edit</button>

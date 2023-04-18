@@ -18,7 +18,7 @@ import Swal from 'sweetalert2'
 
 interface User {
   avatar: string;
-  department: string;
+  department: any;
   email: string;
   firstName: string;
   userId: number;

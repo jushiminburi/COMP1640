@@ -13,8 +13,7 @@ import { ApiService } from 'src/app/api.service';
   styleUrls: ['./admin-homepage.component.css']
 })
 export class AdminHomepageComponent {
-
-   // ngListEvent = [ "All Event", "Category 1", "Department1","All Idea"];
+// ngListEvent = [ "All Event", "Category 1", "Department1","All Idea"];
   // ngListCategory = [ "All Category", "Category 1", "Category 2","Category3"];
   // ngListDepartment = [ "All Department", "Department 1", "Department 2","Department3"];
   // ngFilterIdea =[ "All Idea", "Most Popular Idea", "Most Viewed Idea","Least Idea"];
@@ -179,6 +178,10 @@ export class AdminHomepageComponent {
     
   }
   
+
+  
+
+ 
   getAnUser() {
     
     const helper = new JwtHelperService();
@@ -224,8 +227,8 @@ export class AdminHomepageComponent {
 
     this.api.getIdeas(this.currentPage, this.limit, params).subscribe((d: any) => {
       var data = JSON.parse(d);
-      console.log(data.data.listIdea[0].file.file[0]);
-      var category = ""
+      // console.log(data.data.listIdea[0].file.file[0]);
+      // var category = ""
       if (data.status == 200) {
         this.ideas = data.data.listIdea;
         
@@ -270,22 +273,11 @@ export class AdminHomepageComponent {
     this.getListIdea();
   }
 
-  dashData!: any
 
-  getDashData(): any {
-    this.api.getDashboard().subscribe((res: any) => {
-      this.dashData = res.data;
-      console.log(this.dashData);
-    }, error => {
-      this.toast.error({ detail: "Get info failed!" });
-      console.log(error);
-    }
-    )
-  }
 
   ngOnInit() {
     
-    this.getDashData();
+    
     // this.getAnUser();
     this.getListIdea();
     this.createAccountForm = this.fb.group({

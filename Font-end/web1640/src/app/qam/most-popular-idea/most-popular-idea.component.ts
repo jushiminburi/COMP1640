@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -42,6 +42,10 @@ export class MostPopularIdeaComponent implements OnInit {
 
   postId!: number;
 
+  onClick(id:any) {
+    this.postId = id
+  }
+
 
  
   totalItems?: number; // Total number of users
@@ -55,6 +59,7 @@ export class MostPopularIdeaComponent implements OnInit {
   createAccountForm!: FormGroup;
 
   constructor(private api: ApiService, private router: Router,
+    private cdr: ChangeDetectorRef,
     private route: ActivatedRoute, private http: HttpClient,
     private fb: FormBuilder, private toast: NgToastService) {
       this.getListDepartment();
@@ -62,29 +67,73 @@ export class MostPopularIdeaComponent implements OnInit {
     this.getListEvent();
     }
 
+    
     categorySelected!: any;
     eventSelected!: any;
     departmentSelected!: any;
 
     ngFilterSelected!: any;
 
+    receiveIdea($event:any) {
+      console.log($event);
+      this.getListIdea();
+      this.cdr.detectChanges();
+    }
+    arrayBip: any[] = [];
+    
+
+
     onDropdownEvent(selectedValue: any) {
       this.eventSelected = selectedValue.target.value;
+      this.arrayBip = [];
+      if(this.eventSelected != null && this.eventSelected != undefined && this.eventSelected != "0"){
+        this.arrayBip.push(this.eventSelected)
+      }
+      if(this.categorySelected != null && this.categorySelected != undefined && this.categorySelected != "0"){
+        this.arrayBip.push(this.categorySelected)
+      }
+      if(this.departmentSelected != null && this.departmentSelected != undefined && this.departmentSelected != "0"){
+        this.arrayBip.push(this.departmentSelected)
+      }
       this.getListIdea();
     }
   
     onDropdownCategory(selectedValue: any) {
       this.categorySelected = selectedValue.target.value;
+      this.arrayBip = [];
+      if(this.eventSelected != null && this.eventSelected != undefined && this.eventSelected != "0"){
+        this.arrayBip.push(this.eventSelected)
+      }
+      if(this.categorySelected != null && this.categorySelected != undefined && this.categorySelected != "0"){
+        this.arrayBip.push(this.categorySelected)
+      }
+      if(this.departmentSelected != null && this.departmentSelected != undefined && this.departmentSelected != "0"){
+        this.arrayBip.push(this.departmentSelected)
+      }
+      
       this.getListIdea();
     }
   
     onDropdownDepartment(selectedValue: any) {
       this.departmentSelected = selectedValue.target.value;
+      this.arrayBip = [];
+      if(this.eventSelected != null && this.eventSelected != undefined && this.eventSelected != "0"){
+        this.arrayBip.push(this.eventSelected)
+      }
+      if(this.categorySelected != null && this.categorySelected != undefined && this.categorySelected != "0"){
+        this.arrayBip.push(this.categorySelected)
+      }
+      if(this.departmentSelected != null && this.departmentSelected != undefined && this.departmentSelected != "0"){
+        this.arrayBip.push(this.departmentSelected)
+      }
+     
       this.getListIdea();
     }
 
     onDropdownFilter(selectedValue: any) {
       this.ngFilterSelected = selectedValue.target.value;
+     
+     
       this.getListIdea();
     }
 
@@ -137,184 +186,6 @@ export class MostPopularIdeaComponent implements OnInit {
   
 
  
-  
-  
-
-
-  getListIdea() {
-
-    let params= {
-      eventId: this.eventSelected,
-      categoryId: this.categorySelected,
-      departmentId: this.departmentSelected,
-      sort: this.ngFilterSelected
-
-    }
-    
-    
-    const helper = new JwtHelperService();
-    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
-    console.log(localStorage.getItem('accessToken'));
-    
-    console.log(data);
-
-    
-    
-    this.api.getIdeas(this.currentPage, this.limit, params).subscribe((d: any) => {
-      var data = JSON.parse(d);
-      console.log(data);
-      var category = ""
-     
-      if (data.status == 200) {
-        this.ideas = data.data.listIdea;
-        
-        this.ideas?.forEach((idea: any) => {
-
-          //get user name
-          this.api.getUserById(idea.user.userId).subscribe((d: any) => {
-            idea.userName = d.data.firstName + " " + d.data.lastName
-            idea.avatarUser = d.data.avatar
-            console.log(d);
-            return
-          }, err => {
-            console.log(err);
-            idea.userName = ""
-            return
-          })
-          
-          // get event name
-          this.api.getEventById(idea.event.id).subscribe((res: any) => {
-            idea.eventName = res.data.name
-            console.log(idea.eventName);
-            return
-          },
-          error => {
-            console.log(error);
-            idea.eventName = ""
-            return
-          })
-          
-          //add category name
-          this.api.getCategory().subscribe((res: any) => {
-            //get name category
-            var d = res.data.list
-            console.log(d);
-            d.forEach((c: any) => {
-              
-              if (c.id == idea.categoryId) {
-                //add category name to ideas
-                idea.categoryName = c.name
-                console.log(idea.categoryName);
-              }
-            })
-          })
-          
-        })
-        
-        this.totalPages = Math.ceil(data.data.totalIdea / this.limit);
-        this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i+1)
-
-        
-        
-        // this.totalItems = data.data.totalItems;
-        // this.totalPages = data.data.totalPages;
-        // this.pageArray = Array(this.totalPages).fill(0).map((x, i) => i + 1);
-        // console.log(this.pageArray);
-
-      } else {
-        this.toast.error({ detail: "Get idea failed!" });
-        console.log(data.message);
-        return
-      }
-
-    }, error => {
-      this.toast.error({ detail: "Get idea failed!" });
-      console.log(error);
-      return
-    }
-    )
-
-  }
-
-
-  changePage(i: number): void {
-    // const element = document.getElementById('paginator');
-    // element!.classList.add('active');
-
-
-    this.currentPage = i
-    this.getListIdea();
-  }
-
-
-  nextPage() {
-    this.currentPage++;
-    this.getListIdea();
-  }
-
-  previousPage() {
-    this.currentPage--;
-    this.getListIdea();
-  }
-
-
-
-  
-
-
-
-  onClick(id:any) {
-    this.postId = id
-  }
-
-  
-
-  ngDepartment = ["IT", "HR", "Marketing", "Sales", "Finance", "Admin"];
-  ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
-  public aElement?: boolean = true;
-
-
-  onclick() {
-    this.aElement = !this.aElement;
-
-
-  }
-  currentFile?: File;
-
-  selectFile(event: any, fieldName: string): void {
-
-    this.currentFile = event.target.files[0];
-    this.createAccountForm.get('avatar')?.setValue(this.currentFile);
-
-  }
-
-  getComment(ideaId: number) {
-    this.api.getComment(ideaId).subscribe((res: any) => {
-      this.comments = res.data.listComment;
-    })
-  }
-
-  dislike(id: any) {
-    this.api.dislikeIdea(id).subscribe(async (res: any) => {
-      console.log(res);
-      if (res.status == 200) {
-        
-       
-        
-      }
-    }, error => {
-      this.toast.error({ detail: "Like idea failed!" });
-      console.log(error);
-      return
-    }
-    )
-  }
-
-  
-
-  
-
- 
   getAnUser() {
     
     const helper = new JwtHelperService();
@@ -342,65 +213,36 @@ export class MostPopularIdeaComponent implements OnInit {
     )
 
   }
-
-  //get category name
-  getCategoryName() {
-    this.api.getCategory().subscribe((res: any) => {
-      //get name category
-      var d = res.data.list
-      console.log(d);
-      d.forEach((c: any) => {
-        console.log(c);
-        if (c.id == this.createAccountForm.value.categoryId) {
-          this.createAccountForm.value.categoryName = c.name
-        }
-      })
-    })
-  }
-
-  // getEventById(id: any) {
-  //   this.api.getEventById(id).subscribe((res: any) => {
-  //     console.log(res.data.name);
-
-  //     return res.data.name
-      
-  //   }, error => {
-     
-  //     console.log(error);
-  //     return ""})
-  // }
   
-  ref!: DynamicDialogRef;
-  getTotalUser() {
-    this.api.getUsers().subscribe((res: any) => {
-      var data = JSON.parse(res);
-      if (data.status == 200) {
-        this.totalItems = res.data.totalUser;
-      } else {
-        this.toast.error({ detail: "Get user failed!" });
-        console.log(data.message);
-        return
-      }
-     
-    }, error => {
-      this.toast.error({ detail: "Get user failed!" });
-      console.log(error);
-      return
-    })
-   }
-  getListPopularIdea() {
-    
-    this.api.getIdeas(this.currentPage, this.limit, {sort: "popular_idea"}).subscribe((d: any) => {
+
+
+  getListIdea() {
+    let params= {
+      eventId: this.eventSelected,
+      categoryId: this.categorySelected,
+      departmentId: this.departmentSelected,
+      sort: this.ngFilterSelected
+
+    }
+  
+    const helper = new JwtHelperService();
+    const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
+    console.log(localStorage.getItem('accessToken'));
+
+    this.api.getIdeas(this.currentPage, this.limit, params).subscribe((d: any) => {
       var data = JSON.parse(d);
-      console.log(data);
-      var category = ""
-     
+      // console.log(data.data.listIdea[0].file.file[0]);
+      // var category = ""
       if (data.status == 200) {
         this.ideas = data.data.listIdea;
-         
+        
+        this.ideas?.forEach((idea: any) => {
+
+        })
         
         this.totalPages = Math.ceil(data.data.totalIdea / this.limit);
         this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i+1)
+       
 
       } else {
         this.toast.error({ detail: "Get idea failed!" });
@@ -417,37 +259,31 @@ export class MostPopularIdeaComponent implements OnInit {
 
   }
 
-  loadStudents(): void {
-    this.api.getUsers(this.currentPage, this.limit).subscribe(
-      res => {
-        console.log(res);
-        var users = JSON.parse(res);
-        
-        // this.users = users.data.listUser;
-        // //change avater url
-        // this.users.forEach((user: any) => {
-        //   //change localhost to ip
-        //   user.avatar = user.avatar.replace("localhost:8888", "139.162.47.239");
-        // })
-        console.log(users);
-        this.totalPages = Math.ceil(users.data.totalUser / this.limit);
-        console.log(this.totalPages);
-        this.pageArray = Array(this.totalPages).fill(undefined).map((x, i) => i+1)
-      },
-      error => {
-        console.log(error);
-      }
-    );
+
+  changePage(i: number): void {
+
+    this.currentPage = i
+    this.getListIdea();
+  }
+
+
+  nextPage() {
+    this.currentPage++;
+    this.getListIdea();
+  }
+
+  previousPage() {
+    this.currentPage--;
+    this.getListIdea();
   }
 
 
 
   ngOnInit() {
-    this.getListPopularIdea();
-    this.getTotalUser();
+    
     
     // this.getAnUser();
-    // this.getListIdea();
+    this.getListIdea();
     this.createAccountForm = this.fb.group({
       firstName: null,
       lastName: null,
