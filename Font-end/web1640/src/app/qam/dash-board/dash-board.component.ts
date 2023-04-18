@@ -27,6 +27,15 @@ export class DashBoardComponent implements OnInit {
    dataDepartment: any[] = [];
    dataChartByMonth: any[] = [];
    highcharts = Highcharts;
+
+   chartOptions2!: any
+
+   chartOptions3!: any 
+
+   chartOptions4!: any
+
+   chartOptions5!: any 
+
    ngOnInit(): void {
       this.api.getDashboard().subscribe((res: any) => {
          this.ngDashboard = res.data;
@@ -91,36 +100,6 @@ export class DashBoardComponent implements OnInit {
                      
                   }
                }),
-               // data: [{
-               //    name: 'Chrome',
-               //    y: 70.67,
-               //    sliced: true,
-               //    selected: true
-               // }, {
-               //    name: 'Edge',
-               //    y: 14.77
-               // }, {
-               //    name: 'Firefox',
-               //    y: 4.86
-               // }, {
-               //    name: 'Safari',
-               //    y: 2.63
-               // }, {
-               //    name: 'Internet Explorer',
-               //    y: 1.53
-               // }, {
-               //    name: 'Opera',
-               //    y: 1.40
-               // }, {
-               //    name: 'Sogou Explorer',
-               //    y: 0.84
-               // }, {
-               //    name: 'QQ',
-               //    y: 0.51
-               // }, {
-               //    name: 'Other',
-               //    y: 2.6
-               // }],
                showInLegend: true,
             },
          ],
@@ -272,106 +251,13 @@ export class DashBoardComponent implements OnInit {
          }]
       }
       
-      
-        
          
       }, (err: any) => {
          this.toast.error({detail: "Get dashboard failed!", position: "top-right",duration: 3000});
          console.log(err);
       }
       )
-
-     
-
-      
-
    }
-   
-   // chartOptions: any = {
-   //    chart: {
-   //       type: 'bar'
-   //    },
-   //    title: {
-   //       text: 'Number idea of category'
-   //    },
-   //    //   subtitle : {
-   //    //      text: 'Source: Wikipedia.org'  
-   //    //   },
-   //    legend: {
-   //       layout: 'vertical',
-   //       align: 'left',
-   //       verticalAlign: 'top',
-   //       x: 250,
-   //       y: 100,
-   //       floating: true,
-   //       borderWidth: 1,
-
-   //       backgroundColor: (
-   //          (Highcharts.theme && Highcharts.theme.legend) ||
-   //          '#FFFFFF'), shadow: true
-   //    },
-   //    xAxis: {
-   //       categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'], title: {
-   //          text: null
-   //       }
-   //    },
-   //    yAxis: {
-   //       min: 0, title: {
-   //          text: 'Population (millions)', align: 'high'
-   //       },
-   //       labels: {
-   //          overflow: 'justify'
-   //       }
-   //    },
-   //    tooltip: {
-   //       valueSuffix: ' millions'
-   //    },
-   //    plotOptions: {
-   //       bar: {
-   //          dataLabels: {
-   //             enabled: true
-   //          }
-   //       },
-   //       series: {
-   //          stacking: 'normal'
-   //       }
-   //    },
-   //    credits: {
-   //       enabled: false
-   //    },
-   //    series: [
-   //       {
-   //          name: 'Year 1800',
-   //          data: [107, 31, 635, 203, 2]
-   //       },
-   //       {
-   //          name: 'Year 1900',
-   //          data: [133, 156, 947, 408, 6]
-   //       },
-   //       {
-   //          name: 'Year 2008',
-   //          data: [973, 914, 4054, 732, 34]
-   //       }
-   //    ]
-   // };
-
-   // chartOptions2: Highcharts.Options = {};
-
-
-   chartOptions2!: any
-
-
-   chartOptions3!: any 
-
-
-
-   chartOptions4!: any
-
-
-
-   chartOptions5!: any 
-
-
 
 
 }
