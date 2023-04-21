@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 
-const api = "http://139.162.47.239/api/";
+const api = 'http://139.162.47.239/api/';
 @Injectable({
   providedIn: 'root'
 })
@@ -229,6 +229,7 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
     });
+    console.log(api + 'user/login');
     return this.http.post(api + 'user/login'
     , dataJson// data minh se gui len
     , {headers: headers} //bao gui kieu json cho phia server va kieu du lieu tra ve tu server la json text

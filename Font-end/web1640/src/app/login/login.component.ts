@@ -43,6 +43,7 @@ export class LoginComponent {
       data.email,
       data.password
     ).subscribe(res => {
+      console.log(res);
       
       localStorage.setItem('accessToken', res.accessToken);
       console.log(res.accessToken);
