@@ -44,6 +44,14 @@
                                 <small>Name is required</small>
                             </div>
 
+                            <span [hidden]="!eventForm.get('name')?.errors?.['minlength']">
+                                <small> Name should be more than 6 characters.</small>
+                            </span>
+                            <span [hidden]="!eventForm.get('name')?.errors?.['maxlength']">
+                                <small> Name should be less than 30 characters.</small>
+                            </span>
+
+
                         </div>
                     </div>
                 </div>
@@ -83,6 +91,7 @@
                                     <small>Deadline Idea is required.</small>
                                 </div>
 
+
                             </div>
                         </div>
                     </div>
@@ -118,7 +127,7 @@
 
                 <div class="col-sm-12 form-group text-center align-content-center">
                     <br>
-                    <button class="btn btn-lg btn-info" [disabled]="!eventForm.valid" type="submit">Create Now
+                    <button class="btn btn-lg btn-info" [disabled]="eventForm.invalid" type="submit">Create Now
                     </button>
                 </div>
             </form>

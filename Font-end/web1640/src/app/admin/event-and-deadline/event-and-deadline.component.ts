@@ -29,6 +29,7 @@ export class EventAndDeadLineComponent implements OnInit {
   eventForm!: FormGroup;
 
   addEvent(data: any) {
+    if(this.eventForm.valid){
     console.log(data);
     const datePipe = new DatePipe('en-US');
     const formattedDateIdea = datePipe.transform(data.deadlineIdea, 'yyyy-MM-dd HH:mm');
@@ -58,6 +59,7 @@ export class EventAndDeadLineComponent implements OnInit {
           }
         }, (err: any) => {
           this.toast.error({ detail: "Add event failed!", summary: "Error", duration: 3000 });
+          console.log(err);
         }
         )
       }
@@ -78,7 +80,7 @@ export class EventAndDeadLineComponent implements OnInit {
     // }
 
 
-
+  }
   }
 
 
@@ -112,7 +114,7 @@ export class EventAndDeadLineComponent implements OnInit {
     this.eventForm = this.fb.group({
       
 
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]),
       deadlineIdea: new FormControl(null, [Validators.required]),
       deadlineComment: new FormControl(null, [Validators.required])
     })
