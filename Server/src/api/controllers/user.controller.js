@@ -82,7 +82,7 @@ module.exports = {
         const infoDepartment = await Department.findOne({id: department }).lean()
         _department = infoDepartment._id
       }
-      const updateUser = await User.findOneAndUpdate({ userId: id }, { email, lastName, firstName, _department, isActive, role }, { new: false })
+      const updateUser = await User.findOneAndUpdate({ userId: id }, { email, lastName, firstName,department: _department, isActive, role }, { new: false })
       if (updateUser) {
         return apiResponse.response_status(res, Languages.UPDATE_USER_SUCCESSFUL, 200)
       } else {

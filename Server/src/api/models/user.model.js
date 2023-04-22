@@ -21,7 +21,7 @@ function validateUser (user) {
     password: Joi.string().pattern(/^[a-zA-Z0-9]{8,30}$/).required(),
     firstName: Joi.string().min(1).max(50).required(),
     lastName: Joi.string().min(1).max(50).required(),
-    department: Joi.string().required(),
+    department: Joi.string(),
     role: Joi.number().required()
   })
   return schema.validate(user)
