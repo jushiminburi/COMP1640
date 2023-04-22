@@ -37,10 +37,12 @@ exports.registerUser = async (req, res) => {
         return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_SUITABLE, 400)
       }
     }
+   if(role === 3 || role === 4){
     const departments = await Department.findOne({ name: department }, '_id')
     if (departments == null) {
       return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
     }
+   }
     const user = await User.findOne({ email })
     if (user) {
       listFile.forEach(element => {
