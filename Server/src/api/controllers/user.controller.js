@@ -7,6 +7,7 @@ const { BASEURL_AVATAR } = require('../utils/global')
 const { BASEURL_FILE } = require('../utils/global')
 const fs = require('fs')
 const path = require('path')
+const { Department } = require('../models/department.model')
 const directoryFile = path.join(__dirname, '../../../upload/')
 require('dotenv').config()
 
@@ -71,13 +72,17 @@ module.exports = {
   async updateUser (req, res) {
     try {
       const id = req.params.id
+      let _department
       const { email, lastName, firstName, department, isActive, role } = req.body
       const result = validateUser(req.body)
       if (result.error) {
         return apiResponse.response_status(res, result.error.message, 400)
       }
-      const updateUser = await User.findOneAndUpdate({ userId: id }, { email, lastName, firstName, department, isActive, role }, { new: false })
-      console.log(updateUser)
+      if(department !== undefined) {
+        const infoDepartment = await Department.findOne({id: department }).lean()
+        _department = infoDepartment._id
+      }
+      const updateUser = await User.findOneAndUpdate({ userId: id }, { email, lastName, firstName, _department, isActive, role }, { new: false })
       if (updateUser) {
         return apiResponse.response_status(res, Languages.UPDATE_USER_SUCCESSFUL, 200)
       } else {
