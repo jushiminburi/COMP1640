@@ -37,7 +37,7 @@ interface User {
 
 export class AccountManagerComponent implements OnInit {
 
-
+  isDisabled: boolean = true;
   users: User[] = []; // List of users
   currentPage: number = 1;
   totalPages: number = 0;
@@ -59,7 +59,7 @@ export class AccountManagerComponent implements OnInit {
     private dialog: MatDialog, private fb: FormBuilder, private toast: NgToastService, private modalService: NgbModal) { }
 
   ngDepartment: any[] = []
-  ngOptionrole = ["Admin", "QMA", "ABC", "Staff"];
+  ngOptionrole = ["Admin", "QAM", "QAC", "Staff"];
   public aElement?: boolean = true;
 
 
@@ -94,13 +94,13 @@ export class AccountManagerComponent implements OnInit {
 
   getAnUser(id: number) {
     console.log(id);
-    this.api.getUsers().subscribe((d: any) => {
-      var data = JSON.parse(d);
-      console.log(data);
-      if (data.status == 200) {
+    this.api.getUserById(id).subscribe((d: any) => {
+      
+      console.log(d);
+      if (d.status == 200) {
         //filter user by id
 
-        let user = data.data.listUser.filter((user: any) => user.userId == id)[0];
+        let user = d.data
         console.log(user);
         //set value for formcontrol
         console.log(this.editAccountForm.value);
@@ -109,11 +109,13 @@ export class AccountManagerComponent implements OnInit {
           this.editAccountForm.get(key)?.setValue(user[key]);
         }
 
+        
+
         console.log(this.editAccountForm.value);
 
       } else {
         alert("Get user failed!");
-        console.log(data.message);
+        console.log(d.message);
         return
       }
 
@@ -133,10 +135,19 @@ export class AccountManagerComponent implements OnInit {
 
       var formData: any = new FormData();
       for (let key in this.editAccountForm.value) {
-        console.log(key);
+       
+        if(this.editAccountForm.get(key)!.value == null || this.editAccountForm.get(key)!.value == '') continue;
+        
         formData.append(key, this.editAccountForm.get(key)!.value);
       }
-      console.log(formData);
+
+      if(this.editAccountForm.get('role')!.value == 1 || this.editAccountForm.get('role')!.value == 2){
+        //delete department
+        formData.delete('department');
+      }
+      formData.forEach((value: any, key: any) => {
+        console.log(key + " " + value);
+      });
 
       this.api.editUser(id, formData
       ).subscribe(async (res: any) => {
@@ -262,6 +273,7 @@ export class AccountManagerComponent implements OnInit {
 
 
   async ngOnInit() {
+    
     this.editAccountForm = this.fb.group({
       userId: new FormControl(0),
       avatar: new FormControl(null),
@@ -271,7 +283,7 @@ export class AccountManagerComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
   
       role: new FormControl('', [Validators.required]),
-      department: new FormControl('', [Validators.required])
+      department: new FormControl('')
     })
     this.createAccountForm = this.fb.group({
       firstName: null,

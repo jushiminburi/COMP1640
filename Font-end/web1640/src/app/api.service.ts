@@ -945,7 +945,9 @@ export class ApiService {
   }
   createNewAccount(formData: FormData){
 
-
+    formData.forEach((value: any, key: any) => {
+      console.log(key + ' ' + value);
+    });
 
 
 
@@ -962,20 +964,28 @@ export class ApiService {
   }
 
   editUser(id: string, formData: FormData){
+    
 
-    let form = {
+    let form: any = {
 
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      department: formData.get('department'),
-      role: formData.get('role'),
+      // firstName: formData.get('firstName'),
+      // lastName: formData.get('lastName'),
+      // email: formData.get('email'),
+      // department: formData.get('department'),
+      // role: formData.get('role'),
 
     }
     console.log(form);
 
 
-
+    // print all key and value form data
+    formData.forEach((value: any, key: any) => {
+      console.log(key + ' ' + value);
+      if(key != 'userId') {
+        form[key] = value;
+      }
+    });
+   
 
 
     const headers = new HttpHeaders({

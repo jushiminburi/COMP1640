@@ -116,6 +116,15 @@
                                                         </div>
 
 
+                                                        <!--<div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" formControlName="email" class="form-control" [disabled]="true">
+
+
+
+                                                        </div> -->
+
+
 
 
                                                         <div class="form-row ">
@@ -127,18 +136,18 @@
 
                                                                     <option
                                                                         *ngFor="let opt of ngOptionrole, let i=index "
-                                                                        [value]="i+ 1 ">
+                                                                        [value]="i+ 1">
                                                                         {{opt}}
                                                                     </option>
                                                                     <div class="text-danger text-center invalid-feedback d-block "
                                                                         *ngIf="!editAccountForm.get('role')?.valid && (editAccountForm.get('role')?.dirty || editAccountForm.get('role')?.touched) ">
 
                                                                         <span
-                                                                            [hidden]="!editAccountForm.get('role')?.errors?.[ 'required'] ">
+                                                                            [hidden]="!editAccountForm.get('role')?.errors?.['required'] ">
                                                                             Role is required!
                                                                         </span>
                                                                         <span
-                                                                            [hidden]="!editAccountForm.get('role')?.errors?.[ 'minlength'] ">
+                                                                            [hidden]="!editAccountForm.get('role')?.errors?.['minlength'] ">
                                                                             Role must be at least 6 characters long!
                                                                         </span>
                                                                     </div>
@@ -149,9 +158,9 @@
 
                                                             </div>
 
-                                                            <div class="form-group col-md-6">
+                                                            <div *ngIf="editAccountForm.get('role')?.value && (editAccountForm.get('role')?.value != 1 && editAccountForm.get('role')?.value != 2)" class="form-group col-md-6">
                                                                 <label>Department</label>
-                                                                <select class="form-select text-center" formControlName="department" required>
+                                                                <select class="form-select text-center" formControlName="department">
 
                                                                     <option *ngFor="let opt of ngDepartment"
                                                                         [value]="opt.id">

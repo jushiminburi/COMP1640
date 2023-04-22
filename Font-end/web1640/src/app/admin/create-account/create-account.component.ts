@@ -84,7 +84,7 @@ export class CreateAccountComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       role: new FormControl('', [Validators.required]),
-      department: new FormControl('', [Validators.required]),
+      department: new FormControl(''),
       files: new FormControl('')
     })
     
@@ -125,11 +125,16 @@ export class CreateAccountComponent implements OnInit {
     for(let key in this.createAccountForm.value){
       console.log(key);
       //if avatar == null or undefined => not append
-      
+      if(this.createAccountForm.get(key)!.value == null || this.createAccountForm.get(key)!.value == "") continue;
       if(this.createAccountForm.get(key)!.value){
         formData.append(key, this.createAccountForm.get(key)!.value);
       }
       
+    }
+
+    if(this.createAccountForm.get('role')!.value == 1 || this.createAccountForm.get('role')!.value == 2){
+      //delete department
+      formData.delete('department');
     }
 
     
