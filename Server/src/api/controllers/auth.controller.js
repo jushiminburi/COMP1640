@@ -39,11 +39,11 @@ exports.registerUser = async (req, res) => {
       }
     }
    if(role === 3 || role === 4){
-    const department = await Department.findOne({ name: department }, '_id')
+    const department = await Department.findOne({ name: department }, '_id').lean()
     if (department == null) {
       return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
     }
-    departments = departments._doc._id
+    departments = departments._id
    }
     const user = await User.findOne({ email })
     if (user) {
@@ -68,7 +68,7 @@ exports.registerUser = async (req, res) => {
         userId
       })
       await user.save()
-      await Department.findOneAndUpdate({ _id: departments._doc._id }, { $push: { user: user._doc._id }}, { new: true })
+      await Department.findOneAndUpdate({ _id: departments}, { $push: { user: user._doc._id }}, { new: true })
       transporter.sendMail(mailCreatedAccountOptions(user.email, password))
       return apiResponse.response_data(res, Languages.REGISTER_SUCCESS, 200, user)
     }
