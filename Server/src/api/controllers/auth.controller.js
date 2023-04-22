@@ -26,6 +26,7 @@ exports.registerUser = async (req, res) => {
   try {
     const { email, password, department, role, lastName, firstName } = req.body
     const result = validate(req.body)
+    let departments
     if (result.error) {
       listFile.forEach(element => {
         unlinkFile(directoryFile + element)
@@ -38,10 +39,11 @@ exports.registerUser = async (req, res) => {
       }
     }
    if(role === 3 || role === 4){
-    const departments = await Department.findOne({ name: department }, '_id')
-    if (departments == null) {
+    const department = await Department.findOne({ name: department }, '_id')
+    if (department == null) {
       return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
     }
+    departments = departments._doc._id
    }
     const user = await User.findOne({ email })
     if (user) {
@@ -58,7 +60,7 @@ exports.registerUser = async (req, res) => {
         avatar: listFile.length > 0 ? listFile[0] : 'default-avatar.png',
         email,
         password: hashPassword,
-        department: departments._doc._id,
+        department:(role === 3 || role === 4)? departments: undefined,
         role,
         lastName,
         firstName,
