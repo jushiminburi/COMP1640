@@ -305,13 +305,13 @@ module.exports = {
       if (idea == null) {
         return apiResponse.response_status(res, Languages.IDEA_NOT_FOUND, 400)
       }
-      if (idea.dislikes.includes(userId)) {
+      if (idea.dislikes.includes(`${userId}`)) {
         removeElement(idea.dislikes, userId)
         idea.totalDislike -= 1
         await idea.save()
         return apiResponse.response_status(res, Languages.UNDISLIKE_IDEA_SUCCESSFULL, 200)
       }
-      if (idea.likes.includes(userId)) {
+      if (idea.likes.includes(`${userId}`)) {
         removeElement(idea.likes, userId)
         idea.totalLike -= 1
       }
