@@ -262,6 +262,17 @@ export class AccountManagerComponent implements OnInit {
 
 
   async ngOnInit() {
+    this.editAccountForm = this.fb.group({
+      userId: new FormControl(0),
+      avatar: new FormControl(null),
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+  
+      email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
+  
+      role: new FormControl('', [Validators.required]),
+      department: new FormControl('', [Validators.required])
+    })
     this.createAccountForm = this.fb.group({
       firstName: null,
       lastName: null,
@@ -300,17 +311,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
 
-  editAccountForm = new FormGroup({
-    userId: new FormControl(0),
-    avatar: new FormControl(null),
-    firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-
-    email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(9)]),
-
-    role: new FormControl('', [Validators.required]),
-    department: new FormControl('', [Validators.required])
-  })
+  editAccountForm!: FormGroup;
 
   delete(id: number) {
     Swal.fire({

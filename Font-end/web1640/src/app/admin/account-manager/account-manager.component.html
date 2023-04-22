@@ -90,12 +90,12 @@
                                                             <div class="form-group col-md-6 ">
                                                                 <label>First Name</label>
                                                                 <input type="text " formControlName="firstName" placeholder="Nguyen Van " class="form-control " required>
-                                                                <div class="text-danger text-center invalid-feedback d-block " *ngIf="editAccountForm.controls.firstName?.valid && (editAccountForm!.controls.firstName?.dirty || editAccountForm.controls.firstName?.touched) ">
+                                                                <div class="text-danger text-center invalid-feedback d-block " *ngIf="editAccountForm.get('firstName')?.valid && (editAccountForm!.get('firstName')?.dirty || editAccountForm.get('firstName')?.touched) ">
 
-                                                                    <span [hidden]="!editAccountForm.controls.firstName.errors?.[ 'required'] ">
+                                                                    <span [hidden]="!editAccountForm.get('firstName')?.errors?.[ 'required'] ">
                                                                         FirstName is required!
                                                                     </span>
-                                                                    <span [hidden]="!editAccountForm.controls.firstName.errors?.[ 'minlength'] ">
+                                                                    <span [hidden]="!editAccountForm.get('firstName')?.errors?.[ 'minlength'] ">
                                                                         FirstName must be at least 3 characters long!
                                                                     </span>
                                                                 </div>
@@ -103,37 +103,19 @@
                                                             <div class="form-group col-md-6 ">
                                                                 <label>Last Name</label>
                                                                 <input type="text " formControlName="lastName" placeholder="A " class="form-control " required>
-                                                                <div class="text-danger text-center invalid-feedback d-block " *ngIf="!editAccountForm.controls.lastName?.valid && (editAccountForm.controls.lastName?.dirty || editAccountForm.controls.lastName?.touched) ">
+                                                                <div class="text-danger text-center invalid-feedback d-block " *ngIf="!editAccountForm.get('lastName')?.valid && (editAccountForm.get('lastName')?.dirty || editAccountForm.get('lastName')?.touched) ">
 
-                                                                    <span [hidden]="!editAccountForm.controls.lastName.errors?.[ 'required'] ">
+                                                                    <span [hidden]="!editAccountForm.get('lastName')?.errors?.[ 'required'] ">
                                                                         LastName is required!
                                                                     </span>
-                                                                    <span [hidden]="!editAccountForm.controls.lastName.errors?.[ 'minlength'] ">
+                                                                    <span [hidden]="!editAccountForm.get('lastName')?.errors?.[ 'minlength'] ">
                                                                         LastName must be at least 2 characters long!
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group ">
-                                                            <label>Email</label>
-                                                            <input type="email " placeholder="svetlana1997@example.com " formControlName="email" class="form-control " required>
-                                                            <div class="text-danger text-center invalid-feedback d-block " *ngIf="!editAccountForm.controls.email?.valid && (editAccountForm.controls.email?.dirty || editAccountForm.controls.email?.touched) ">
 
-                                                                <span [hidden]="!editAccountForm.controls.email.errors?.[ 'required'] ">
-                                                                    Email is required!
-                                                                </span>
-                                                                <span [hidden]="!editAccountForm.controls.email.errors?.[ 'email'] ">
-                                                                    Email is invalid!
-                                                                </span>
-                                                                <span [hidden]="!editAccountForm.controls.email.errors?.[ 'minlength'] ">
-                                                                    Email must be at least 3 characters long!
-                                                                </span>
-
-                                                            </div>
-
-
-                                                        </div>
 
 
                                                         <div class="form-row ">
@@ -149,14 +131,14 @@
                                                                         {{opt}}
                                                                     </option>
                                                                     <div class="text-danger text-center invalid-feedback d-block "
-                                                                        *ngIf="!editAccountForm.controls.role?.valid && (editAccountForm.controls.role?.dirty || editAccountForm.controls.role?.touched) ">
+                                                                        *ngIf="!editAccountForm.get('role')?.valid && (editAccountForm.get('role')?.dirty || editAccountForm.get('role')?.touched) ">
 
                                                                         <span
-                                                                            [hidden]="!editAccountForm.controls.role.errors?.[ 'required'] ">
+                                                                            [hidden]="!editAccountForm.get('role')?.errors?.[ 'required'] ">
                                                                             Role is required!
                                                                         </span>
                                                                         <span
-                                                                            [hidden]="!editAccountForm.controls.role.errors?.[ 'minlength'] ">
+                                                                            [hidden]="!editAccountForm.get('role')?.errors?.[ 'minlength'] ">
                                                                             Role must be at least 6 characters long!
                                                                         </span>
                                                                     </div>
@@ -167,21 +149,20 @@
 
                                                             </div>
 
-                                                            <div class="form-group col-md-6 ">
+                                                            <div class="form-group col-md-6">
                                                                 <label>Department</label>
-                                                                <select class="form-select text-center " formControlName="department" required>
+                                                                <select class="form-select text-center" formControlName="department" required>
 
-                                                                    <option *ngFor="let opt of ngDepartment "
+                                                                    <option *ngFor="let opt of ngDepartment"
                                                                         [value]="opt.id">
                                                                         {{opt.name}}
                                                                     </option>
                                                                     <div class="text-danger text-center invalid-feedback d-block "
-                                                                        *ngIf="!editAccountForm.controls.department?.valid && (editAccountForm.controls.department?.dirty || editAccountForm.controls.department?.touched) ">
-
-                                                                        <span
-                                                                            [hidden]="!editAccountForm.controls.department.errors?.[ 'required'] ">
+                                                                        *ngIf="!editAccountForm.get('department')?.valid && (editAccountForm.get('department')?.dirty || editAccountForm.get('department')?.touched) ">
+                                                                        <div *ngIf="editAccountForm.get('department')?.errors?.['required']">
                                                                             Department is required!
-                                                                        </span>
+                                                                        </div>
+                                                                       
                                                                     </div>
 
                                                                 </select>
@@ -191,17 +172,17 @@
 
 
 
-                                                        <div class=" col-sm-12 form-group text-center align-content-center ">
+                                                        <!--<div class=" col-sm-12 form-group text-center align-content-center ">
                                                             <label>Image</label>
                                                             <input type="file" class="form-control " formControlName="avatar ">
 
 
-                                                        </div>
+                                                        </div>-->
 
 
                                                         <div class="modal-footer ">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit " (click)="editUser(this.editAccountForm.get('userId')?.value)" data-bs-dismiss="modal" class="btn btn-primary ">Save changes</button>
+                                                            <button type="submit" [disabled]="editAccountForm.invalid" (click)="editUser(this.editAccountForm.get('userId')?.value)" data-bs-dismiss="modal" class="btn btn-primary ">Save changes</button>
                                                         </div>
 
 
