@@ -109,7 +109,7 @@ export class ListCommentComponent {
     if (confirm('Are you sure you want delete this comment?')) {
 
       this.api.deleteComment(id).subscribe( res => {
-
+        this.commentEvent.emit("abc")
         console.log(res);
         this.toast.success({ detail: "Delete comment successfully!", duration: 3000, position: "top-right" })
 
