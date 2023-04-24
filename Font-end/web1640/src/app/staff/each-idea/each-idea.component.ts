@@ -362,8 +362,7 @@ export class EachIdeaComponent implements OnInit {
    
 
     this.idea = d.data;
-    console.log(this.idea);
-    // for (let i = 0; i < this.idea.event.length; i++) {
+   
       if (new Date(this.idea.event.deadlineComment)> new Date()) {
         this.allowComment = true;
        
@@ -372,7 +371,7 @@ export class EachIdeaComponent implements OnInit {
         this.allowComment = false;
         
       }
-    // }
+   
 
     console.log(this.allowComment);
     
