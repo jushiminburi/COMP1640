@@ -8,16 +8,16 @@
         </div>
         <div class="media-body ml-2 col-7">
             <!-- <h6 class="mb-0 chat-title">Louis Litt</h6> -->
-            <form [formGroup]="commentForm" novalidate>
+            <form [formGroup]="commentForm">
                 <div class="input-group-append">
-                    <textarea [disabled]="allowComment" formControlName="content" class="form-control col-7" rows="1" cols="3" placeholder="Write comment..."></textarea>
+                    <textarea formControlName="content" class="form-control col-7" rows="1" cols="3" placeholder="Write comment..."></textarea>
 
                     <!-- button input file -->
                     <!-- <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="file"> <i class="lni lni-add-files"></i></button>
             </div> -->
                     <div class="input-group-append custom-control custom-switch col-4 align-content-center text-center m-auto">
-                        <input [disabled]="allowComment" formControlName="anonymous" type="checkbox" class="custom-control-input" id="customSwitch1">
+                        <input formControlName="anonymous" type="checkbox" class="custom-control-input" id="customSwitch1">
                         <label class="custom-control-label font-14" for="customSwitch1">Hide
                             Identity</label>
                     </div>
@@ -30,7 +30,7 @@
                 </ng-template>
             </p-fileUpload> -->
                     <div class="input-group-append">
-                        <button [disabled]="allowComment" class="btn btn-outline-secondary" (click)="createComment()" type="button" id="button-addon2"><i
+                        <button [disabled]="!allowComment" class="btn btn-outline-secondary" (click)="createComment()" type="button" id="button-addon2"><i
                                 class="bx bx-send"></i></button>
                     </div>
                 </div>

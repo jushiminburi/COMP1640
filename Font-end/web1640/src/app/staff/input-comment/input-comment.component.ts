@@ -114,11 +114,16 @@ constructor(
 
    }
   ngOnInit(): void {
+    console.log(this.allowComment)
     this.getUserById()
     this.commentForm = this.fb.group({
       content: ['' ],
       anonymous: [false]
     })
+
+    if(this.allowComment == false) {
+      this.commentForm.disable()
+    }
   }
 
 
