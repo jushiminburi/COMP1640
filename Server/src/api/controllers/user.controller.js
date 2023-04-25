@@ -175,7 +175,7 @@ module.exports = {
       const listUser = list.map(user => {
         return {
           ...user._doc,
-          avatar: `${BASEURL_AVATAR}${user.avatar}`
+          avatar: `${user.avatar}`
         }
       })
       const totalUser = await User.find().countDocuments()
@@ -198,7 +198,6 @@ module.exports = {
       if (user == null) {
         return apiResponse.response_status(res, Languages.USER_NOT_FOUND, 400)
       }
-      user.avatar = BASEURL_FILE + user.avatar
       return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, user)
     } catch (error) {
       return apiResponse.response_error_500(res, error.message)
