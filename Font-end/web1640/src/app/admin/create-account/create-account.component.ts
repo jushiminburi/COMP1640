@@ -220,7 +220,7 @@ export class CreateAccountComponent implements OnInit {
         var data = JSON.parse(res)
 
         console.log(res);
-        console.log(data.data.username);
+        
 
         if (data.status == 200) {
           

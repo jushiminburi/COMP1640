@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 
-const api = 'http://139.162.47.239/api/';
+const api = 'https://no-data.cloud/api/';
 @Injectable({
   providedIn: 'root'
 })
