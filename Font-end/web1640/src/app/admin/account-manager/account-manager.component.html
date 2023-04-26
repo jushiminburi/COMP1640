@@ -36,11 +36,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let account of users">
-                                <td class=" align-middle text-center ">{{account.userId}}</td>
+                            <tr *ngFor="let account of users;index as i">
+                                <td class=" align-middle text-center ">{{i+1}}</td>
                                 <td class="align-middle text-center ">
 
-                                    <img class="bg-transparent border " [src]="account.avatar " width="35 " alt=" ">
+                                    <img class="bg-transparent border " [src]="'https://no-data.cloud/upload/'+account.avatar" width="35 " alt=" ">
 
                                 </td>
                                 <td class="align-middle text-center ">{{account.firstName}} {{account.lastName}}</td>
