@@ -24,7 +24,8 @@ exports.registerUser = async (req, res) => {
     checkFile(listFile, res)
   }
   try {
-    const { email, password, department, role, lastName, firstName } = req.body
+    const { email, password, department, lastName, firstName } = req.body
+    const role = parseInt(req.body.role)
     const result = validate(req.body)
     let departments
     if (result.error) {
@@ -38,13 +39,13 @@ exports.registerUser = async (req, res) => {
         return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_SUITABLE, 400)
       }
     }
-   if(role === 3 || role === 4){
-    const department = await Department.findOne({ name: department }, '_id').lean()
-    if (department == null) {
-      return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
+    if (role === 3 || role === 4) {
+      const departmentCheck = await Department.findOne({ name: department }, '_id').lean()
+      if (department == null) {
+        return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
+      }
+      departments = departmentCheck._id
     }
-    departments = department._id
-   }
     const user = await User.findOne({ email })
     if (user) {
       listFile.forEach(element => {
@@ -60,7 +61,7 @@ exports.registerUser = async (req, res) => {
         avatar: listFile.length > 0 ? listFile[0] : 'default-avatar.png',
         email,
         password: hashPassword,
-        department:(role === 3 || role === 4)? departments: undefined,
+        department: (role === 3 || role === 4) ? departments : undefined,
         role,
         lastName,
         firstName,
@@ -68,8 +69,7 @@ exports.registerUser = async (req, res) => {
         userId
       })
       await user.save()
-      await Department.findOneAndUpdate({ _id: departments}, { $push: { user: user._doc._id }}, { new: true })
-      transporter.sendMail(mailCreatedAccountOptions(user.email, password))
+      await Department.findOneAndUpdate({ _id: departments }, { $push: { user: user._doc._id } }, { new: true })
       return apiResponse.response_data(res, Languages.REGISTER_SUCCESS, 200, user)
     }
   } catch (error) {
