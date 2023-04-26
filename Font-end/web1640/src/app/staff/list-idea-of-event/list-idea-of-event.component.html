@@ -2,7 +2,7 @@
     <div class="mt-2">
         <div class="media pt-3 m-auto">
             <div class="chat-user-online">
-                <img *ngIf="idea.anonymous == false" [src]="'http://139.162.47.239/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
+                <img *ngIf="idea.anonymous == false" [src]="'https://no-data.cloud/upload/' + idea.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
                 <img *ngIf="idea.anonymous == true" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/1200px-Unknown_person.jpg" width="42" height="42" class="rounded-circle" alt="" />
             </div>
             <div class="media-body ml-2">
@@ -47,7 +47,7 @@
                 <div *ngIf="idea.file.file" class="row col-12 text-center align-content-center m-auto ">
                     <div *ngFor="let f of idea.file.file">
                         <div *ngIf="checkFileType(f) == 'image'" class="col-2" type="button">
-                            <img [src]="'http://139.162.47.239/upload/' + f" class="card-img" alt="...">
+                            <img [src]="'https://no-data.cloud/upload/' + f" class="card-img" alt="...">
                         </div>
                         <div *ngIf="checkFileType(f) == 'pdf'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">

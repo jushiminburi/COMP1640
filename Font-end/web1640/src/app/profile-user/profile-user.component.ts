@@ -31,6 +31,7 @@ export class ProfileUserComponent {
     const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
     this.api.getUserById(data.id).subscribe((res: any) => {
       this.user = res.data;
+      console.log(this.user);
     })
 
    }

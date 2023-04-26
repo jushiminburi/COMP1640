@@ -217,7 +217,7 @@ export class EventListComponent implements OnInit {
     this.api.getEvents().subscribe(
       (res:any) => {
         console.log(res);
-        var events = res.data.list;
+        var events = res.data.totalEvent;
         console.log(events);
 
         

@@ -52,7 +52,7 @@ export class LoginComponent {
       
       if (res.status != 200) {
 
-        this.toast.error({detail: "Email or password is incorrect! Please try again!", position: "top-right", duration:5000})
+        this.toast.error({detail: "Email or password is incorrect! Please try again!", position: "top-right", duration:3000})
         this.loginForm.reset();
         this.router.navigate(['/login']);
       } else if (res.status == 200){
