@@ -43,7 +43,7 @@ exports.registerUser = async (req, res) => {
     if (department == null) {
       return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_EXSITS, 400)
     }
-    departments = departments._id
+    departments = department._id
    }
     const user = await User.findOne({ email })
     if (user) {

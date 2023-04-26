@@ -42,7 +42,33 @@ module.exports = {
       if (list.error) {
         return apiResponse.response_status(res, list.error.message, 400)
       }
-      const totalEvent = await Event.find().lean().countDocuments()
+      const totalEvent = await Event.aggregate([
+        {
+          $lookup: {
+            from: 'ideas',
+            localField: 'idea',
+            foreignField: '_id',
+            as: 'ideas'
+          }
+        },
+        {
+          $project: {
+            name: 1,
+            deadlineIdea: 1,
+            deadlineComment: 1,
+            totalIdea: 1,
+            totalLike: {
+              $sum: '$ideas.totalLike'
+            },
+            totalDislike: {
+              $sum: '$ideas.totalDislike'
+            },
+            totalComment: {
+              $sum: '$ideas.totalComment'
+            }
+          }
+        }
+      ])
       return apiResponse.response_data(res, Languages.SUCCESSFUL, 200, {
         list,
         totalEvent

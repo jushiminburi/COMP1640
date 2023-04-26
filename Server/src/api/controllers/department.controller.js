@@ -45,7 +45,8 @@ module.exports = {
   async deleteDepartment (req, res) {
     try {
       const id = req.params.id
-      const userDepartment = await User.find({ departmentId: id })
+      const departmentCheck = await Department.find({id}).lean()
+      const userDepartment = await User.find({ department: departmentCheck._id })
       if (userDepartment != null) {
         return apiResponse.response_status(res, Languages.DEPARTMENT_NOT_DELETE, 404)
       }
