@@ -9,5 +9,5 @@ router.get('/get-event-document', isQAM, qamController.listDocumentInfo)
 router.get('/detail-document/:id', isQAM, qamController.detailDocument)
 router.get('/download-csv/:id', isQAM, qamController.downloadFilecsv)
 router.get('/dowload/:file', isQAM, qamController.dowloadFile)
-router.get('/dashboard',verifyToken, dashboardController.ideaOfDepartmentOrCategory)
+router.get('/dashboard', verifyToken, dashboardController.ideaOfDepartmentOrCategory)
 module.exports = router

@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt')
 const getNextSequenceValue = require('../utils/icrement.db')
 require('dotenv').config()
 const path = require('path')
-const { transporter, mailCreatedAccountOptions } = require('../utils/sendEmail')
 const { Department } = require('../models/department.model')
 const { checkFile, unlinkFile } = require('../utils/utils')
 

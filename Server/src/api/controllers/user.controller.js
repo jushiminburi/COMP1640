@@ -3,8 +3,7 @@ const { User } = require('../models/user.model')
 const Languages = require('../utils/languages')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
-const { BASEURL_AVATAR } = require('../utils/global')
-const { BASEURL_FILE } = require('../utils/global')
+const { Ideas } = require('../models/idea.model')
 const fs = require('fs')
 const path = require('path')
 const { Department } = require('../models/department.model')
@@ -78,11 +77,11 @@ module.exports = {
       if (result.error) {
         return apiResponse.response_status(res, result.error.message, 400)
       }
-      if(department !== undefined) {
-        const infoDepartment = await Department.findOne({id: department }).lean()
+      if (department !== undefined) {
+        const infoDepartment = await Department.findOne({ id: department }).lean()
         _department = infoDepartment._id
       }
-      const updateUser = await User.findOneAndUpdate({ userId: id }, { email, lastName, firstName,department: _department, isActive, role }, { new: false })
+      const updateUser = await User.findOneAndUpdate({ userId: id }, { email, lastName, firstName, department: _department, isActive, role }, { new: false })
       if (updateUser) {
         return apiResponse.response_status(res, Languages.UPDATE_USER_SUCCESSFUL, 200)
       } else {
@@ -155,8 +154,12 @@ module.exports = {
   async deleteUser (req, res) {
     try {
       const id = req.params.id
+      const user = User.findOne({ userId: id }).lean()
+      const resultIdea = Ideas.findOne({ user: user._id })
+      if (resultIdea !== null) {
+        return apiResponse.response_status(res, Languages.DELETE_USER_NOT_CLEAR_IDEA, 400)
+      }
       const deleteUser = await User.findOneAndDelete({ userId: id })
-      console.log(deleteUser)
       if (deleteUser) {
         return apiResponse.response_status(res, Languages.DELETE_USER_SUCCESSFUL, 200)
       }

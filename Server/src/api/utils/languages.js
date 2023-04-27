@@ -23,6 +23,7 @@ module.exports = {
   UPDATE_USER_SUCCESSFUL: 'Update user successful!',
   DELETE_USER_SUCCESSFUL: 'Delete user successful!',
   DELETE_USER_FAIL: 'Delete user fail!',
+  DELETE_USER_NOT_CLEAR_IDEA: 'Delete user not clear idea!',
   CHANGE_PASSWORD_SUCCESS: 'Change password successful!',
   CHANGE_PASSWORD_FAIL: 'Change password Fail!',
   OLD_PASSWORD_NOT_CORRECT: 'old password not correct',

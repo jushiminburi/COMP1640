@@ -96,7 +96,7 @@ module.exports = {
         header: csvFields
       })
       const csvData = detail.idea.map(data => {
-        const documents = data.file.file.join(',')
+        const documents = data.file === undefined ? [] : data.file.file.join(',')
         return {
           id: data.id,
           title: data.title,
