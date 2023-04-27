@@ -117,19 +117,9 @@ export class EditIdeaComponent {
   }
 
   editAnIdea(data: any) {
-    
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this imaginary file!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, add it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
+    if(confirm("Are you sure to edit this idea?")) {
 
-        var formData: any = new FormData();
+      var formData: any = new FormData();
 
         formData.append('content', this.createIdeaForm.get('content')!.value?.toString());
        
@@ -143,9 +133,13 @@ export class EditIdeaComponent {
         this.api.editIdea(this.idea.id, formData
         ).subscribe(res => {
           console.log(res)
-          const id = this.route.snapshot.params['id'];
-          this.router.navigateByUrl('/staff', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/staff/newidea', id]).then(() => {
+          //navigate current page
+
+          this.toast.success({ detail: "Edit idea successfully!", duration: 3000, position: "top-right" })
+          
+          const rou = this.router.url;
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([rou]).then(() => {
               this.toast.success({ detail: "Edit idea successfully!", duration: 3000, position: "top-right" })
             })
           })
@@ -161,15 +155,30 @@ export class EditIdeaComponent {
 
         }, error => {
 
-          this.toast.error({ detail: "Add idea failed!", duration: 3000, position: "top-right" })
+          this.toast.error({ detail: "Edit idea failed!", duration: 3000, position: "top-right" })
           console.log(error)
           // this.router.navigate(['/login']);
         }
 
         );
 
-      }
-    })
+    }
+    
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: 'You will not be able to recover this imaginary file!',
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, add it!'
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+
+        
+
+    //   }
+    // })
   }
 
 
@@ -220,7 +229,7 @@ export class EditIdeaComponent {
 
 
     this.createIdeaForm = this.fb.group({
-      files: new FormControl(null),
+      // files: new FormControl(null),
       title: new FormControl(this.idea.title, [Validators.required, Validators.minLength(3)]),
       content: new FormControl(this.idea.content, [Validators.required, Validators.minLength(3)]),
       anonymous: new FormControl(this.idea.anonymous)

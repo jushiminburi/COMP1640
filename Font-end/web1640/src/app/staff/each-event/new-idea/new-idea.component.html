@@ -74,7 +74,7 @@
                     <div class="card radius-15">
                         <div class="card-body">
 
-                            <p-fileUpload name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [multiple]="true" [fileLimit]=5 [maxFileSize]="5000000">
+                            <p-fileUpload name="demo[]" [showUploadButton]="false" (onRemove)="onRemove($event)" (onClear)="onClear($event)" url="https://www.primefaces.org/cdn/api/upload.php" (onSelect)="onSelect($event)" [multiple]="true" [fileLimit]=5 [maxFileSize]="1000000">
                                 <ng-template pTemplate="content">
                                     <ul *ngIf="uploadedFiles.length">
 

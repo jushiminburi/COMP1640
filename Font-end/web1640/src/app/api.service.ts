@@ -60,11 +60,31 @@ export class ApiService {
   }
 
 
-  editIdea(id: any, data: any): Observable<any> {
+  editIdea(id: any, data: FormData): Observable<any> {
+    let form: any = {
+
+      // firstName: formData.get('firstName'),
+      // lastName: formData.get('lastName'),
+      // email: formData.get('email'),
+      // department: formData.get('department'),
+      // role: formData.get('role'),
+
+    }
+    console.log(form);
+
+
+    // print all key and value form data
+    data.forEach((value: any, key: any) => {
+      console.log(key + ' ' + value);
+      if(key != 'userId') {
+        form[key] = value;
+      }
+    });
     const httpOptions = {
       
+      
         headers: new HttpHeaders({
-          'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
         })
@@ -72,7 +92,7 @@ export class ApiService {
       }
       
     
-    return this.http.put(api + `idea/update/${id}`, data, {headers:httpOptions.headers, responseType: 'json'})
+    return this.http.put(api + `idea/update/${id}`, form, {headers:httpOptions.headers, responseType: 'json'})
   }
 
   getIdeaByEvent(id: any): Observable<any> {

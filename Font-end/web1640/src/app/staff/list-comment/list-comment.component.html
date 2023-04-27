@@ -1,6 +1,7 @@
 <div *ngFor="let comment of comments" class="media  pt-3 m-auto">
     <div class="chat-user-online">
-        <img [src]="'https://no-data.cloud/upload/' + comment.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
+        <img *ngIf="comment.anonymous == false" [src]="'https://no-data.cloud/upload/' + comment.user.avatar" width="42" height="42" class="rounded-circle" alt="" />
+        <img *ngIf="comment.anonymous == true" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/1200px-Unknown_person.jpg" width="42" height="42" class="rounded-circle" alt="" />
     </div>
     <div class="media-body ml-2">
         <div class="row">
@@ -9,12 +10,12 @@
             <p class=" col-4 text-right">{{comment.timeAgo}}</p>
         </div>
         <div class="row">
-            <p *ngIf="!isEditing" (dblclick)="enableEditing()" class=" mb-0 pt-0 form-label col-8">{{comment.content}}</p>
-            <input *ngIf="isEditing" [(ngModel)]="commentText" (blur)="disableEditing(comment.id)" (keydown.enter)="disableEditing(comment.id)" />
+            <p *ngIf="!isEditing" class=" mb-0 pt-0 form-label col-8">{{comment.content}}</p>
+            <input class="col-8" *ngIf="isEditing" [(ngModel)]="comment.content" (blur)="disableEditing(comment.id, comment.content)" (keydown.enter)="disableEditing(comment.id, comment.content)" />
             <div *ngIf="checkUpdateDeleteOptions(comment.user.userId)" class="dropdown  col-4 text-right">
                 <div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret " data-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
                 </div>
-                <div class="dropdown-menu dropdown-menu-right bg-body"> <a class="dropdown-item" type="button">Edit Comment</a>
+                <div class="dropdown-menu dropdown-menu-right bg-body"> <a (click)="enableEditing()" class="dropdown-item" type="button">Edit Comment</a>
                     <a type="button" (click)="deleteComment(comment.id)" class="dropdown-item" type="button">Delete Comment</a>
                 </div>
             </div>

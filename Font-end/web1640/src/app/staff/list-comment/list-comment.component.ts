@@ -85,12 +85,13 @@ export class ListCommentComponent {
     this.isEditing = true;
   }
 
-  disableEditing(id: any) {
-    this.api.editComment(id, this.commentText).subscribe(async (res: any) => {
+  disableEditing(id: any, text: any) {
+    console.log(id, text);
+    this.api.editComment(id, text).subscribe(async (res: any) => {
       console.log(res);
       this.commentEvent.emit("abc")
 
-      this.cdr.detectChanges();
+      
       this.toast.success({ detail: "Edit comment successfully!", duration: 3000, position: "top-right" })
     }, error => {
       this.toast.error({ detail: "Edit comment failed!" });

@@ -164,6 +164,7 @@ import { EditIdeaComponent } from './staff/each-event/edit-idea/edit-idea.compon
 
 import { ChartModule } from 'angular-highcharts'
 import { HighchartsChartModule } from 'highcharts-angular';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -206,7 +207,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     AdminHomepageComponent,
     TopPopularIdeasComponent,
     QacHomepageComponent,
-    EditIdeaComponent
+    EditIdeaComponent,
 
 
 

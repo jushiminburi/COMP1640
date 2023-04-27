@@ -75,8 +75,10 @@ createComment() {
       console.log(data);
       
       this.ideaEvent.emit("abc")
-      this.cdr.detectChanges();
-      this.commentForm.reset()
+      // this.cdr.detectChanges();
+      this.commentForm.get('content')?.reset();
+     
+      return
       
     }, error => {
       

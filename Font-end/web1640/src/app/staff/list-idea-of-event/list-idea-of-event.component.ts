@@ -556,12 +556,13 @@ export class ListIdeaOfEventComponent implements OnDestroy  {
     }).then((result) => {
       if (result.isConfirmed) {
         this.api.deleteIdea(id).subscribe((data: any) => {
-          this.getListIdea();
+          // this.getListIdea();
           // Swal.fire(
           //   'Deleted!',
           //   'Your file has been deleted.',
           //   'success'
           // )
+          this.ideaEvent.emit("abc")
           this.toast.success({ detail: "Delete idea successfully!", duration: 3000, position: "top-right" })
           
         },
