@@ -143,7 +143,7 @@ export class NewIdeaComponent {
         
         if(this.uploadedFiles.length != 0){
            
-            formData.append('files', this.uploadedFiles);
+            formData.append('files', this.uploadedFiles[0]);
           
       }
       console.log(formData.get('files'))
