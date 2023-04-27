@@ -50,8 +50,9 @@ export class ApiService {
       headers: new HttpHeaders({
        
         'Content-Type': 'application/zip',
-        'Accept': 'application/zip',
+        
         'Access-Control-Allow-Origin': '*',
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
       })
     };
       return this.http.get(api + 'qam/download-files'
@@ -200,8 +201,9 @@ export class ApiService {
       headers: new HttpHeaders({
        
         'Content-Type': 'application/csv',
-        'Accept': 'application/csv',
+        
         'Access-Control-Allow-Origin': '*',
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
       })
     };
 
