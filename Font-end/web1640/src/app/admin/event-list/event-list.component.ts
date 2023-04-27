@@ -83,13 +83,23 @@ export class EventListComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.api.deleteEvent(id).subscribe(async (res: any) => {
-          this.toast.success({ detail: 'Delete event successfully!', position: 'top-right', duration: 3000 })
-          this.loadEvents();
-        }, error => {
-          this.toast.error({ detail: 'Error deleting event', position: 'top-right', duration: 3000 })
+        this.api.getIdeaByEvent(id).subscribe(async (res: any) => {
+          if(res.data.listIdea) {
+            this.toast.error({ detail: 'This event has ideas, cannot delete', position: 'top-right', duration: 3000 })
+            return
+          } else {
+            this.api.deleteEvent(id).subscribe(async (res: any) => {
+              this.toast.success({ detail: 'Delete event successfully!', position: 'top-right', duration: 3000 })
+              this.loadEvents();
+              return
+            }, error => {
+              this.toast.error({ detail: 'Error deleting event', position: 'top-right', duration: 3000 })
+            })
+          }
         })
+        
       } 
+      
       // else if (result.dismiss === Swal.DismissReason.cancel) {
       //   Swal.fire(
       //     'Cancelled',
@@ -177,7 +187,7 @@ export class EventListComponent implements OnInit {
 
         let event = events.filter((event: any) => event.id == id)[0];
        
-
+        console.log(id);
         //convert date to dd/mm/yyyy - dùng moment cũng đc để chuyển giữa múi giờ.
         // let deadlineIdea: Date = new Date(event.deadlineIdea);
         // let deadlineComment: Date = new Date(event.deadlineComment);
@@ -213,12 +223,15 @@ export class EventListComponent implements OnInit {
   }
 
 
+  res!: any;
+
   loadEvents(): void {
     this.api.getEvents().subscribe(
       (res:any) => {
         console.log(res);
-        var events = res.data.totalEvent;
+        var events = res.data.list;
         console.log(events);
+        this.res = res.data
 
         
 

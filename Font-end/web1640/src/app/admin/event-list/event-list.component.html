@@ -60,7 +60,7 @@
 
             <div class="row tab-content " id="nav-tabContent">
 
-                <div class="col-12 col-lg-4" *ngFor="let event of events">
+                <div class="col-12 col-lg-4" *ngFor="let event of events; index as i">
                     <div class="card radius-15 d-flex">
                         <div class="card-body m-auto text-center">
                             <div class="row">
@@ -92,15 +92,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">Like</div>
-                                    <div class="col-lg-6 text-info">{{event.totalLike}}</div>
+                                    <div class="col-lg-6 text-info">{{res.totalEvent[i].totalLike}}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">Dislike</div>
-                                    <div class="col-lg-6 text-info">{{event.totalDislike}}</div>
+                                    <div class="col-lg-6 text-info">{{res.totalEvent[i].totalDislike}}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">Comment</div>
-                                    <div class="col-lg-6 text-info">{{event.totalComment}}</div>
+                                    <div class="col-lg-6 text-info">{{res.totalEvent[i].totalComment}}</div>
                                 </div>
                             </div>
 

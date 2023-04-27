@@ -344,9 +344,10 @@ export class AccountManagerComponent implements OnInit {
           error => {
             Swal.fire(
               'Failed!',
-              'Delete failed.',
+              error.error.message,
               'error'
             )
+            console.log(error)
           }
         )
       }
