@@ -168,7 +168,7 @@ export class ApiService {
       headers: new HttpHeaders({
        
         'Content-Type': 'application/json',
-        
+        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
         'Access-Control-Allow-Origin': '*',
       })
     };

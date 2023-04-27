@@ -95,18 +95,21 @@
                                     <td>{{event.totalLike}}</td>
                                     <td>{{event.totalComment}}</td>
                                     <td><i class="text-primary" data-feather="download">
-                                        <div *ngFor="let i of event.file.file">
-                                            <a *ngIf="isImage(i); else downloadLink" type="button" (click)="op.toggle($event)">{{i}}</a>
-                                            
-                                                <p-overlayPanel #op>
-                                                    <img style="width: 280px; height: 230px" src="http://139.162.47.239/upload/1680295009008_13.jpg" alt="File" />
-                                                </p-overlayPanel>
-                                            
-                                            
-                                            <ng-template #downloadLink>
-                                                <a [href]="dowload('http://139.162.47.239/download/'+i)" download>{{i}}</a>
-                                              </ng-template>
+                                        <div *ngIf="event.file">
+                                            <div *ngFor="let i of event.file.file">
+                                                <a *ngIf="isImage(i); else downloadLink" type="button" (click)="op.toggle($event)">{{i}}</a>
+                                                
+                                                    <p-overlayPanel #op>
+                                                        <img style="width: 280px; height: 230px" src="http://139.162.47.239/upload/1680295009008_13.jpg" alt="File" />
+                                                    </p-overlayPanel>
+                                                
+                                                
+                                                <ng-template #downloadLink>
+                                                    <a [href]="dowload('http://139.162.47.239/download/'+i)" download>{{i}}</a>
+                                                  </ng-template>
+                                            </div>
                                         </div>
+                                       
                                     </i></td>
 
                                 </tr>

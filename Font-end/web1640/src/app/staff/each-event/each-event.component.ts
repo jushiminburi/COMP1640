@@ -148,15 +148,13 @@ export class EachEventComponent {
       
 
     }
-
-    console.log(params);
     
     
     const helper = new JwtHelperService();
     const data = helper.decodeToken(localStorage.getItem('accessToken')|| '{}');
     console.log(localStorage.getItem('accessToken'));
     
-    console.log(data);
+   
 
     
     
