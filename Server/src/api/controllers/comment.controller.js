@@ -146,9 +146,8 @@ module.exports = {
     try {
       const { content, anonymous } = req.body
       const id = req.params.id
-      const userId = req.userId
-
-      const commentIsMyself = await Comment.findOne({ id, userId })
+      const _userId = req._userId
+      const commentIsMyself = await Comment.findOne({ id, user: _userId })
       if (commentIsMyself == null) {
         return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
       }
@@ -170,8 +169,8 @@ module.exports = {
       if (commentIsMyself.user.userId !== userId) {
         return apiResponse.response_status(res, Languages.COMMENT_NOT_YOUSELF, 400)
       }
-      await Comment.findOneAndDelete({ id: commentId, user: _userId })
-      await Ideas.findOneAndUpdate({ id: commentId }, { $inc: { totalComment: -1 } },
+      const commentDelete = await Comment.findOneAndDelete({ id: commentId, user: _userId }).lean()
+      await Ideas.findOneAndUpdate({ _id: commentDelete.idea }, { $inc: { totalComment: -1 } },
         { new: true })
       return apiResponse.response_status(res, Languages.DELETE_COMMENT_SUCCESS, 200)
     } catch (error) {
