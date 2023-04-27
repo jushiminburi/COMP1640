@@ -165,11 +165,13 @@ export class ApiService {
     //   })
     // };
 
+  
+     
     const httpOptions = {
       headers: new HttpHeaders({
        
-        'Content-Type': 'application/json',
-        'Authorization': 'Baerar ' + localStorage.getItem('accessToken'),
+        // 'Content-Type': 'application/json',
+        'Authorization': 'Bearar ' + localStorage.getItem('accessToken'),
         'Access-Control-Allow-Origin': '*',
       })
     };
@@ -178,7 +180,7 @@ export class ApiService {
 
    
     
-      return this.http.get(`http://139.162.47.239/download/${fileName}`
+      return this.http.get(`https://no-data.cloud/download/${fileName}`
       , {headers:httpOptions.headers, responseType: 'blob'})
   }
 

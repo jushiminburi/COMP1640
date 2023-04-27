@@ -47,7 +47,10 @@
                 <div *ngIf="idea.file.file" class="row col-12 text-center align-content-center m-auto ">
                     <div *ngFor="let f of idea.file.file">
                         <div *ngIf="checkFileType(f) == 'image'" class="col-2" type="button">
-                            <img [src]="'https://no-data.cloud/upload/' + f" class="card-img" alt="...">
+                            <img (click)="op.toggle($event)" [src]="'https://no-data.cloud/upload/' + f" class="card-img" alt="...">
+                            <p-overlayPanel #op>
+                                <img style="width: 280px; height: 230px" [src]="'https://no-data.cloud/upload/'+f" alt="File" />
+                            </p-overlayPanel>
                         </div>
                         <div *ngIf="checkFileType(f) == 'pdf'" class="d-flex align-items-center">
                             <div class="col-1"><img src="../../../assets/image/image_pdf.png" alt="pdf" style="width:30px;height:30px">
